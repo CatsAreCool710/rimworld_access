@@ -216,4 +216,32 @@ namespace RimWorldAccess
             StorytellerNavigationState.Reset();
         }
     }
+
+    // ==== Patches for IN-GAME storyteller selection ====
+
+    /// <summary>
+    /// Opens keyboard navigation when the in-game storyteller page opens.
+    /// </summary>
+    [HarmonyPatch(typeof(Page_SelectStorytellerInGame), "PreOpen")]
+    public static class StorytellerInGamePatch_PreOpen
+    {
+        [HarmonyPostfix]
+        public static void Postfix()
+        {
+            StorytellerSelectionState.Open();
+        }
+    }
+
+    /// <summary>
+    /// Closes keyboard navigation when the in-game storyteller page closes.
+    /// </summary>
+    [HarmonyPatch(typeof(Page_SelectStorytellerInGame), "PreClose")]
+    public static class StorytellerInGamePatch_PreClose
+    {
+        [HarmonyPostfix]
+        public static void Postfix()
+        {
+            StorytellerSelectionState.Close();
+        }
+    }
 }

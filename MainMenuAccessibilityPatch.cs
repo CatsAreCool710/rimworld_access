@@ -79,7 +79,7 @@ namespace RimWorldAccess
             cachedColumn0.Add(new ListableOption("Options".Translate(), delegate {
                 var method = AccessTools.Method(typeof(MainMenuDrawer), "CloseMainTab");
                 method.Invoke(null, null);
-                Find.WindowStack.Add(new Dialog_Options());
+                WindowlessOptionsMenuState.Open();
             }, "MenuButton-Options"));
 
             if (Current.ProgramState == ProgramState.Entry)

@@ -144,7 +144,46 @@ namespace RimWorldAccess
                 }
             }
 
-            // ===== PRIORITY 4.5: Handle options menu if active =====
+            // ===== PRIORITY 4.5: Handle storyteller selection (in-game) if active =====
+            if (StorytellerSelectionState.IsActive)
+            {
+                bool handled = false;
+
+                if (key == KeyCode.DownArrow)
+                {
+                    StorytellerSelectionState.SelectNext();
+                    handled = true;
+                }
+                else if (key == KeyCode.UpArrow)
+                {
+                    StorytellerSelectionState.SelectPrevious();
+                    handled = true;
+                }
+                else if (key == KeyCode.Tab)
+                {
+                    StorytellerSelectionState.SwitchLevel();
+                    handled = true;
+                }
+                else if (key == KeyCode.Return || key == KeyCode.KeypadEnter)
+                {
+                    StorytellerSelectionState.Confirm();
+                    handled = true;
+                }
+                else if (key == KeyCode.Escape)
+                {
+                    StorytellerSelectionState.Close();
+                    Find.WindowStack.TryRemove(typeof(Page_SelectStorytellerInGame));
+                    handled = true;
+                }
+
+                if (handled)
+                {
+                    Event.current.Use();
+                    return;
+                }
+            }
+
+            // ===== PRIORITY 4.6: Handle options menu if active =====
             if (WindowlessOptionsMenuState.IsActive)
             {
                 bool handled = false;
