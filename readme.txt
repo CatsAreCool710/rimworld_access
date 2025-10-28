@@ -70,7 +70,7 @@ Enter         Jump to selected item
 OTHER SHORTCUTS
 ---------------
 Delete        Delete selected save file (in save/load menu)
-
+p      open research project selection menu.
 
 ADDITIONAL NOTES
 ----------------
