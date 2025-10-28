@@ -143,6 +143,13 @@ namespace RimWorldAccess
             if (selectedBuilding == null)
                 return;
 
+            // First, try to open the current tab (bills, storage, etc.)
+            // This way Enter key works for common use cases like bills menu
+            if (TryOpenCurrentTab())
+            {
+                return;
+            }
+
             // Check if building has temperature control
             if (selectedBuilding is Building building)
             {
@@ -158,6 +165,51 @@ namespace RimWorldAccess
 
             // If no recognized settings, announce
             ClipboardHelper.CopyToClipboard($"{selectedBuilding.LabelCap} has no keyboard-accessible settings");
+        }
+
+        /// <summary>
+        /// Tries to open the current tab. Returns true if successful, false otherwise.
+        /// </summary>
+        private static bool TryOpenCurrentTab()
+        {
+            if (availableTabs == null || selectedTabIndex >= availableTabs.Count)
+                return false;
+
+            InspectTabBase currentTab = availableTabs[selectedTabIndex];
+
+            // Check if this is a bills tab
+            if (currentTab is ITab_Bills billsTab)
+            {
+                // Get the building's bill stack
+                if (selectedBuilding is IBillGiver billGiver)
+                {
+                    // Save position before closing
+                    IntVec3 pos = selectedBuilding.Position;
+                    // Close the building inspect state before opening bills menu
+                    Close();
+                    BillsMenuState.Open(billGiver, pos);
+                    return true;
+                }
+            }
+
+            // Check if this is a storage tab
+            if (currentTab.GetType().Name == "ITab_Storage")
+            {
+                // Get the storage settings
+                if (selectedBuilding is IStoreSettingsParent storageParent)
+                {
+                    StorageSettings settings = storageParent.GetStoreSettings();
+                    if (settings != null)
+                    {
+                        // Close the building inspect state before opening storage menu
+                        Close();
+                        StorageSettingsMenuState.Open(settings);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static void AnnounceCurrentTab()
