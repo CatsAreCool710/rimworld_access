@@ -68,6 +68,7 @@ Alt+H         Display health
 Alt+W         Open work menu (see Work Menu section below)
 Alt+G         Display gear
 S             Open schedule menu (manage colonist timetables)
+Shift+A       Open assign menu (manage outfits, food, drugs, areas, reading)
 
 
 WORK MENU (Press Alt+W)
@@ -95,7 +96,47 @@ Notes:
 - In manual priority mode, lower numbers execute first (1 before 2 before 3 before 4)
 - Work types with the same priority number use list order as tiebreaker
 - Changes are marked as "(pending)" until you press Enter to save
-- Column reordering (Shift+Up/Down) affects all colonists globally.  As far as I am aware, this is an unavoidable quirk of the game's logic, and not something I can change. 
+- Column reordering (Shift+Up/Down) affects all colonists globally.  As far as I am aware, this is an unavoidable quirk of the game's logic, and not something I can change.
+
+
+ASSIGN MENU (Press Shift+A)
+----------------------------
+Manage colonist assignments across five policy categories: Outfit, Food Restrictions,
+Drug Policies, Allowed Areas, and Reading Policies (Ideology DLC only).
+
+Navigation:
+Left/Right    Switch between policy categories (columns)
+Up/Down       Navigate available policies within current category
+Enter         Apply selected policy to current colonist
+Tab           Switch to next colonist
+E         Open policy editor/manager for current category
+Escape        Close assign menu
+
+Policy Editor Controls:
+When you press E to open a policy editor, you can manage policies:
+
+Up/Down       Navigate policy list (in policy list mode)
+Tab           Enter actions menu
+escape     Return to policy list
+Enter         Execute selected action or confirm
+Escape        Go back/close editor
+
+Available Actions:
+- New Policy: Create a new policy
+- Rename Policy: Rename the selected policy
+- Duplicate Policy: Make a copy of the selected policy
+- Delete Policy: Delete the selected policy (if not in use)
+- Set as Default: Set as the default policy for new colonists
+- Edit Filter: Edit apparel/food filters (navigate with arrows, Space to toggle, Enter to expand/collapse)
+- Edit Drugs: Configure drug usage settings (navigate drugs, edit dosage schedules and conditions)
+- Close: Return to assign menu
+
+Notes:
+- Outfit policies let you control what clothes colonists will wear
+- Food policies restrict what foods colonists can eat
+- Drug policies control when and how colonists use drugs
+- Allowed areas restrict where colonists can go
+- Reading policies (Ideology DLC) control what colonists read for ideological development.  These policies are untested, and the custom editor is not yet supported.  I do not have the DCLs yet, so I will be saving all DLC features for later.  
 
 
 QUICK NAVIGATION (Press J)
