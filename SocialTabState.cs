@@ -311,8 +311,23 @@ namespace RimWorldAccess
                     if (logIndex >= 0 && logIndex < socialLog.Count)
                     {
                         var interaction = socialLog[logIndex];
-                        sb.AppendLine($"{interaction.InteractionType} with {interaction.OtherPawn}");
-                        sb.AppendLine($"{interaction.Timestamp}");
+
+                        // Show interaction label if available, otherwise use type
+                        string interactionName = !string.IsNullOrEmpty(interaction.InteractionLabel)
+                            ? interaction.InteractionLabel
+                            : interaction.InteractionType;
+
+                        sb.AppendLine($"{interactionName} - {interaction.Timestamp} ago");
+                        sb.AppendLine();
+                        sb.AppendLine(interaction.Description);
+                        sb.AppendLine();
+
+                        if (interaction.IsFaded)
+                        {
+                            sb.AppendLine("[Old interaction]");
+                            sb.AppendLine();
+                        }
+
                         sb.AppendLine($"Interaction {logIndex + 1} of {socialLog.Count}");
                         sb.AppendLine("Press Escape to go back");
                     }

@@ -63,15 +63,18 @@ namespace RimWorldAccess
                         string description = hediff.Description;
                         if (!string.IsNullOrEmpty(description))
                         {
+                            // Strip tags, replace newlines with spaces, and collapse multiple spaces
                             description = description.StripTags().Trim();
+                            description = System.Text.RegularExpressions.Regex.Replace(description, @"\s+", " ");
                             sb.Append($": {description}");
                         }
 
-                        // Get capacity modifiers directly
+                        // Get capacity modifiers directly from the hediff
                         var capMods = hediff.CapMods;
+                        var effects = new List<string>();
+
                         if (capMods != null && capMods.Any())
                         {
-                            var effects = new List<string>();
                             foreach (var capMod in capMods)
                             {
                                 if (capMod.capacity != null)
@@ -96,11 +99,82 @@ namespace RimWorldAccess
                                     effects.Add(effect);
                                 }
                             }
+                        }
+                        // For injuries to body parts WITHOUT direct capacity modifiers,
+                        // calculate the part efficiency impact
+                        else if (hediff.Part != null)
+                        {
+                            // Calculate part efficiency
+                            float partHealth = pawn.health.hediffSet.GetPartHealth(hediff.Part);
+                            float maxHealth = hediff.Part.def.GetMaxHealth(pawn);
+                            float currentEfficiency = partHealth / maxHealth;
 
-                            if (effects.Any())
+                            // Only show if there's a meaningful impact (less than 100%)
+                            if (currentEfficiency < 0.999f)
                             {
-                                sb.Append(": " + string.Join(", ", effects));
+                                // Get the body part tags to determine which capacities it affects
+                                var affectedCapacities = new List<string>();
+
+                                // Check common capacity-related tags
+                                if (hediff.Part.def.tags != null)
+                                {
+                                    foreach (var tag in hediff.Part.def.tags)
+                                    {
+                                        // Map body part tags to capacity names
+                                        if (tag.defName == "SightSource")
+                                        {
+                                            affectedCapacities.Add($"Sight (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "HearingSource")
+                                        {
+                                            affectedCapacities.Add($"Hearing (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "MovingLimbCore")
+                                        {
+                                            affectedCapacities.Add($"Moving (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "ManipulationLimbCore" || tag.defName == "ManipulationLimbSegment" || tag.defName == "ManipulationLimbDigit")
+                                        {
+                                            affectedCapacities.Add($"Manipulation (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "TalkingSource")
+                                        {
+                                            affectedCapacities.Add($"Talking (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "EatingSource")
+                                        {
+                                            affectedCapacities.Add($"Eating (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "BreathingSource")
+                                        {
+                                            affectedCapacities.Add($"Breathing (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "ConsciousnessSource")
+                                        {
+                                            affectedCapacities.Add($"Consciousness (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "BloodPumpingSource")
+                                        {
+                                            affectedCapacities.Add($"Blood Pumping (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "BloodFiltrationSource")
+                                        {
+                                            affectedCapacities.Add($"Blood Filtration (part at {currentEfficiency:P0})");
+                                        }
+                                        else if (tag.defName == "MetabolismSource")
+                                        {
+                                            affectedCapacities.Add($"Metabolism (part at {currentEfficiency:P0})");
+                                        }
+                                    }
+                                }
+
+                                effects.AddRange(affectedCapacities);
                             }
+                        }
+
+                        if (effects.Any())
+                        {
+                            sb.Append(". Affects: " + string.Join(", ", effects));
                         }
 
                         sb.AppendLine();
@@ -274,7 +348,9 @@ namespace RimWorldAccess
                 {
                     if (rel.otherPawn != null)
                     {
-                        sb.AppendLine($"  - {rel.def.LabelCap}: {rel.otherPawn.LabelShort}");
+                        // Use GetGenderSpecificLabelCap to get the correct label based on the other pawn's gender
+                        string relationLabel = rel.def.GetGenderSpecificLabelCap(rel.otherPawn);
+                        sb.AppendLine($"  - {relationLabel}: {rel.otherPawn.LabelShort}");
                     }
                 }
             }

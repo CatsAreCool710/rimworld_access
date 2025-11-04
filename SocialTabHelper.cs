@@ -55,9 +55,11 @@ namespace RimWorldAccess
         public class SocialInteractionInfo
         {
             public string InteractionType { get; set; }
-            public string OtherPawn { get; set; }
+            public string InteractionLabel { get; set; }
+            public string Description { get; set; }
             public string Timestamp { get; set; }
-            public string Outcome { get; set; }
+            public int AgeTicks { get; set; }
+            public bool IsFaded { get; set; }
         }
 
         /// <summary>
@@ -255,7 +257,8 @@ namespace RimWorldAccess
                 {
                     if (rel.otherPawn == otherPawn)
                     {
-                        labels.Add(rel.def.LabelCap);
+                        // Use GetGenderSpecificLabelCap to get the correct label based on the other pawn's gender
+                        labels.Add(rel.def.GetGenderSpecificLabelCap(otherPawn));
                     }
                 }
             }
@@ -379,54 +382,71 @@ namespace RimWorldAccess
 
         /// <summary>
         /// Gets recent social interactions for a pawn.
+        /// Follows RimWorld's display logic: shows up to 12 interactions from the play log.
         /// </summary>
         public static List<SocialInteractionInfo> GetSocialInteractions(Pawn pawn)
         {
             var interactions = new List<SocialInteractionInfo>();
 
-            if (pawn?.interactions == null)
+            if (pawn == null)
                 return interactions;
 
-            // Get recent interactions from play log
+            // Get interactions from play log
             var playLog = Find.PlayLog;
             if (playLog == null)
                 return interactions;
 
-            // Use GetConcerns() to get pawns involved in the interaction
-            var recentEntries = playLog.AllEntries
-                .Where(e => e is PlayLogEntry_Interaction)
-                .Cast<PlayLogEntry_Interaction>()
-                .Take(50) // Get recent interactions
-                .ToList();
+            const int maxEntries = 12; // Match the game's default
+            const int fadeAgeTicks = 7500; // Ticks after which entries appear faded (~2 hours)
 
-            foreach (var entry in recentEntries)
+            // Iterate through all play log entries
+            foreach (var entry in playLog.AllEntries)
             {
-                // Use GetConcerns() to check if this pawn is involved
-                var concerns = entry.GetConcerns();
-                if (concerns != null && concerns.Contains(pawn))
+                // Check if this entry concerns the pawn (is the pawn involved in this entry?)
+                if (!entry.Concerns(pawn))
+                    continue;
+
+                // Get the description from this pawn's point of view
+                string description = entry.ToGameStringFromPOV(pawn);
+
+                // Get additional details
+                string interactionType = "Event";
+                string interactionLabel = "";
+
+                // Check if this is a PlayLogEntry_Interaction to get the interaction type
+                if (entry is PlayLogEntry_Interaction interactionEntry)
                 {
-                    // Find the other pawn involved
-                    string otherPawnName = "Unknown";
-                    foreach (var concern in concerns)
+                    // Use reflection to access the protected intDef field
+                    var intDefField = typeof(PlayLogEntry_Interaction).GetField("intDef",
+                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                    if (intDefField != null)
                     {
-                        if (concern is Pawn concernPawn && concernPawn != pawn)
+                        var intDef = intDefField.GetValue(interactionEntry) as InteractionDef;
+                        if (intDef != null)
                         {
-                            otherPawnName = concernPawn.LabelShort.StripTags();
-                            break;
+                            interactionType = intDef.label;
+                            interactionLabel = intDef.LabelCap;
                         }
                     }
-
-                    interactions.Add(new SocialInteractionInfo
-                    {
-                        InteractionType = "Social interaction", // intDef is protected, can't access
-                        OtherPawn = otherPawnName,
-                        Timestamp = $"{entry.Age} ago",
-                        Outcome = ""
-                    });
-
-                    if (interactions.Count >= 12)
-                        break;
                 }
+
+                // Get timestamp
+                int ageTicks = entry.Age;
+                string timestamp = ageTicks.ToStringTicksToPeriod();
+
+                interactions.Add(new SocialInteractionInfo
+                {
+                    InteractionType = interactionType,
+                    InteractionLabel = interactionLabel,
+                    Description = !string.IsNullOrEmpty(description) ? description.StripTags() : "[No description]",
+                    Timestamp = timestamp,
+                    AgeTicks = ageTicks,
+                    IsFaded = ageTicks > fadeAgeTicks
+                });
+
+                if (interactions.Count >= maxEntries)
+                    break;
             }
 
             return interactions;
