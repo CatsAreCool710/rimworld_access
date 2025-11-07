@@ -26,6 +26,16 @@ namespace RimWorldAccess
                 Thing = thing;
                 Distance = distance;
                 Label = thing.LabelShort;
+
+                // Add suffix for pawns that are hostile or traders
+                if (thing is Pawn pawn)
+                {
+                    string suffix = TileInfoHelper.GetPawnSuffix(pawn);
+                    if (!string.IsNullOrEmpty(suffix))
+                    {
+                        Label += suffix;
+                    }
+                }
             }
         }
 

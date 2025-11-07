@@ -54,7 +54,16 @@ namespace RimWorldAccess
             foreach (var pawn in pawns.Take(3))
             {
                 if (addedSomething) sb.Append(", ");
+
                 sb.Append(pawn.LabelShort);
+
+                // Add suffix for hostile or trader pawns
+                string suffix = GetPawnSuffix(pawn);
+                if (!string.IsNullOrEmpty(suffix))
+                {
+                    sb.Append(suffix);
+                }
+
                 addedSomething = true;
             }
             if (pawns.Count > 3)
@@ -347,7 +356,15 @@ namespace RimWorldAccess
                 for (int i = 0; i < pawns.Count; i++)
                 {
                     if (i > 0) sb.Append(", ");
+
                     sb.Append(pawns[i].LabelShortCap);
+
+                    // Add suffix for hostile or trader pawns
+                    string suffix = GetPawnSuffix(pawns[i]);
+                    if (!string.IsNullOrEmpty(suffix))
+                    {
+                        sb.Append(suffix);
+                    }
                 }
             }
 
@@ -616,6 +633,29 @@ namespace RimWorldAccess
             if (direction == IntVec3.East) return "east";
             if (direction == IntVec3.West) return "west";
             return "unknown";
+        }
+
+        /// <summary>
+        /// Gets a suffix for a pawn based on their status (hostile or trader).
+        /// Returns " (hostile)" if the pawn is hostile to the player,
+        /// returns " (trader)" if the pawn is a trader,
+        /// returns null if neither.
+        /// </summary>
+        public static string GetPawnSuffix(Pawn pawn)
+        {
+            // Check if pawn is hostile to player (takes priority over trader status)
+            if (pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer))
+            {
+                return " (hostile)";
+            }
+
+            // Check if pawn is a trader
+            if (pawn.trader?.traderKind != null)
+            {
+                return " (trader)";
+            }
+
+            return null;
         }
     }
 }
