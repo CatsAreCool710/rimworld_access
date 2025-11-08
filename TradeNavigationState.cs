@@ -19,6 +19,7 @@ namespace RimWorldAccess
         private static TradeCategory currentCategory = TradeCategory.Currency;
         private static int currentIndex = 0;
         private static bool isInQuantityMode = false;
+        private static bool hasAnnouncedControls = false;
 
         // References to active trade session
         private static TradeDeal cachedDeal = null;
@@ -80,19 +81,23 @@ namespace RimWorldAccess
             currentCategory = TradeCategory.Currency;
             currentIndex = 0;
             isInQuantityMode = false;
+            hasAnnouncedControls = false;
             filterText = "";
 
             // Build initial tradeable lists
             RefreshTradeables();
 
-            // Announce opening
+            // Announce opening with controls
             string traderName = cachedTrader.TraderName ?? "Unknown Trader";
             string traderKind = cachedTrader.TraderKind?.label ?? "trader";
-            ClipboardHelper.CopyToClipboard($"Trading with {traderName} ({traderKind})");
+            string controls = "Controls: Up/Down: Navigate | Left/Right: Switch categories | Enter: Adjust quantity | T: Accept trade | G: Toggle gift mode | B: Balance | Escape: Cancel";
+            ClipboardHelper.CopyToClipboard($"Trading with {traderName} ({traderKind}). {controls}");
 
             SoundDefOf.TabOpen.PlayOneShotOnCamera();
 
-            // Announce first item
+            hasAnnouncedControls = true;
+
+            // Announce first item without controls
             AnnounceCurrentSelection();
         }
 
@@ -103,6 +108,7 @@ namespace RimWorldAccess
         {
             isActive = false;
             isInQuantityMode = false;
+            hasAnnouncedControls = false;
             currentIndex = 0;
             currentCategory = TradeCategory.Currency;
 
@@ -354,6 +360,7 @@ namespace RimWorldAccess
             if (isInQuantityMode)
             {
                 isInQuantityMode = false;
+                hasAnnouncedControls = false; // Reset so controls are announced next time
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 AnnounceCurrentSelection();
                 return;
@@ -380,6 +387,7 @@ namespace RimWorldAccess
             }
 
             isInQuantityMode = true;
+            hasAnnouncedControls = false; // Reset so controls are announced when entering quantity mode
             SoundDefOf.Click.PlayOneShotOnCamera();
             AnnounceCurrentSelection();
         }
@@ -394,6 +402,7 @@ namespace RimWorldAccess
                 return false;
 
             isInQuantityMode = false;
+            hasAnnouncedControls = false; // Reset so controls are announced next time
             SoundDefOf.Click.PlayOneShotOnCamera();
             AnnounceCurrentSelection();
             return true;
@@ -934,14 +943,11 @@ namespace RimWorldAccess
                 parts.Add("[Trader will not trade]");
             }
 
-            // Additional controls hint
-            if (isInQuantityMode)
+            // Additional controls hint (only when entering quantity mode or first time)
+            if (isInQuantityMode && !hasAnnouncedControls)
             {
                 parts.Add("(Up/Down: ±1, Shift: ±10, Ctrl: ±100, Alt+Up: Max sell, Alt+Down: Max buy, Enter: Confirm)");
-            }
-            else
-            {
-                parts.Add("(Enter: Adjust quantity, P: Price details, R: Reset)");
+                hasAnnouncedControls = true;
             }
 
             return string.Join(" | ", parts);
