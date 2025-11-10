@@ -3,14 +3,21 @@ RimWorld Access - screen reader accessibility for RimWorld
 
 OVERVIEW
 --------
-This mod adds keyboard navigation and screen reader support to RimWorld.
-All selections are copied to the clipboard for screen reader accessibility.
+This mod adds keyboard navigation and direct screen reader support to RimWorld.
+Uses the Tolk library to communicate directly with NVDA, JAWS, and other screen readers.
+Falls back to SAPI (Windows built-in TTS) if no screen reader is detected.
 
 Installation:
 1. Install RimWorld, and run it once to set up the folder structure correctly.
-2. Install mellon loader for RimWorld.
-3. Copy the RimWorld_access.dll to the RimWorld mods folder.
-4. Launch the game.  UI text should be coppied to your clipboard.
+2. Install MelonLoader for RimWorld.
+3. Copy all three DLL files to the RimWorld Mods folder:
+   - rimworld_access.dll (the mod)
+   - Tolk.dll (screen reader bridge library)
+   - nvdaControllerClient64.dll (NVDA communication library)
+4. Launch the game. UI text will be spoken through your screen reader or SAPI.
+
+Note: The mod works with or without a screen reader running. If no screen reader is
+detected, it automatically uses Windows SAPI for speech output.
 
 MAIN MENU
 ---------
@@ -20,8 +27,7 @@ Enter         Select menu item
 
 IN-GAME NAVIGATION
 ------------------
-RimWorld Access provides tile-by-tile map navigation using arrow keys. The camera
-automatically follows your cursor position, keeping it centered on screen.
+RimWorld Access provides tile-by-tile map navigation using arrow keys..
 
 BASIC MOVEMENT:
 Arrow Keys    Move cursor one tile in any direction
@@ -30,17 +36,16 @@ Arrow Keys    Move cursor one tile in any direction
               - Left Arrow: West (negative X axis)
               - Right Arrow: East (positive X axis)
 
-, (comma)     Cycle to previous colonist (selects but doesn't move camera)
-. (period)    Cycle to next colonist (selects but doesn't move camera)
-I (Shift+i)   Open colony-wide inventory menu
-Enter         Open building settings.
+, (comma)     Cycle to previous colonist 
+. (period)    Cycle to next colonist 
+I   Open colony-wide inventory menu
+Enter         Open inspect pannel.
 Escape        Open pause menu
 
 NAVIGATION FEATURES:
-- Automatic camera following: Camera jumps to center on cursor position after each move
 - Audio feedback: Plays terrain-specific sounds when moving (grass, stone, wood, etc.)
 - Boundary detection: "Map boundary" message when attempting to move past map edge
-- Automatic announcements: Tile information copied to clipboard after each move
+- Automatic announcements: Tile information spoken via screen reader after each move
 - Fog of war: Tiles in unexplored areas announce as "unseen" with no other info
 
 TILE SUMMARY FORMAT:
@@ -219,11 +224,10 @@ R             Toggle draft mode for selected colonist
 Alt+M         Display mood information and thoughts
 Alt+N         Display needs
 Alt+H         Display health
-Alt+G         Display gear
 F1            Open work menu (see Work Menu section below)
 F2            Open schedule menu (manage colonist timetables)
 F3            Open assign menu (manage outfits, food, drugs, areas, reading)
-
+g open gismos for selected colonist.  Gismos include options like fire at will, draft, etc.  G also opens gismos on a selected object.  
 
 WORK MENU (Press F1)
 --------------------
@@ -325,11 +329,6 @@ Structure:
          - Jump to location: Moves camera and cursor to where item is stored
          - View details: Shows item description, market value, mass, and storage info
 
-Examples:
-- "Resources [Collapsed]"
-- "Wood x400 [Expanded]"
-- "Jump to location"
-
 Notes:
 - All items of the same type are combined regardless of storage location
 - Categories show the number of item types they contain
@@ -384,7 +383,7 @@ Features:
 - Caravan trading with mass/capacity tracking
 - Comprehensive trade summary before execution
 - Validation for insufficient funds, trader inventory, ideology restrictions
-- Screen reader integration via clipboard announcements
+- Direct screen reader output via Tolk library
 - Audio feedback using RimWorld's built-in sounds
 
 Information Announced:
