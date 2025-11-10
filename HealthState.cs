@@ -20,21 +20,21 @@ namespace RimWorldAccess
             // Check if we're in-game
             if (Current.ProgramState != ProgramState.Playing)
             {
-                ClipboardHelper.CopyToClipboard("Not in game");
+                TolkHelper.Speak("Not in game");
                 return;
             }
 
             // Check if there's a current map
             if (Find.CurrentMap == null)
             {
-                ClipboardHelper.CopyToClipboard("No map loaded");
+                TolkHelper.Speak("No map loaded");
                 return;
             }
 
             // Check if map navigation is initialized
             if (!MapNavigationState.IsInitialized)
             {
-                ClipboardHelper.CopyToClipboard("Map navigation not initialized");
+                TolkHelper.Speak("Map navigation not initialized");
                 return;
             }
 
@@ -44,7 +44,7 @@ namespace RimWorldAccess
             // Validate cursor position
             if (!cursorPosition.IsValid || !cursorPosition.InBounds(Find.CurrentMap))
             {
-                ClipboardHelper.CopyToClipboard("Invalid cursor position");
+                TolkHelper.Speak("Invalid cursor position");
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace RimWorldAccess
 
             if (pawnsAtPosition.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No pawn at cursor position");
+                TolkHelper.Speak("No pawn at cursor position");
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace RimWorldAccess
             string healthInfo = PawnInfoHelper.GetHealthInfo(pawnAtCursor);
 
             // Copy to clipboard for screen reader
-            ClipboardHelper.CopyToClipboard(healthInfo);
+            TolkHelper.Speak(healthInfo);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace RimWorldAccess
         {
             if (bed == null)
             {
-                ClipboardHelper.CopyToClipboard("No bed to configure");
+                TolkHelper.Speak("No bed to configure");
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace RimWorldAccess
             if (currentMenuLevel == MenuLevel.MainMenu)
             {
                 Close();
-                ClipboardHelper.CopyToClipboard("Bed menu closed");
+                TolkHelper.Speak("Bed menu closed");
             }
             else
             {
@@ -202,7 +202,7 @@ namespace RimWorldAccess
                 announcement += $" - {menuOptions[selectedIndex]}";
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         private static void ExecuteMainMenuOption()
@@ -228,7 +228,7 @@ namespace RimWorldAccess
                     break;
                 case "Close menu":
                     Close();
-                    ClipboardHelper.CopyToClipboard("Bed menu closed");
+                    TolkHelper.Speak("Bed menu closed");
                     break;
             }
         }
@@ -242,7 +242,7 @@ namespace RimWorldAccess
             CompAssignableToPawn_Bed comp = selectedBed.CompAssignableToPawn as CompAssignableToPawn_Bed;
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Cannot assign pawns to this bed");
+                TolkHelper.Speak("Cannot assign pawns to this bed", SpeechPriority.High);
                 return;
             }
 
@@ -251,7 +251,7 @@ namespace RimWorldAccess
 
             if (candidatePawns.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No available pawns to assign");
+                TolkHelper.Speak("No available pawns to assign");
                 return;
             }
 
@@ -282,7 +282,7 @@ namespace RimWorldAccess
             selectedIndex = 0;
 
             // Announce first option
-            ClipboardHelper.CopyToClipboard($"Assign pawn - {menuOptions[0]}");
+            TolkHelper.Speak($"Assign pawn - {menuOptions[0]}");
         }
 
         private static void ExecuteAssignMenuOption()
@@ -295,20 +295,20 @@ namespace RimWorldAccess
 
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Cannot assign pawn");
+                TolkHelper.Speak("Cannot assign pawn", SpeechPriority.High);
                 return;
             }
 
             // Check if pawn can be assigned
             if (!comp.CanAssignTo(selectedPawn))
             {
-                ClipboardHelper.CopyToClipboard($"Cannot assign {selectedPawn.LabelShort} to this bed");
+                TolkHelper.Speak($"Cannot assign {selectedPawn.LabelShort} to this bed", SpeechPriority.High);
                 return;
             }
 
             if (comp.IdeoligionForbids(selectedPawn))
             {
-                ClipboardHelper.CopyToClipboard($"Ideology forbids {selectedPawn.LabelShort} from using this bed");
+                TolkHelper.Speak($"Ideology forbids {selectedPawn.LabelShort} from using this bed");
                 return;
             }
 
@@ -318,11 +318,11 @@ namespace RimWorldAccess
             // Check if assignment succeeded
             if (comp.AssignedPawnsForReading.Contains(selectedPawn))
             {
-                ClipboardHelper.CopyToClipboard($"{selectedPawn.LabelShort} assigned to {selectedBed.LabelCap}");
+                TolkHelper.Speak($"{selectedPawn.LabelShort} assigned to {selectedBed.LabelCap}");
             }
             else
             {
-                ClipboardHelper.CopyToClipboard($"Failed to assign {selectedPawn.LabelShort}");
+                TolkHelper.Speak($"Failed to assign {selectedPawn.LabelShort}", SpeechPriority.High);
             }
 
             // Go back to main menu
@@ -340,7 +340,7 @@ namespace RimWorldAccess
             CompAssignableToPawn_Bed comp = selectedBed.CompAssignableToPawn as CompAssignableToPawn_Bed;
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Cannot unassign pawns from this bed");
+                TolkHelper.Speak("Cannot unassign pawns from this bed", SpeechPriority.High);
                 return;
             }
 
@@ -349,7 +349,7 @@ namespace RimWorldAccess
 
             if (assignedPawns.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No pawns assigned to this bed");
+                TolkHelper.Speak("No pawns assigned to this bed");
                 return;
             }
 
@@ -364,7 +364,7 @@ namespace RimWorldAccess
             selectedIndex = 0;
 
             // Announce first option
-            ClipboardHelper.CopyToClipboard($"Unassign pawn - {menuOptions[0]}");
+            TolkHelper.Speak($"Unassign pawn - {menuOptions[0]}");
         }
 
         private static void ExecuteUnassignMenuOption()
@@ -377,7 +377,7 @@ namespace RimWorldAccess
 
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Cannot unassign pawn");
+                TolkHelper.Speak("Cannot unassign pawn", SpeechPriority.High);
                 return;
             }
 
@@ -387,11 +387,11 @@ namespace RimWorldAccess
             // Check if unassignment succeeded
             if (!comp.AssignedPawnsForReading.Contains(selectedPawn))
             {
-                ClipboardHelper.CopyToClipboard($"{selectedPawn.LabelShort} unassigned from {selectedBed.LabelCap}");
+                TolkHelper.Speak($"{selectedPawn.LabelShort} unassigned from {selectedBed.LabelCap}");
             }
             else
             {
-                ClipboardHelper.CopyToClipboard($"Failed to unassign {selectedPawn.LabelShort}");
+                TolkHelper.Speak($"Failed to unassign {selectedPawn.LabelShort}", SpeechPriority.High);
             }
 
             // Go back to main menu
@@ -423,7 +423,7 @@ namespace RimWorldAccess
                 selectedIndex = 0;
 
             // Announce current selection
-            ClipboardHelper.CopyToClipboard($"Change bed type - {menuOptions[selectedIndex]} (current)");
+            TolkHelper.Speak($"Change bed type - {menuOptions[selectedIndex]} (current)");
         }
 
         private static void ExecuteBedTypeMenuOption()
@@ -452,7 +452,7 @@ namespace RimWorldAccess
                 Room room = selectedBed.GetRoom();
                 if (room == null || !Building_Bed.RoomCanBePrisonCell(room))
                 {
-                    ClipboardHelper.CopyToClipboard("Cannot set bed for prisoners - not in an enclosed room. Build walls around the bed first.");
+                    TolkHelper.Speak("Cannot set bed for prisoners - not in an enclosed room. Build walls around the bed first.", SpeechPriority.High);
                     return;
                 }
             }
@@ -470,7 +470,7 @@ namespace RimWorldAccess
                 selectedBed.ForPrisoners = (newOwnerType == BedOwnerType.Prisoner);
             }
 
-            ClipboardHelper.CopyToClipboard($"Bed type changed to: {menuOptions[selectedIndex]}");
+            TolkHelper.Speak($"Bed type changed to: {menuOptions[selectedIndex]}");
 
             // Go back to main menu
             currentMenuLevel = MenuLevel.MainMenu;
@@ -491,7 +491,7 @@ namespace RimWorldAccess
             selectedBed.Medical = !selectedBed.Medical;
 
             string status = selectedBed.Medical ? "Medical" : "Not medical";
-            ClipboardHelper.CopyToClipboard($"Bed medical status: {status}");
+            TolkHelper.Speak($"Bed medical status: {status}");
 
             // Rebuild main menu to reflect changes
             BuildMainMenu();
@@ -523,7 +523,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard($"{prefix}{menuOptions[selectedIndex]}");
+            TolkHelper.Speak($"{prefix}{menuOptions[selectedIndex]}");
         }
 
         #endregion

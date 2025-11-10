@@ -25,7 +25,7 @@ namespace RimWorldAccess
             onConfirm = confirmAction;
 
             // Announce the confirmation prompt
-            ClipboardHelper.CopyToClipboard(message + " - Press Enter to confirm, Escape to cancel");
+            TolkHelper.Speak(message + " - Press Enter to confirm, Escape to cancel");
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace RimWorldAccess
                 return;
 
             Close();
-            ClipboardHelper.CopyToClipboard("Cancelled");
+            TolkHelper.Speak("Cancelled");
 
             // Reopen the pause menu
             WindowlessPauseMenuState.Open();

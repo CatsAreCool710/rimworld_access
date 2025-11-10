@@ -57,7 +57,7 @@ namespace RimWorldAccess
             selectedCells.Clear();
             
             string zoneName = GetZoneTypeName(zoneType);
-            ClipboardHelper.CopyToClipboard($"Creating {zoneName}. Press Space to select tiles, Enter to confirm, Escape to cancel");
+            TolkHelper.Speak($"Creating {zoneName}. Press Space to select tiles, Enter to confirm, Escape to cancel");
             MelonLoader.MelonLogger.Msg($"Entered zone creation mode: {zoneName}");
         }
 
@@ -69,11 +69,11 @@ namespace RimWorldAccess
             if (!selectedCells.Contains(cell))
             {
                 selectedCells.Add(cell);
-                ClipboardHelper.CopyToClipboard($"Selected, {cell.x}, {cell.z}");
+                TolkHelper.Speak($"Selected, {cell.x}, {cell.z}");
             }
             else
             {
-                ClipboardHelper.CopyToClipboard($"Already selected, {cell.x}, {cell.z}");
+                TolkHelper.Speak($"Already selected, {cell.x}, {cell.z}");
             }
         }
 
@@ -84,7 +84,7 @@ namespace RimWorldAccess
         {
             if (selectedCells.Remove(cell))
             {
-                ClipboardHelper.CopyToClipboard($"Deselected, {cell.x}, {cell.z}");
+                TolkHelper.Speak($"Deselected, {cell.x}, {cell.z}");
             }
         }
 
@@ -103,7 +103,7 @@ namespace RimWorldAccess
         {
             if (selectedCells.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No cells selected. Zone not created.");
+                TolkHelper.Speak("No cells selected. Zone not created.");
                 Cancel();
                 return;
             }
@@ -148,18 +148,18 @@ namespace RimWorldAccess
                         }
                     }
 
-                    ClipboardHelper.CopyToClipboard($"{zoneName} created with {selectedCells.Count} cells");
+                    TolkHelper.Speak($"{zoneName} created with {selectedCells.Count} cells");
                     MelonLoader.MelonLogger.Msg($"Created {zoneName} with {selectedCells.Count} cells");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Failed to create zone");
+                    TolkHelper.Speak("Failed to create zone", SpeechPriority.High);
                     MelonLoader.MelonLogger.Error("Failed to create zone: newZone was null");
                 }
             }
             catch (System.Exception ex)
             {
-                ClipboardHelper.CopyToClipboard($"Error creating zone: {ex.Message}");
+                TolkHelper.Speak($"Error creating zone: {ex.Message}", SpeechPriority.High);
                 MelonLoader.MelonLogger.Error($"Error creating zone: {ex}");
             }
             finally
@@ -173,7 +173,7 @@ namespace RimWorldAccess
         /// </summary>
         public static void Cancel()
         {
-            ClipboardHelper.CopyToClipboard("Zone creation cancelled");
+            TolkHelper.Speak("Zone creation cancelled");
             MelonLoader.MelonLogger.Msg("Zone creation cancelled");
             Reset();
         }

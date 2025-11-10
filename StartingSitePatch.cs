@@ -26,7 +26,7 @@ namespace RimWorldAccess
                 if (!hasAnnouncedTitle)
                 {
                     string pageTitle = "Select Starting Site";
-                    ClipboardHelper.CopyToClipboard($"{pageTitle} - Arrow keys to navigate, Control+arrows to jump by biome, Space for basic info, I for detailed info menu, F for factions, Enter to validate selection");
+                    TolkHelper.Speak($"{pageTitle} - Arrow keys to navigate, Control+arrows to jump by biome, Space for basic info, I for detailed info menu, F for factions, Enter to validate selection");
                     hasAnnouncedTitle = true;
                 }
 
@@ -77,7 +77,7 @@ namespace RimWorldAccess
                     {
                         // Open factions tab
                         Find.WindowStack.Add(new Dialog_FactionDuringLanding());
-                        ClipboardHelper.CopyToClipboard("Opened faction relations dialog.");
+                        TolkHelper.Speak("Opened faction relations dialog.");
                         Event.current.Use();
                         patchActive = true;
                     }
@@ -213,7 +213,7 @@ namespace RimWorldAccess
             PlanetTile tile = Find.WorldInterface.SelectedTile;
             if (!tile.Valid)
             {
-                ClipboardHelper.CopyToClipboard("No tile selected. Use arrow keys to navigate to a tile first.");
+                TolkHelper.Speak("No tile selected. Use arrow keys to navigate to a tile first.");
                 return false; // Don't proceed
             }
 
@@ -225,7 +225,7 @@ namespace RimWorldAccess
             {
                 // Tile is invalid - explain why and don't proceed
                 string errorMessage = "Cannot settle here: " + reason.ToString();
-                ClipboardHelper.CopyToClipboard(errorMessage);
+                TolkHelper.Speak(errorMessage, SpeechPriority.High);
                 return false; // Skip original method - don't advance
             }
 

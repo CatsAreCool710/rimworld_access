@@ -76,7 +76,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     StorageSettingsMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed storage settings menu");
+                    TolkHelper.Speak("Closed storage settings menu");
                     Event.current.Use();
                     break;
             }
@@ -114,14 +114,14 @@ namespace RimWorldAccess
                     if (RangeEditMenuState.ApplyAndClose(out var hitPoints, out var quality))
                     {
                         StorageSettingsMenuState.ApplyRangeChanges(hitPoints, quality);
-                        ClipboardHelper.CopyToClipboard("Applied range changes");
+                        TolkHelper.Speak("Applied range changes");
                     }
                     Event.current.Use();
                     break;
 
                 case KeyCode.Escape:
                     RangeEditMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Cancelled range editing");
+                    TolkHelper.Speak("Cancelled range editing");
                     Event.current.Use();
                     break;
             }
@@ -151,7 +151,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     PlantSelectionMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed plant selection menu");
+                    TolkHelper.Speak("Closed plant selection menu");
                     Event.current.Use();
                     break;
             }

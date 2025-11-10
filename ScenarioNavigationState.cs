@@ -76,7 +76,7 @@ namespace RimWorldAccess
             string categoryPrefix = GetCategoryPrefix(selected);
             string text = $"{categoryPrefix}{selected.name} - {selected.summary}";
 
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static string GetCategoryPrefix(Scenario scenario)

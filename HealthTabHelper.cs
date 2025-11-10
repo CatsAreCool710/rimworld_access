@@ -102,14 +102,14 @@ namespace RimWorldAccess
                     return false;
 
                 pawn.foodRestriction.CurrentFoodPolicy = restriction;
-                ClipboardHelper.CopyToClipboard($"Food restriction set to: {restriction.label}");
+                TolkHelper.Speak($"Food restriction set to: {restriction.label}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error setting food restriction: {ex}");
-                ClipboardHelper.CopyToClipboard("Error setting food restriction");
+                TolkHelper.Speak("Error setting food restriction", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -147,14 +147,14 @@ namespace RimWorldAccess
                     return false;
 
                 pawn.playerSettings.medCare = care;
-                ClipboardHelper.CopyToClipboard($"Medical care set to: {care.GetLabel()}");
+                TolkHelper.Speak($"Medical care set to: {care.GetLabel()}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error setting medical care: {ex}");
-                ClipboardHelper.CopyToClipboard("Error setting medical care");
+                TolkHelper.Speak("Error setting medical care", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -183,14 +183,14 @@ namespace RimWorldAccess
 
                 pawn.playerSettings.selfTend = !pawn.playerSettings.selfTend;
                 string status = pawn.playerSettings.selfTend ? "enabled" : "disabled";
-                ClipboardHelper.CopyToClipboard($"Self-tend {status}");
+                TolkHelper.Speak($"Self-tend {status}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error toggling self-tend: {ex}");
-                ClipboardHelper.CopyToClipboard("Error toggling self-tend");
+                TolkHelper.Speak("Error toggling self-tend", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -465,14 +465,14 @@ namespace RimWorldAccess
                 // THEN set the body part (must be done after adding to stack)
                 bill.Part = part;
 
-                ClipboardHelper.CopyToClipboard($"Added operation: {recipe.LabelCap.ToString().StripTags()}");
+                TolkHelper.Speak($"Added operation: {recipe.LabelCap.ToString().StripTags()}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error adding operation: {ex}");
-                ClipboardHelper.CopyToClipboard("Error adding operation");
+                TolkHelper.Speak("Error adding operation", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -489,14 +489,14 @@ namespace RimWorldAccess
                     return false;
 
                 pawn.BillStack.Delete(bill);
-                ClipboardHelper.CopyToClipboard($"Removed operation: {bill.LabelCap.ToString().StripTags()}");
+                TolkHelper.Speak($"Removed operation: {bill.LabelCap.ToString().StripTags()}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error removing operation: {ex}");
-                ClipboardHelper.CopyToClipboard("Error removing operation");
+                TolkHelper.Speak("Error removing operation", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }

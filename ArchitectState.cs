@@ -96,7 +96,7 @@ namespace RimWorldAccess
             selectedMaterial = null;
             selectedCells.Clear();
 
-            ClipboardHelper.CopyToClipboard("Architect menu opened. Select a category");
+            TolkHelper.Speak("Architect menu opened. Select a category");
             MelonLoader.MelonLogger.Msg("Entered architect category selection");
         }
 
@@ -112,7 +112,7 @@ namespace RimWorldAccess
             selectedMaterial = null;
             selectedCells.Clear();
 
-            ClipboardHelper.CopyToClipboard($"{category.LabelCap} category selected. Choose a tool");
+            TolkHelper.Speak($"{category.LabelCap} category selected. Choose a tool");
             MelonLoader.MelonLogger.Msg($"Entered tool selection for category: {category.defName}");
         }
 
@@ -127,7 +127,7 @@ namespace RimWorldAccess
             selectedMaterial = null;
             selectedCells.Clear();
 
-            ClipboardHelper.CopyToClipboard($"Select material for {buildable.label}");
+            TolkHelper.Speak($"Select material for {buildable.label}");
             MelonLoader.MelonLogger.Msg($"Entered material selection for: {buildable.defName}");
         }
 
@@ -161,7 +161,7 @@ namespace RimWorldAccess
 
             string toolName = designator.Label;
             string announcement = GetPlacementAnnouncement(designator);
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             MelonLoader.MelonLogger.Msg($"Entered placement mode with designator: {toolName}");
         }
 
@@ -184,7 +184,7 @@ namespace RimWorldAccess
 
             // Announce new rotation and spatial info
             string announcement = GetRotationAnnouncement(buildDesignator);
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             MelonLoader.MelonLogger.Msg($"Rotated building to: {currentRotation}");
         }
 
@@ -390,19 +390,19 @@ namespace RimWorldAccess
             {
                 // Remove cell
                 selectedCells.Remove(cell);
-                ClipboardHelper.CopyToClipboard($"Deselected, {cell.x}, {cell.z}");
+                TolkHelper.Speak($"Deselected, {cell.x}, {cell.z}");
             }
             else if (report.Accepted)
             {
                 // Add cell
                 selectedCells.Add(cell);
-                ClipboardHelper.CopyToClipboard($"Selected, {cell.x}, {cell.z}");
+                TolkHelper.Speak($"Selected, {cell.x}, {cell.z}");
             }
             else
             {
                 // Cannot designate this cell
                 string reason = report.Reason ?? "Cannot designate here";
-                ClipboardHelper.CopyToClipboard($"Invalid: {reason}");
+                TolkHelper.Speak($"Invalid: {reason}");
             }
         }
 
@@ -413,7 +413,7 @@ namespace RimWorldAccess
         {
             if (selectedDesignator == null || selectedCells.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No tiles selected");
+                TolkHelper.Speak("No tiles selected");
                 Cancel();
                 return;
             }
@@ -424,12 +424,12 @@ namespace RimWorldAccess
                 selectedDesignator.DesignateMultiCell(selectedCells);
 
                 string toolName = selectedDesignator.Label;
-                ClipboardHelper.CopyToClipboard($"{toolName} placed on {selectedCells.Count} tiles");
+                TolkHelper.Speak($"{toolName} placed on {selectedCells.Count} tiles");
                 MelonLoader.MelonLogger.Msg($"Executed placement: {toolName} on {selectedCells.Count} tiles");
             }
             catch (System.Exception ex)
             {
-                ClipboardHelper.CopyToClipboard($"Error placing designation: {ex.Message}");
+                TolkHelper.Speak($"Error placing designation: {ex.Message}", SpeechPriority.High);
                 MelonLoader.MelonLogger.Error($"Error in ExecutePlacement: {ex}");
             }
             finally
@@ -446,13 +446,13 @@ namespace RimWorldAccess
             if (currentMode == ArchitectMode.PlacementMode)
             {
                 // Return to category selection
-                ClipboardHelper.CopyToClipboard("Placement cancelled");
+                TolkHelper.Speak("Placement cancelled");
                 EnterCategorySelection();
             }
             else
             {
                 // Exit architect mode entirely
-                ClipboardHelper.CopyToClipboard("Architect menu closed");
+                TolkHelper.Speak("Architect menu closed");
                 Reset();
             }
         }

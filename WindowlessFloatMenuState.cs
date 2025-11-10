@@ -48,7 +48,7 @@ namespace RimWorldAccess
                 {
                     optionText += " (unavailable)";
                 }
-                ClipboardHelper.CopyToClipboard(optionText);
+                TolkHelper.Speak(optionText);
             }
         }
 
@@ -91,7 +91,7 @@ namespace RimWorldAccess
                 {
                     optionText += " (unavailable)";
                 }
-                ClipboardHelper.CopyToClipboard(optionText);
+                TolkHelper.Speak(optionText);
             }
         }
 
@@ -124,7 +124,7 @@ namespace RimWorldAccess
                 {
                     optionText += " (unavailable)";
                 }
-                ClipboardHelper.CopyToClipboard(optionText);
+                TolkHelper.Speak(optionText);
             }
         }
 
@@ -143,7 +143,7 @@ namespace RimWorldAccess
 
             if (selectedOption.Disabled)
             {
-                ClipboardHelper.CopyToClipboard(selectedOption.Label + " - unavailable");
+                TolkHelper.Speak(selectedOption.Label + " - unavailable");
                 return;
             }
 

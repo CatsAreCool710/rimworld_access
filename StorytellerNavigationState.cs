@@ -129,7 +129,7 @@ namespace RimWorldAccess
             if (storyteller == null) return;
 
             string text = $"Storyteller: {storyteller.label} - {storyteller.description}";
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static void CopyDifficultyToClipboard()
@@ -148,7 +148,7 @@ namespace RimWorldAccess
                 text += $" - {difficulty.description}";
             }
 
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static void CopyPermadeathToClipboard()
@@ -159,7 +159,7 @@ namespace RimWorldAccess
                 : "Can reload saves anytime";
 
             string text = $"{mode} - {description}";
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         public static int StorytellerCount => storytellers.Count;

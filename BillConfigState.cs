@@ -247,7 +247,7 @@ namespace RimWorldAccess
 
             if (isEditing)
             {
-                ClipboardHelper.CopyToClipboard("Finish editing first (press Enter or Escape)");
+                TolkHelper.Speak("Finish editing first (press Enter or Escape)");
                 return;
             }
 
@@ -262,7 +262,7 @@ namespace RimWorldAccess
 
             if (isEditing)
             {
-                ClipboardHelper.CopyToClipboard("Finish editing first (press Enter or Escape)");
+                TolkHelper.Speak("Finish editing first (press Enter or Escape)");
                 return;
             }
 
@@ -279,7 +279,7 @@ namespace RimWorldAccess
 
             if (!item.isEditable)
             {
-                ClipboardHelper.CopyToClipboard("This item cannot be adjusted");
+                TolkHelper.Speak("This item cannot be adjusted", SpeechPriority.High);
                 return;
             }
 
@@ -310,7 +310,7 @@ namespace RimWorldAccess
                     break;
 
                 default:
-                    ClipboardHelper.CopyToClipboard("Use Enter to open submenu");
+                    TolkHelper.Speak("Use Enter to open submenu");
                     break;
             }
         }
@@ -327,7 +327,7 @@ namespace RimWorldAccess
                 case MenuItemType.SuspendToggle:
                     bill.suspended = !bill.suspended;
                     BuildMenuItems();
-                    ClipboardHelper.CopyToClipboard(bill.suspended ? "Bill paused" : "Bill resumed");
+                    TolkHelper.Speak(bill.suspended ? "Bill paused" : "Bill resumed");
                     AnnounceCurrentSelection();
                     break;
 
@@ -348,7 +348,7 @@ namespace RimWorldAccess
                     break;
 
                 default:
-                    ClipboardHelper.CopyToClipboard("Use left/right arrows to adjust");
+                    TolkHelper.Speak("Use left/right arrows to adjust");
                     break;
             }
         }
@@ -380,7 +380,7 @@ namespace RimWorldAccess
             bill.repeatCount = Mathf.Max(1, bill.repeatCount + step);
 
             menuItems[selectedIndex].label = GetRepeatCountLabel();
-            ClipboardHelper.CopyToClipboard(menuItems[selectedIndex].label);
+            TolkHelper.Speak(menuItems[selectedIndex].label);
         }
 
         private static void AdjustTargetCount(int direction)
@@ -395,7 +395,7 @@ namespace RimWorldAccess
             }
 
             menuItems[selectedIndex].label = GetTargetCountLabel();
-            ClipboardHelper.CopyToClipboard(menuItems[selectedIndex].label);
+            TolkHelper.Speak(menuItems[selectedIndex].label);
         }
 
         private static void AdjustUnpauseAt(int direction)
@@ -404,7 +404,7 @@ namespace RimWorldAccess
             bill.unpauseWhenYouHave = Mathf.Clamp(bill.unpauseWhenYouHave + step, 0, bill.targetCount - 1);
 
             menuItems[selectedIndex].label = GetUnpauseAtLabel();
-            ClipboardHelper.CopyToClipboard(menuItems[selectedIndex].label);
+            TolkHelper.Speak(menuItems[selectedIndex].label);
         }
 
         private static void AdjustSkillRange(int direction)
@@ -452,7 +452,7 @@ namespace RimWorldAccess
             }
 
             menuItems[selectedIndex].label = GetSkillRangeLabel();
-            ClipboardHelper.CopyToClipboard(menuItems[selectedIndex].label);
+            TolkHelper.Speak(menuItems[selectedIndex].label);
         }
 
         private static void AdjustIngredientRadius(int direction)
@@ -477,7 +477,7 @@ namespace RimWorldAccess
             }
 
             menuItems[selectedIndex].label = GetIngredientRadiusLabel();
-            ClipboardHelper.CopyToClipboard(menuItems[selectedIndex].label);
+            TolkHelper.Speak(menuItems[selectedIndex].label);
         }
 
         #endregion
@@ -493,7 +493,7 @@ namespace RimWorldAccess
             {
                 bill.SetStoreMode(BillStoreModeDefOf.DropOnFloor);
                 BuildMenuItems();
-                ClipboardHelper.CopyToClipboard("Store mode: Drop on floor");
+                TolkHelper.Speak("Store mode: Drop on floor");
                 AnnounceCurrentSelection();
             }));
 
@@ -502,7 +502,7 @@ namespace RimWorldAccess
             {
                 bill.SetStoreMode(BillStoreModeDefOf.BestStockpile);
                 BuildMenuItems();
-                ClipboardHelper.CopyToClipboard("Store mode: Best stockpile");
+                TolkHelper.Speak("Store mode: Best stockpile");
                 AnnounceCurrentSelection();
             }));
 
@@ -520,7 +520,7 @@ namespace RimWorldAccess
                     {
                         bill.SetStoreMode(BillStoreModeDefOf.SpecificStockpile, localGroup);
                         BuildMenuItems();
-                        ClipboardHelper.CopyToClipboard($"Store mode: {stockpile.label}");
+                        TolkHelper.Speak($"Store mode: {stockpile.label}");
                         AnnounceCurrentSelection();
                     }));
                 }
@@ -538,7 +538,7 @@ namespace RimWorldAccess
             {
                 bill.SetPawnRestriction(null);
                 menuItems[selectedIndex].label = GetPawnRestrictionLabel();
-                ClipboardHelper.CopyToClipboard("Worker: Anyone");
+                TolkHelper.Speak("Worker: Anyone");
             }));
 
             // Get all colonists and sort by skill
@@ -565,7 +565,7 @@ namespace RimWorldAccess
                 {
                     bill.SetPawnRestriction(localPawn);
                     menuItems[selectedIndex].label = GetPawnRestrictionLabel();
-                    ClipboardHelper.CopyToClipboard($"Worker: {localPawn.LabelShortCap}");
+                    TolkHelper.Speak($"Worker: {localPawn.LabelShortCap}");
                 }));
             }
 
@@ -581,7 +581,7 @@ namespace RimWorldAccess
         {
             string billLabel = bill.LabelCap;
             bill.billStack.Delete(bill);
-            ClipboardHelper.CopyToClipboard($"Deleted bill: {billLabel}");
+            TolkHelper.Speak($"Deleted bill: {billLabel}");
             Close();
 
             // Go back to bills menu
@@ -598,7 +598,7 @@ namespace RimWorldAccess
             if (selectedIndex >= 0 && selectedIndex < menuItems.Count)
             {
                 MenuItem item = menuItems[selectedIndex];
-                ClipboardHelper.CopyToClipboard(item.label);
+                TolkHelper.Speak(item.label);
             }
         }
     }

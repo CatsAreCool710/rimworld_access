@@ -27,7 +27,7 @@ namespace RimWorldAccess
         {
             if (Find.CurrentMap == null)
             {
-                ClipboardHelper.CopyToClipboard("No map loaded");
+                TolkHelper.Speak("No map loaded");
                 return;
             }
 
@@ -36,7 +36,7 @@ namespace RimWorldAccess
 
             if (animalsList.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No colony animals found");
+                TolkHelper.Speak("No colony animals found");
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace RimWorldAccess
             activeSubmenu = SubmenuType.None;
             animalsList.Clear();
             SoundDefOf.TabClose.PlayOneShotOnCamera();
-            ClipboardHelper.CopyToClipboard("Animals menu closed");
+            TolkHelper.Speak("Animals menu closed");
         }
 
         public static void HandleInput()
@@ -165,7 +165,7 @@ namespace RimWorldAccess
                 announcement = $"{columnName}: {columnValue}";
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         private static void InteractWithCurrentCell()
@@ -251,7 +251,7 @@ namespace RimWorldAccess
 
                 if (isBonded)
                 {
-                    ClipboardHelper.CopyToClipboard($"{pawn.Name.ToStringShort} is bonded. Marking for slaughter anyway.");
+                    TolkHelper.Speak($"{pawn.Name.ToStringShort} is bonded. Marking for slaughter anyway.");
                 }
 
                 // Add slaughter designation
@@ -270,7 +270,7 @@ namespace RimWorldAccess
             AcceptanceReport canTrain = pawn.training.CanAssignToTrain(trainable);
             if (!canTrain.Accepted)
             {
-                ClipboardHelper.CopyToClipboard($"{pawn.Name.ToStringShort} cannot be trained in {trainable.LabelCap}");
+                TolkHelper.Speak($"{pawn.Name.ToStringShort} cannot be trained in {trainable.LabelCap}", SpeechPriority.High);
                 return;
             }
 
@@ -515,7 +515,7 @@ namespace RimWorldAccess
             }
 
             string announcement = $"{optionText} ({submenuSelectedIndex + 1}/{submenuOptions.Count})";
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         private static void ApplySubmenuSelection()
@@ -606,7 +606,7 @@ namespace RimWorldAccess
             string columnName = AnimalsMenuHelper.GetColumnName(sortColumnIndex);
 
             SoundDefOf.Click.PlayOneShotOnCamera();
-            ClipboardHelper.CopyToClipboard($"Sorted by {columnName} ({direction})");
+            TolkHelper.Speak($"Sorted by {columnName} ({direction})");
 
             // Announce current cell after sorting (include animal name since position may have changed)
             AnnounceCurrentCell(includeAnimalName: true);

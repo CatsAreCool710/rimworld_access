@@ -27,14 +27,14 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to configure");
+                TolkHelper.Speak("No building to configure");
                 return;
             }
 
             CompRefuelable comp = targetBuilding.TryGetComp<CompRefuelable>();
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Building does not have fuel system");
+                TolkHelper.Speak("Building does not have fuel system");
                 return;
             }
 
@@ -114,13 +114,13 @@ namespace RimWorldAccess
             // Check if auto-refuel toggle is available for this building
             if (!refuelable.Props.showAllowAutoRefuelToggle)
             {
-                ClipboardHelper.CopyToClipboard("Auto-refuel not available for this building");
+                TolkHelper.Speak("Auto-refuel not available for this building", SpeechPriority.High);
                 return;
             }
 
             refuelable.allowAutoRefuel = !refuelable.allowAutoRefuel;
             string status = refuelable.allowAutoRefuel ? "enabled" : "disabled";
-            ClipboardHelper.CopyToClipboard($"Auto-refuel {status}");
+            TolkHelper.Speak($"Auto-refuel {status}");
             SoundDefOf.Checkbox_TurnedOn.PlayOneShotOnCamera();
         }
 
@@ -134,7 +134,7 @@ namespace RimWorldAccess
 
             if (!refuelable.Props.targetFuelLevelConfigurable)
             {
-                ClipboardHelper.CopyToClipboard("Target fuel level cannot be configured");
+                TolkHelper.Speak("Target fuel level cannot be configured", SpeechPriority.High);
                 return;
             }
 
@@ -153,7 +153,7 @@ namespace RimWorldAccess
 
             if (!refuelable.Props.targetFuelLevelConfigurable)
             {
-                ClipboardHelper.CopyToClipboard("Target fuel level cannot be configured");
+                TolkHelper.Speak("Target fuel level cannot be configured", SpeechPriority.High);
                 return;
             }
 
@@ -168,7 +168,7 @@ namespace RimWorldAccess
                 return;
 
             float percent = (refuelable.TargetFuelLevel / refuelable.Props.fuelCapacity) * 100f;
-            ClipboardHelper.CopyToClipboard(
+            TolkHelper.Speak(
                 $"Target fuel: {refuelable.TargetFuelLevel:F1}/{refuelable.Props.fuelCapacity:F1} ({percent:F0}%)");
         }
 
@@ -181,11 +181,11 @@ namespace RimWorldAccess
             {
                 string help = "Use Left/Right arrows to adjust target fuel level. " +
                              $"Current: {refuelable.TargetFuelLevel:F1}/{refuelable.Props.fuelCapacity:F1}";
-                ClipboardHelper.CopyToClipboard(help);
+                TolkHelper.Speak(help);
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Target fuel level cannot be configured for this building");
+                TolkHelper.Speak("Target fuel level cannot be configured for this building", SpeechPriority.High);
             }
         }
 
@@ -214,7 +214,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard($"Option {currentOption + 1}/{optionCount}: {option}");
+            TolkHelper.Speak($"Option {currentOption + 1}/{optionCount}: {option}");
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace RimWorldAccess
                 announcement += $" - Auto-refuel: {autoRefuel}";
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace RimWorldAccess
                 details += $"\nWarning: {refuelable.Props.outOfFuelMessage}";
             }
 
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
     }
 }

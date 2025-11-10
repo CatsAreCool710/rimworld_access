@@ -287,13 +287,13 @@ namespace RimWorldAccess
             {
                 var range = currentFilter.AllowedQualityLevels;
                 string value = currentSliderPart == SliderPart.Min ? range.min.ToString() : range.max.ToString();
-                ClipboardHelper.CopyToClipboard($"{sliderName} - {partName}: {value}. Use Left/Right to adjust, Up/Down to switch Min/Max, Enter to confirm.");
+                TolkHelper.Speak($"{sliderName} - {partName}: {value}. Use Left/Right to adjust, Up/Down to switch Min/Max, Enter to confirm.");
             }
             else if (currentSliderMode == SliderMode.HitPoints)
             {
                 var range = currentFilter.AllowedHitPointsPercents;
                 string value = currentSliderPart == SliderPart.Min ? $"{range.min:P0}" : $"{range.max:P0}";
-                ClipboardHelper.CopyToClipboard($"{sliderName} - {partName}: {value}. Use Left/Right to adjust, Up/Down to switch Min/Max, Enter to confirm.");
+                TolkHelper.Speak($"{sliderName} - {partName}: {value}. Use Left/Right to adjust, Up/Down to switch Min/Max, Enter to confirm.");
             }
         }
 
@@ -342,7 +342,7 @@ namespace RimWorldAccess
                         bool newValue = !currentFilter.Allows(specialFilter);
                         currentFilter.SetAllow(specialFilter, newValue);
                         node.IsChecked = newValue;
-                        ClipboardHelper.CopyToClipboard($"{node.Label}: {(newValue ? "Allowed" : "Disallowed")}");
+                        TolkHelper.Speak($"{node.Label}: {(newValue ? "Allowed" : "Disallowed")}");
                     }
                     break;
 
@@ -356,7 +356,7 @@ namespace RimWorldAccess
                         currentFilter.SetAllow(category.catDef, newValue);
                         node.IsChecked = newValue;
                         RebuildNavigationList(); // Rebuild because children may change
-                        ClipboardHelper.CopyToClipboard($"{node.Label}: {(newValue ? "Allowed" : "Disallowed")}");
+                        TolkHelper.Speak($"{node.Label}: {(newValue ? "Allowed" : "Disallowed")}");
                     }
                     break;
 
@@ -367,7 +367,7 @@ namespace RimWorldAccess
                         bool newValue = !currentFilter.Allows(thingDef);
                         currentFilter.SetAllow(thingDef, newValue);
                         node.IsChecked = newValue;
-                        ClipboardHelper.CopyToClipboard($"{node.Label}: {(newValue ? "Allowed" : "Disallowed")}");
+                        TolkHelper.Speak($"{node.Label}: {(newValue ? "Allowed" : "Disallowed")}");
                     }
                     break;
 
@@ -394,7 +394,7 @@ namespace RimWorldAccess
                 int oldIndex = selectedIndex;
                 RebuildNavigationList();
                 selectedIndex = oldIndex; // Try to maintain position
-                ClipboardHelper.CopyToClipboard($"{node.Label}: {(node.IsExpanded ? "Expanded" : "Collapsed")}");
+                TolkHelper.Speak($"{node.Label}: {(node.IsExpanded ? "Expanded" : "Collapsed")}");
             }
         }
 
@@ -473,12 +473,12 @@ namespace RimWorldAccess
             if (sliderType == "Quality")
             {
                 var range = currentFilter.AllowedQualityLevels;
-                ClipboardHelper.CopyToClipboard($"Quality: {range.min} to {range.max}");
+                TolkHelper.Speak($"Quality: {range.min} to {range.max}");
             }
             else if (sliderType == "HitPoints")
             {
                 var range = currentFilter.AllowedHitPointsPercents;
-                ClipboardHelper.CopyToClipboard($"Hit Points: {range.min:P0} to {range.max:P0}");
+                TolkHelper.Speak($"Hit Points: {range.min:P0} to {range.max:P0}");
             }
         }
 
@@ -491,7 +491,7 @@ namespace RimWorldAccess
             {
                 currentFilter.SetAllowAll(null);
                 RebuildNavigationList();
-                ClipboardHelper.CopyToClipboard("Allowed all items");
+                TolkHelper.Speak("Allowed all items");
             }
         }
 
@@ -504,7 +504,7 @@ namespace RimWorldAccess
             {
                 currentFilter.SetDisallowAll();
                 RebuildNavigationList();
-                ClipboardHelper.CopyToClipboard("Disallowed all items");
+                TolkHelper.Speak("Disallowed all items");
             }
         }
 
@@ -515,7 +515,7 @@ namespace RimWorldAccess
         {
             if (flattenedNodes.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No items in filter");
+                TolkHelper.Speak("No items in filter");
                 return;
             }
 
@@ -558,7 +558,7 @@ namespace RimWorldAccess
                 status = " - Press Enter to execute";
             }
 
-            ClipboardHelper.CopyToClipboard($"{indent}{typeIcon} {node.Label}{status} - {selectedIndex + 1}/{flattenedNodes.Count}");
+            TolkHelper.Speak($"{indent}{typeIcon} {node.Label}{status} - {selectedIndex + 1}/{flattenedNodes.Count}");
         }
     }
 }

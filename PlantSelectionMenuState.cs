@@ -235,7 +235,7 @@ namespace RimWorldAccess
             // Check for warnings
             CheckAndWarnAboutPlant(plantDef);
 
-            ClipboardHelper.CopyToClipboard($"Selected: {selected.displayText}");
+            TolkHelper.Speak($"Selected: {selected.displayText}");
             MelonLoader.MelonLogger.Msg($"Set plant to: {plantDef.label}");
 
             Close();
@@ -247,7 +247,7 @@ namespace RimWorldAccess
             {
                 PlantOption current = availablePlants[selectedIndex];
                 string announcement = $"{current.displayText}. {current.detailedInfo}";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
         }
 
@@ -331,7 +331,7 @@ namespace RimWorldAccess
 
                     if (!hasMech)
                     {
-                        ClipboardHelper.CopyToClipboard($"WARNING: No colonist can plant {plantDef.label} (requires Plants skill {plantDef.plant.sowMinSkill})");
+                        TolkHelper.Speak($"WARNING: No colonist can plant {plantDef.label} (requires Plants skill {plantDef.plant.sowMinSkill})");
                     }
                 }
             }
@@ -356,7 +356,7 @@ namespace RimWorldAccess
 
                 if (problemCell.IsValid)
                 {
-                    ClipboardHelper.CopyToClipboard($"WARNING: {plantDef.LabelCap} is a cave plant but zone has cells exposed to light");
+                    TolkHelper.Speak($"WARNING: {plantDef.LabelCap} is a cave plant but zone has cells exposed to light");
                 }
             }
         }

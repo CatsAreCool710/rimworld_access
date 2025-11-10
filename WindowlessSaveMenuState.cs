@@ -132,7 +132,7 @@ namespace RimWorldAccess
             // In save mode, index 0 is "Create New Save" which can't be deleted
             if (currentMode == SaveLoadMode.Save && selectedIndex == 0)
             {
-                ClipboardHelper.CopyToClipboard("Cannot delete 'Create New Save' option");
+                TolkHelper.Speak("Cannot delete 'Create New Save' option", SpeechPriority.High);
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace RimWorldAccess
             string fileName = Path.GetFileNameWithoutExtension(selectedFile.FileName);
 
             // Open confirmation
-            ClipboardHelper.CopyToClipboard($"Delete {fileName}? Press Enter to confirm, Escape to cancel");
+            TolkHelper.Speak($"Delete {fileName}? Press Enter to confirm, Escape to cancel");
             WindowlessDeleteConfirmationState.Open(selectedFile.FileInfo, () => {
                 // After deletion, reload and reopen this menu
                 ReloadFiles();
@@ -184,13 +184,13 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Invalid save selection");
+                TolkHelper.Speak("Invalid save selection");
                 return;
             }
 
             if (string.IsNullOrEmpty(saveName))
             {
-                ClipboardHelper.CopyToClipboard("Need a name for the save file");
+                TolkHelper.Speak("Need a name for the save file");
                 return;
             }
 
@@ -208,14 +208,14 @@ namespace RimWorldAccess
             Messages.Message("SavedAs".Translate(saveName), MessageTypeDefOf.SilentInput, historical: false);
             PlayerKnowledgeDatabase.Save();
 
-            ClipboardHelper.CopyToClipboard($"Saved as {saveName}");
+            TolkHelper.Speak($"Saved as {saveName}");
         }
 
         private static void ExecuteLoad()
         {
             if (saveFiles == null || saveFiles.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No save files available");
+                TolkHelper.Speak("No save files available");
                 return;
             }
 
@@ -234,7 +234,7 @@ namespace RimWorldAccess
                 GameDataSaveLoader.LoadGame(fileName);
             }, "LoadingLongEvent", doAsynchronously: true, GameAndMapInitExceptionHandlers.ErrorWhileLoadingGame);
 
-            ClipboardHelper.CopyToClipboard($"Loading {fileName}");
+            TolkHelper.Speak($"Loading {fileName}");
         }
 
         private static void ReloadFiles()
@@ -264,17 +264,17 @@ namespace RimWorldAccess
                 // Index 0 is "Create New Save", indices 1+ are existing files
                 if (selectedIndex == 0)
                 {
-                    ClipboardHelper.CopyToClipboard($"Create New Save: {typedSaveName}");
+                    TolkHelper.Speak($"Create New Save: {typedSaveName}");
                 }
                 else if (saveFiles != null && selectedIndex > 0 && selectedIndex <= saveFiles.Count)
                 {
                     SaveFileInfo file = saveFiles[selectedIndex - 1]; // Adjust for "Create New Save" at index 0
                     string fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                    ClipboardHelper.CopyToClipboard($"Overwrite: {fileName} - {file.LastWriteTime:yyyy-MM-dd HH:mm}");
+                    TolkHelper.Speak($"Overwrite: {fileName} - {file.LastWriteTime:yyyy-MM-dd HH:mm}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard($"Create New Save: {typedSaveName}");
+                    TolkHelper.Speak($"Create New Save: {typedSaveName}");
                 }
             }
             else // Load mode
@@ -283,11 +283,11 @@ namespace RimWorldAccess
                 {
                     SaveFileInfo file = saveFiles[selectedIndex];
                     string fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                    ClipboardHelper.CopyToClipboard($"Load: {fileName} - {file.LastWriteTime:yyyy-MM-dd HH:mm}");
+                    TolkHelper.Speak($"Load: {fileName} - {file.LastWriteTime:yyyy-MM-dd HH:mm}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No save files available");
+                    TolkHelper.Speak("No save files available");
                 }
             }
         }
@@ -327,7 +327,7 @@ namespace RimWorldAccess
 
             string fileName = fileToDelete.Name;
             fileToDelete.Delete();
-            ClipboardHelper.CopyToClipboard($"Deleted {fileName}");
+            TolkHelper.Speak($"Deleted {fileName}");
 
             Action callback = onDeleteComplete;
             Close();
@@ -339,7 +339,7 @@ namespace RimWorldAccess
             if (!isActive)
                 return;
 
-            ClipboardHelper.CopyToClipboard("Delete cancelled");
+            TolkHelper.Speak("Delete cancelled");
 
             Action callback = onDeleteComplete;
             Close();

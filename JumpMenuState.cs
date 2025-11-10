@@ -27,13 +27,13 @@ namespace RimWorldAccess
         {
             if (Find.CurrentMap == null)
             {
-                ClipboardHelper.CopyToClipboard("No map available");
+                TolkHelper.Speak("No map available");
                 return;
             }
 
             if (!MapNavigationState.IsInitialized)
             {
-                ClipboardHelper.CopyToClipboard("Map navigation not initialized");
+                TolkHelper.Speak("Map navigation not initialized");
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace RimWorldAccess
 
             if (categories.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No items found on map");
+                TolkHelper.Speak("No items found on map");
                 return;
             }
 
@@ -120,16 +120,16 @@ namespace RimWorldAccess
                 }
                 else if (category.IsExpanded)
                 {
-                    ClipboardHelper.CopyToClipboard("Already expanded");
+                    TolkHelper.Speak("Already expanded");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Category is empty");
+                    TolkHelper.Speak("Category is empty");
                 }
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Not a category");
+                TolkHelper.Speak("Not a category");
             }
         }
 
@@ -157,7 +157,7 @@ namespace RimWorldAccess
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Already collapsed");
+                    TolkHelper.Speak("Already collapsed");
                 }
             }
             else if (selected is JumpMenuItem item)
@@ -203,11 +203,11 @@ namespace RimWorldAccess
                 Close();
 
                 // Announce the jump
-                ClipboardHelper.CopyToClipboard($"Jumped to {item.Label} at {targetPosition.x}, {targetPosition.z}");
+                TolkHelper.Speak($"Jumped to {item.Label} at {targetPosition.x}, {targetPosition.z}");
             }
             else if (selected is JumpMenuCategory category)
             {
-                ClipboardHelper.CopyToClipboard("Select an item, not a category");
+                TolkHelper.Speak("Select an item, not a category");
             }
         }
 
@@ -255,12 +255,12 @@ namespace RimWorldAccess
             {
                 string expandedState = category.IsExpanded ? "expanded" : "collapsed";
                 string announcement = $"{category.Name} ({category.Items.Count} items) - {expandedState}";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
             else if (selected is JumpMenuItem item)
             {
                 string announcement = $"{item.Label} - {item.Distance:F1} tiles away";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
         }
 

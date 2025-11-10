@@ -197,7 +197,7 @@ namespace RimWorldAccess
                         trainables = TrainingTabHelper.GetTrainableSkills(currentPawn);
                         if (trainables.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No trainable skills");
+                            TolkHelper.Speak("No trainable skills");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -276,7 +276,7 @@ namespace RimWorldAccess
             {
                 case MenuLevel.SectionMenu:
                     Close();
-                    ClipboardHelper.CopyToClipboard("Closed Training tab");
+                    TolkHelper.Speak("Closed Training tab");
                     break;
 
                 case MenuLevel.TrainabilityInfo:
@@ -384,7 +384,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
         }
     }
 }

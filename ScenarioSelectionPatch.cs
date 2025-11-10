@@ -45,11 +45,11 @@ namespace RimWorldAccess
                     if (firstScenario != null)
                     {
                         string categoryPrefix = GetCategoryPrefixString(firstScenario.Category);
-                        ClipboardHelper.CopyToClipboard($"{pageTitle} - {categoryPrefix}{firstScenario.name} - {firstScenario.summary}");
+                        TolkHelper.Speak($"{pageTitle} - {categoryPrefix}{firstScenario.name} - {firstScenario.summary}");
                     }
                     else
                     {
-                        ClipboardHelper.CopyToClipboard(pageTitle);
+                        TolkHelper.Speak(pageTitle);
                     }
                     hasAnnouncedTitle = true;
                 }

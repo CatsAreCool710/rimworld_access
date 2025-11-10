@@ -180,7 +180,7 @@ namespace RimWorldAccess
                         ideologyInfo = SocialTabHelper.GetIdeologyInfo(currentPawn);
                         if (ideologyInfo == null)
                         {
-                            ClipboardHelper.CopyToClipboard("No ideology information available");
+                            TolkHelper.Speak("No ideology information available");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -191,7 +191,7 @@ namespace RimWorldAccess
                         relations = SocialTabHelper.GetRelations(currentPawn);
                         if (relations.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No relations");
+                            TolkHelper.Speak("No relations");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -203,7 +203,7 @@ namespace RimWorldAccess
                         socialLog = SocialTabHelper.GetSocialInteractions(currentPawn);
                         if (socialLog.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No recent social interactions");
+                            TolkHelper.Speak("No recent social interactions");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -231,7 +231,7 @@ namespace RimWorldAccess
             {
                 case MenuLevel.SectionMenu:
                     Close();
-                    ClipboardHelper.CopyToClipboard("Closed Social tab");
+                    TolkHelper.Speak("Closed Social tab");
                     break;
 
                 case MenuLevel.IdeologyInfo:
@@ -329,7 +329,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
         }
     }
 }

@@ -47,7 +47,7 @@ namespace RimWorldAccess
 
             if (!pawn.IsPrisonerOfColony && !pawn.IsSlaveOfColony)
             {
-                ClipboardHelper.CopyToClipboard($"{pawn.LabelShort} is not a prisoner or slave");
+                TolkHelper.Speak($"{pawn.LabelShort} is not a prisoner or slave");
                 return;
             }
 
@@ -76,7 +76,7 @@ namespace RimWorldAccess
             selectedIndex = 0;
             ClearCachedData();
 
-            ClipboardHelper.CopyToClipboard("Prisoner tab closed");
+            TolkHelper.Speak("Prisoner tab closed");
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace RimWorldAccess
             currentPawn.playerSettings.medCare = newCare;
 
             string label = PrisonerTabHelper.GetMedicalCareLabel(newCare);
-            ClipboardHelper.CopyToClipboard($"Medical Care: {label}");
+            TolkHelper.Speak($"Medical Care: {label}");
         }
 
         private static void SelectExclusiveMode()
@@ -298,7 +298,7 @@ namespace RimWorldAccess
                     }
 
                     string description = PrisonerTabHelper.GetInteractionModeDescription(currentPawn, mode);
-                    ClipboardHelper.CopyToClipboard($"Selected: {mode.LabelCap}. {description}");
+                    TolkHelper.Speak($"Selected: {mode.LabelCap}. {description}");
                 }
             }
             else if (currentPawn.IsSlaveOfColony)
@@ -311,14 +311,14 @@ namespace RimWorldAccess
                     if (mode == SlaveInteractionModeDefOf.Execute && currentPawn.SlaveFaction != null && !currentPawn.SlaveFaction.HostileTo(Faction.OfPlayer))
                     {
                         // Warn about neutral faction
-                        ClipboardHelper.CopyToClipboard($"Warning: Executing slave from neutral faction {currentPawn.SlaveFaction.Name}. Select again to confirm.");
+                        TolkHelper.Speak($"Warning: Executing slave from neutral faction {currentPawn.SlaveFaction.Name}. Select again to confirm.");
                         // For now, just set it - confirmation dialogs would require more complex handling
                     }
 
                     currentPawn.guest.slaveInteractionMode = mode;
 
                     string description = PrisonerTabHelper.GetSlaveInteractionModeDescription(currentPawn, mode);
-                    ClipboardHelper.CopyToClipboard($"Selected: {mode.LabelCap}. {description}");
+                    TolkHelper.Speak($"Selected: {mode.LabelCap}. {description}");
                 }
             }
         }
@@ -351,7 +351,7 @@ namespace RimWorldAccess
                 }
 
                 string state = newState ? "Enabled" : "Disabled";
-                ClipboardHelper.CopyToClipboard($"{mode.LabelCap}: {state}");
+                TolkHelper.Speak($"{mode.LabelCap}: {state}");
             }
         }
 
@@ -382,7 +382,7 @@ namespace RimWorldAccess
                     }
                 }
 
-                ClipboardHelper.CopyToClipboard($"Conversion target: {selected.name}{warning}");
+                TolkHelper.Speak($"Conversion target: {selected.name}{warning}");
 
                 // Return to exclusive modes section
                 currentSection = TabSection.ExclusiveModes;
@@ -403,7 +403,7 @@ namespace RimWorldAccess
             sb.AppendLine($"Medical Care: {PrisonerTabHelper.GetMedicalCareLabel(currentPawn.playerSettings.medCare)}");
             sb.AppendLine("\nPress Left/Right to navigate sections, Up/Down within sections, Enter to select");
 
-            ClipboardHelper.CopyToClipboard(sb.ToString().TrimEnd());
+            TolkHelper.Speak(sb.ToString().TrimEnd());
         }
 
         private static void AnnounceSlaveOpened()
@@ -419,7 +419,7 @@ namespace RimWorldAccess
 
             sb.AppendLine("\nPress Left/Right to navigate sections, Up/Down within sections, Enter to select");
 
-            ClipboardHelper.CopyToClipboard(sb.ToString().TrimEnd());
+            TolkHelper.Speak(sb.ToString().TrimEnd());
         }
 
         private static void AnnounceCurrentSection()
@@ -430,31 +430,31 @@ namespace RimWorldAccess
             switch (currentSection)
             {
                 case TabSection.Information:
-                    ClipboardHelper.CopyToClipboard("Information Section - Press Down to read stats");
+                    TolkHelper.Speak("Information Section - Press Down to read stats");
                     break;
 
                 case TabSection.MedicalCare:
                     string careLevel = PrisonerTabHelper.GetMedicalCareLabel(currentPawn.playerSettings.medCare);
-                    ClipboardHelper.CopyToClipboard($"Medical Care: {careLevel}. Use Up/Down arrows to adjust");
+                    TolkHelper.Speak($"Medical Care: {careLevel}. Use Up/Down arrows to adjust");
                     break;
 
                 case TabSection.ExclusiveModes:
                     if (currentPawn.IsPrisonerOfColony)
                     {
-                        ClipboardHelper.CopyToClipboard($"Interaction Modes - {exclusiveModes.Count} available. Currently: {currentPawn.guest.ExclusiveInteractionMode.LabelCap}");
+                        TolkHelper.Speak($"Interaction Modes - {exclusiveModes.Count} available. Currently: {currentPawn.guest.ExclusiveInteractionMode.LabelCap}");
                     }
                     else if (currentPawn.IsSlaveOfColony)
                     {
-                        ClipboardHelper.CopyToClipboard($"Slave Modes - {slaveModes.Count} available. Currently: {currentPawn.guest.slaveInteractionMode.LabelCap}");
+                        TolkHelper.Speak($"Slave Modes - {slaveModes.Count} available. Currently: {currentPawn.guest.slaveInteractionMode.LabelCap}");
                     }
                     break;
 
                 case TabSection.NonExclusiveModes:
-                    ClipboardHelper.CopyToClipboard($"Non-Exclusive Modes - {nonExclusiveModes.Count} available. Press Space to toggle");
+                    TolkHelper.Speak($"Non-Exclusive Modes - {nonExclusiveModes.Count} available. Press Space to toggle");
                     break;
 
                 case TabSection.IdeologySelection:
-                    ClipboardHelper.CopyToClipboard("Ideology Selection - Choose conversion target");
+                    TolkHelper.Speak("Ideology Selection - Choose conversion target");
                     break;
             }
 
@@ -475,13 +475,13 @@ namespace RimWorldAccess
                 case TabSection.Information:
                     if (selectedIndex >= 0 && selectedIndex < infoLines.Count)
                     {
-                        ClipboardHelper.CopyToClipboard(infoLines[selectedIndex]);
+                        TolkHelper.Speak(infoLines[selectedIndex]);
                     }
                     break;
 
                 case TabSection.MedicalCare:
                     string careLevel = PrisonerTabHelper.GetMedicalCareLabel(currentPawn.playerSettings.medCare);
-                    ClipboardHelper.CopyToClipboard($"Medical Care: {careLevel}");
+                    TolkHelper.Speak($"Medical Care: {careLevel}");
                     break;
 
                 case TabSection.ExclusiveModes:
@@ -491,7 +491,7 @@ namespace RimWorldAccess
                         bool isSelected = currentPawn.guest.ExclusiveInteractionMode == mode;
                         string marker = isSelected ? "[ACTIVE] " : "";
                         string description = PrisonerTabHelper.GetInteractionModeDescription(currentPawn, mode);
-                        ClipboardHelper.CopyToClipboard($"{marker}{mode.LabelCap}. {description}");
+                        TolkHelper.Speak($"{marker}{mode.LabelCap}. {description}");
                     }
                     else if (currentPawn.IsSlaveOfColony && selectedIndex >= 0 && selectedIndex < slaveModes.Count)
                     {
@@ -499,7 +499,7 @@ namespace RimWorldAccess
                         bool isSelected = currentPawn.guest.slaveInteractionMode == mode;
                         string marker = isSelected ? "[ACTIVE] " : "";
                         string description = PrisonerTabHelper.GetSlaveInteractionModeDescription(currentPawn, mode);
-                        ClipboardHelper.CopyToClipboard($"{marker}{mode.LabelCap}. {description}");
+                        TolkHelper.Speak($"{marker}{mode.LabelCap}. {description}");
                     }
                     break;
 
@@ -509,7 +509,7 @@ namespace RimWorldAccess
                         PrisonerInteractionModeDef mode = nonExclusiveModes[selectedIndex];
                         bool isEnabled = currentPawn.guest.IsInteractionEnabled(mode);
                         string state = isEnabled ? "[ON]" : "[OFF]";
-                        ClipboardHelper.CopyToClipboard($"{state} {mode.LabelCap}. {mode.description}");
+                        TolkHelper.Speak($"{state} {mode.LabelCap}. {mode.description}");
                     }
                     break;
 
@@ -520,7 +520,7 @@ namespace RimWorldAccess
                         Ideo ideo = ideologies[selectedIndex];
                         bool isCurrent = currentPawn.guest.ideoForConversion == ideo;
                         string marker = isCurrent ? "[CURRENT] " : "";
-                        ClipboardHelper.CopyToClipboard($"{marker}{ideo.name}");
+                        TolkHelper.Speak($"{marker}{ideo.name}");
                     }
                     break;
             }

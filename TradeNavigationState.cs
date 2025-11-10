@@ -58,7 +58,7 @@ namespace RimWorldAccess
         {
             if (!TradeSession.Active)
             {
-                ClipboardHelper.CopyToClipboard("No active trade session");
+                TolkHelper.Speak("No active trade session");
                 return;
             }
 
@@ -69,7 +69,7 @@ namespace RimWorldAccess
 
             if (cachedDeal == null || cachedTrader == null)
             {
-                ClipboardHelper.CopyToClipboard("Trade session not properly initialized");
+                TolkHelper.Speak("Trade session not properly initialized");
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace RimWorldAccess
             string traderName = cachedTrader.TraderName ?? "Unknown Trader";
             string traderKind = cachedTrader.TraderKind?.label ?? "trader";
             string controls = "Controls: Up/Down: Navigate | Left/Right: Switch categories | Enter: Adjust quantity | T: Accept trade | G: Toggle gift mode | B: Balance | Escape: Cancel";
-            ClipboardHelper.CopyToClipboard($"Trading with {traderName} ({traderKind}). {controls}");
+            TolkHelper.Speak($"Trading with {traderName} ({traderKind}). {controls}");
 
             SoundDefOf.TabOpen.PlayOneShotOnCamera();
 
@@ -121,7 +121,7 @@ namespace RimWorldAccess
             cachedNegotiator = null;
             filterText = "";
 
-            ClipboardHelper.CopyToClipboard("Trade cancelled");
+            TolkHelper.Speak("Trade cancelled");
             SoundDefOf.Click.PlayOneShotOnCamera();
         }
 
@@ -277,7 +277,7 @@ namespace RimWorldAccess
             List<Tradeable> list = GetCurrentList();
             if (list.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No items in this category");
+                TolkHelper.Speak("No items in this category");
                 return;
             }
 
@@ -300,7 +300,7 @@ namespace RimWorldAccess
             List<Tradeable> list = GetCurrentList();
             if (list.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No items in this category");
+                TolkHelper.Speak("No items in this category");
                 return;
             }
 
@@ -319,7 +319,7 @@ namespace RimWorldAccess
         {
             if (isInQuantityMode)
             {
-                ClipboardHelper.CopyToClipboard("Exit quantity mode first (press Enter or Escape)");
+                TolkHelper.Speak("Exit quantity mode first (press Enter or Escape)");
                 return;
             }
 
@@ -338,7 +338,7 @@ namespace RimWorldAccess
         {
             if (isInQuantityMode)
             {
-                ClipboardHelper.CopyToClipboard("Exit quantity mode first (press Enter or Escape)");
+                TolkHelper.Speak("Exit quantity mode first (press Enter or Escape)");
                 return;
             }
 
@@ -370,19 +370,19 @@ namespace RimWorldAccess
             Tradeable tradeable = GetCurrentTradeable();
             if (tradeable == null)
             {
-                ClipboardHelper.CopyToClipboard("No item selected");
+                TolkHelper.Speak("No item selected");
                 return;
             }
 
             if (!tradeable.Interactive)
             {
-                ClipboardHelper.CopyToClipboard("Cannot adjust quantity for this item");
+                TolkHelper.Speak("Cannot adjust quantity for this item", SpeechPriority.High);
                 return;
             }
 
             if (!tradeable.TraderWillTrade)
             {
-                ClipboardHelper.CopyToClipboard("Trader will not trade this item");
+                TolkHelper.Speak("Trader will not trade this item");
                 return;
             }
 
@@ -433,7 +433,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Cannot adjust to this amount");
+                TolkHelper.Speak("Cannot adjust to this amount", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
             }
         }
@@ -500,7 +500,7 @@ namespace RimWorldAccess
             Tradeable tradeable = GetCurrentTradeable();
             if (tradeable == null)
             {
-                ClipboardHelper.CopyToClipboard("No item selected");
+                TolkHelper.Speak("No item selected");
                 return;
             }
 
@@ -508,7 +508,7 @@ namespace RimWorldAccess
             {
                 tradeable.AdjustTo(0);
                 cachedDeal.UpdateCurrencyCount();
-                ClipboardHelper.CopyToClipboard($"Reset {tradeable.Label}");
+                TolkHelper.Speak($"Reset {tradeable.Label}");
                 SoundDefOf.Checkbox_TurnedOff.PlayOneShotOnCamera();
                 AnnounceCurrentSelection();
             }
@@ -524,7 +524,7 @@ namespace RimWorldAccess
 
             cachedDeal.Reset();
             RefreshTradeables();
-            ClipboardHelper.CopyToClipboard("All trades reset");
+            TolkHelper.Speak("All trades reset");
             SoundDefOf.Checkbox_TurnedOff.PlayOneShotOnCamera();
             AnnounceCurrentSelection();
         }
@@ -536,19 +536,19 @@ namespace RimWorldAccess
         {
             if (cachedTrader == null || cachedTrader.Faction == null)
             {
-                ClipboardHelper.CopyToClipboard("Cannot gift to this trader");
+                TolkHelper.Speak("Cannot gift to this trader", SpeechPriority.High);
                 return;
             }
 
             if (cachedTrader.Faction.HostileTo(Faction.OfPlayer))
             {
-                ClipboardHelper.CopyToClipboard("Cannot gift to hostile faction");
+                TolkHelper.Speak("Cannot gift to hostile faction", SpeechPriority.High);
                 return;
             }
 
             if (cachedTrader.TradeCurrency == TradeCurrency.Favor)
             {
-                ClipboardHelper.CopyToClipboard("Cannot gift when trading for royal favor");
+                TolkHelper.Speak("Cannot gift when trading for royal favor", SpeechPriority.High);
                 return;
             }
 
@@ -557,7 +557,7 @@ namespace RimWorldAccess
             RefreshTradeables();
 
             string mode = TradeSession.giftMode ? "gift mode" : "trade mode";
-            ClipboardHelper.CopyToClipboard($"Switched to {mode}");
+            TolkHelper.Speak($"Switched to {mode}");
             SoundDefOf.Checkbox_TurnedOn.PlayOneShotOnCamera();
             AnnounceCurrentSelection();
         }
@@ -569,7 +569,7 @@ namespace RimWorldAccess
         {
             if (cachedDeal == null)
             {
-                ClipboardHelper.CopyToClipboard("No trade to execute");
+                TolkHelper.Speak("No trade to execute");
                 return;
             }
 
@@ -586,7 +586,7 @@ namespace RimWorldAccess
             // Check if there's anything to trade
             if (string.IsNullOrEmpty(tradeSummary))
             {
-                ClipboardHelper.CopyToClipboard("No items to trade");
+                TolkHelper.Speak("No items to trade");
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return;
             }
@@ -609,7 +609,7 @@ namespace RimWorldAccess
 
             if (!result.Accepted)
             {
-                ClipboardHelper.CopyToClipboard($"Cannot complete trade: {result.Reason}");
+                TolkHelper.Speak($"Cannot complete trade: {result.Reason}", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return;
             }
@@ -617,7 +617,7 @@ namespace RimWorldAccess
             if (actuallyTraded)
             {
                 SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("Trade completed successfully");
+                TolkHelper.Speak("Trade completed successfully");
 
                 // Close the trade and session
                 Close();
@@ -625,7 +625,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("No items to trade");
+                TolkHelper.Speak("No items to trade");
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
             }
         }
@@ -728,7 +728,7 @@ namespace RimWorldAccess
 
             if (goodwillChange <= 0)
             {
-                ClipboardHelper.CopyToClipboard("No gifts to offer");
+                TolkHelper.Speak("No gifts to offer");
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return;
             }
@@ -754,7 +754,7 @@ namespace RimWorldAccess
             FactionGiftUtility.GiveGift(cachedDeal.AllTradeables.ToList(), cachedTrader.Faction, lookTarget);
 
             SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
-            ClipboardHelper.CopyToClipboard($"Gifts offered, goodwill +{goodwillChange}");
+            TolkHelper.Speak($"Gifts offered, goodwill +{goodwillChange}");
 
             // Close the trade and session
             Close();
@@ -769,13 +769,13 @@ namespace RimWorldAccess
             Tradeable tradeable = GetCurrentTradeable();
             if (tradeable == null)
             {
-                ClipboardHelper.CopyToClipboard("No item selected");
+                TolkHelper.Speak("No item selected");
                 return;
             }
 
             // Get price tooltips
             string breakdown = BuildPriceBreakdown(tradeable);
-            ClipboardHelper.CopyToClipboard(breakdown);
+            TolkHelper.Speak(breakdown);
         }
 
         /// <summary>
@@ -830,7 +830,7 @@ namespace RimWorldAccess
         {
             string categoryName = GetCategoryName();
             List<Tradeable> list = GetCurrentList();
-            ClipboardHelper.CopyToClipboard($"{categoryName} - {list.Count} items");
+            TolkHelper.Speak($"{categoryName} - {list.Count} items");
 
             if (list.Count > 0)
             {
@@ -848,12 +848,12 @@ namespace RimWorldAccess
             {
                 List<Tradeable> list = GetCurrentList();
                 string categoryName = GetCategoryName();
-                ClipboardHelper.CopyToClipboard($"{categoryName} - No items");
+                TolkHelper.Speak($"{categoryName} - No items");
                 return;
             }
 
             string announcement = BuildTradeableAnnouncement(tradeable);
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -872,11 +872,11 @@ namespace RimWorldAccess
 
             if (tradeable.ActionToDo == TradeAction.None)
             {
-                ClipboardHelper.CopyToClipboard($"{tradeable.Label}: No trade");
+                TolkHelper.Speak($"{tradeable.Label}: No trade");
             }
             else
             {
-                ClipboardHelper.CopyToClipboard($"{action} {count} {tradeable.Label} for {totalCost:F0} {currencyName}");
+                TolkHelper.Speak($"{action} {count} {tradeable.Label} for {totalCost:F0} {currencyName}");
             }
         }
 
@@ -1000,7 +1000,7 @@ namespace RimWorldAccess
                 balanceText = "Balanced trade (no currency exchange)";
             }
 
-            ClipboardHelper.CopyToClipboard(balanceText);
+            TolkHelper.Speak(balanceText);
         }
     }
 }

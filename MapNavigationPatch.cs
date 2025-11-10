@@ -110,7 +110,7 @@ namespace RimWorldAccess
 
                 // Announce starting position
                 string initialInfo = TileInfoHelper.GetTileSummary(MapNavigationState.CurrentCursorPosition, Find.CurrentMap);
-                ClipboardHelper.CopyToClipboard(initialInfo);
+                TolkHelper.Speak(initialInfo);
                 MapNavigationState.LastAnnouncedInfo = initialInfo;
                 hasAnnouncedThisFrame = true;
                 return;
@@ -233,7 +233,7 @@ namespace RimWorldAccess
                     // Only announce if different from last announcement (avoids spam when hitting map edge)
                     if (tileInfo != MapNavigationState.LastAnnouncedInfo)
                     {
-                        ClipboardHelper.CopyToClipboard(tileInfo);
+                        TolkHelper.Speak(tileInfo);
                         MapNavigationState.LastAnnouncedInfo = tileInfo;
                         hasAnnouncedThisFrame = true;
                     }
@@ -243,7 +243,7 @@ namespace RimWorldAccess
                     // Cursor at map boundary - optionally announce boundary
                     if (!hasAnnouncedThisFrame)
                     {
-                        ClipboardHelper.CopyToClipboard("Map boundary");
+                        TolkHelper.Speak("Map boundary");
                         hasAnnouncedThisFrame = true;
                     }
                 }
@@ -269,7 +269,7 @@ namespace RimWorldAccess
             if (selectedPawn == null)
             {
                 // No colonists available to select
-                ClipboardHelper.CopyToClipboard("No colonists available");
+                TolkHelper.Speak("No colonists available");
                 hasAnnouncedThisFrame = true;
                 return;
             }
@@ -294,7 +294,7 @@ namespace RimWorldAccess
             // Announce the selected pawn's name and current task
             // Note: Camera does NOT jump - user can use Alt+C to manually jump to pawn
             string announcement = $"{selectedPawn.LabelShort} selected - {currentTask}";
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             MapNavigationState.LastAnnouncedInfo = announcement;
             hasAnnouncedThisFrame = true;
         }

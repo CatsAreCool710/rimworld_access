@@ -139,7 +139,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     BuildingInspectState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed building inspection");
+                    TolkHelper.Speak("Closed building inspection");
                     Event.current.Use();
                     break;
             }
@@ -178,7 +178,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     TempControlMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed temperature control menu");
+                    TolkHelper.Speak("Closed temperature control menu");
                     Event.current.Use();
                     break;
             }
@@ -221,7 +221,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     BillsMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed bills menu");
+                    TolkHelper.Speak("Closed bills menu");
                     Event.current.Use();
                     break;
             }
@@ -261,7 +261,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     BillConfigState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed bill configuration");
+                    TolkHelper.Speak("Closed bill configuration");
 
                     // Go back to bills menu
                     if (BuildingInspectState.SelectedBuilding is IBillGiver billGiver)
@@ -315,7 +315,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     ThingFilterMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed thing filter menu");
+                    TolkHelper.Speak("Closed thing filter menu");
                     Event.current.Use();
                     break;
             }
@@ -353,14 +353,14 @@ namespace RimWorldAccess
                     if (RangeEditMenuState.ApplyAndClose(out var hitPoints, out var quality))
                     {
                         ThingFilterMenuState.ApplyRangeChanges(hitPoints, quality);
-                        ClipboardHelper.CopyToClipboard("Applied range changes");
+                        TolkHelper.Speak("Applied range changes");
                     }
                     Event.current.Use();
                     break;
 
                 case KeyCode.Escape:
                     RangeEditMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Cancelled range editing");
+                    TolkHelper.Speak("Cancelled range editing");
                     Event.current.Use();
                     break;
             }
@@ -414,7 +414,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     FlickableComponentState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed power control menu");
+                    TolkHelper.Speak("Closed power control menu");
                     Event.current.Use();
                     break;
             }
@@ -454,7 +454,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     RefuelableComponentState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed fuel settings menu");
+                    TolkHelper.Speak("Closed fuel settings menu");
                     Event.current.Use();
                     break;
             }
@@ -473,7 +473,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     BreakdownableComponentState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed breakdown status view");
+                    TolkHelper.Speak("Closed breakdown status view");
                     Event.current.Use();
                     break;
             }
@@ -499,7 +499,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     DoorControlState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed door controls");
+                    TolkHelper.Speak("Closed door controls");
                     Event.current.Use();
                     break;
             }
@@ -525,7 +525,7 @@ namespace RimWorldAccess
 
                 case KeyCode.Escape:
                     ForbidControlState.Close();
-                    ClipboardHelper.CopyToClipboard("Closed forbid controls");
+                    TolkHelper.Speak("Closed forbid controls");
                     Event.current.Use();
                     break;
             }

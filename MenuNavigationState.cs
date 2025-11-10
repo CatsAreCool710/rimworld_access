@@ -97,7 +97,7 @@ namespace RimWorldAccess
             ListableOption selected = GetCurrentSelection();
             if (selected != null)
             {
-                ClipboardHelper.CopyToClipboard(selected.label);
+                TolkHelper.Speak(selected.label);
             }
         }
 

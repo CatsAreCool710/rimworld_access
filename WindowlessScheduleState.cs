@@ -118,7 +118,7 @@ namespace RimWorldAccess
                 ? $"Applied {changesApplied} schedule changes"
                 : "No changes made";
 
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
 
             // Close and cleanup
             isActive = false;
@@ -150,7 +150,7 @@ namespace RimWorldAccess
                 }
             }
 
-            ClipboardHelper.CopyToClipboard("Schedule changes cancelled");
+            TolkHelper.Speak("Schedule changes cancelled");
 
             // Close and cleanup
             isActive = false;
@@ -281,7 +281,7 @@ namespace RimWorldAccess
             pendingChanges[pawn][selectedHourIndex] = selectedAssignment;
 
             string message = $"{pawn.LabelShort}, Hour {selectedHourIndex}: {selectedAssignment.label} (pending)";
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace RimWorldAccess
             }
 
             string message = $"{pawn.LabelShort}: Filled {cellsFilled} hours with {selectedAssignment.label} (pending)";
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace RimWorldAccess
                 copiedSchedule.Add(pawn.timetable.GetAssignment(hour));
             }
 
-            ClipboardHelper.CopyToClipboard($"Copied schedule from {pawn.LabelShort}");
+            TolkHelper.Speak($"Copied schedule from {pawn.LabelShort}");
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace RimWorldAccess
         {
             if (copiedSchedule == null)
             {
-                ClipboardHelper.CopyToClipboard("No schedule copied");
+                TolkHelper.Speak("No schedule copied");
                 return;
             }
 
@@ -365,7 +365,7 @@ namespace RimWorldAccess
                 pendingChanges[pawn][hour] = copiedSchedule[hour];
             }
 
-            ClipboardHelper.CopyToClipboard($"Pasted schedule to {pawn.LabelShort} (pending)");
+            TolkHelper.Speak($"Pasted schedule to {pawn.LabelShort} (pending)");
         }
 
         /// <summary>
@@ -375,14 +375,14 @@ namespace RimWorldAccess
         {
             if (pawns.Count == 0 || selectedPawnIndex < 0 || selectedPawnIndex >= pawns.Count)
             {
-                ClipboardHelper.CopyToClipboard("No pawns available");
+                TolkHelper.Speak("No pawns available");
                 return;
             }
 
             Pawn pawn = pawns[selectedPawnIndex];
             if (pawn.timetable == null)
             {
-                ClipboardHelper.CopyToClipboard($"{pawn.LabelShort}: No schedule");
+                TolkHelper.Speak($"{pawn.LabelShort}: No schedule");
                 return;
             }
 
@@ -394,7 +394,7 @@ namespace RimWorldAccess
 
             string pendingIndicator = hasPendingChange ? " (pending)" : "";
             string message = $"{pawn.LabelShort}, Hour {selectedHourIndex}: {currentAssignment.label}{pendingIndicator}";
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
         }
     }
 }

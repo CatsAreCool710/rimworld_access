@@ -333,7 +333,7 @@ namespace RimWorldAccess
                         capacities = HealthTabHelper.GetCapacities(currentPawn);
                         if (capacities.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No capacity information available");
+                            TolkHelper.Speak("No capacity information available");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -351,7 +351,7 @@ namespace RimWorldAccess
                         bodyParts = HealthTabHelper.GetBodyPartsWithHediffs(currentPawn);
                         if (bodyParts.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No health conditions");
+                            TolkHelper.Speak("No health conditions");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -369,7 +369,7 @@ namespace RimWorldAccess
                         availableFoodRestrictions = HealthTabHelper.GetAvailableFoodRestrictions();
                         if (availableFoodRestrictions.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No food restrictions available");
+                            TolkHelper.Speak("No food restrictions available");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -436,7 +436,7 @@ namespace RimWorldAccess
                         availableRecipes = HealthTabHelper.GetAvailableRecipes(currentPawn);
                         if (availableRecipes.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No operations available");
+                            TolkHelper.Speak("No operations available");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -454,7 +454,7 @@ namespace RimWorldAccess
                         if (operationIndex >= 0 && operationIndex < queuedOperations.Count)
                         {
                             var bill = queuedOperations[operationIndex];
-                            ClipboardHelper.CopyToClipboard($"{bill.LabelCap.StripTags()}\n\nPress Escape to go back");
+                            TolkHelper.Speak($"{bill.LabelCap.StripTags()}\n\nPress Escape to go back");
                             SoundDefOf.Click.PlayOneShotOnCamera();
                         }
                     }
@@ -492,7 +492,7 @@ namespace RimWorldAccess
                         }
                         else
                         {
-                            ClipboardHelper.CopyToClipboard($"Cannot add: {op.UnavailableReason}");
+                            TolkHelper.Speak($"Cannot add: {op.UnavailableReason}", SpeechPriority.High);
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                         }
                     }
@@ -519,7 +519,7 @@ namespace RimWorldAccess
                             }
                             else
                             {
-                                ClipboardHelper.CopyToClipboard("This operation is not available");
+                                TolkHelper.Speak("This operation is not available", SpeechPriority.High);
                                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             }
                         }
@@ -557,7 +557,7 @@ namespace RimWorldAccess
                         }
                         else
                         {
-                            ClipboardHelper.CopyToClipboard("This operation is not available on this body part");
+                            TolkHelper.Speak("This operation is not available on this body part", SpeechPriority.High);
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                         }
                     }
@@ -576,7 +576,7 @@ namespace RimWorldAccess
                         }
                         else
                         {
-                            ClipboardHelper.CopyToClipboard("No conditions on this body part");
+                            TolkHelper.Speak("No conditions on this body part");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                         }
                     }
@@ -603,7 +603,7 @@ namespace RimWorldAccess
             {
                 case MenuLevel.SectionMenu:
                     Close();
-                    ClipboardHelper.CopyToClipboard("Closed Health tab");
+                    TolkHelper.Speak("Closed Health tab");
                     break;
 
                 case MenuLevel.MedicalSettingsList:
@@ -858,7 +858,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
         }
     }
 }

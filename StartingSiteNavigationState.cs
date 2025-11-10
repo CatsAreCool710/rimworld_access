@@ -61,7 +61,7 @@ namespace RimWorldAccess
 
             if (!tile.Valid)
             {
-                ClipboardHelper.CopyToClipboard("No starting site selected. Press R to select random site, or use arrow keys to navigate the world map.");
+                TolkHelper.Speak("No starting site selected. Press R to select random site, or use arrow keys to navigate the world map.");
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace RimWorldAccess
                 tileInfo += " | " + factionWarning;
             }
 
-            ClipboardHelper.CopyToClipboard(tileInfo);
+            TolkHelper.Speak(tileInfo);
             hasReadCurrentTile = true;
         }
 
@@ -84,7 +84,7 @@ namespace RimWorldAccess
 
             if (!randomTile.Valid)
             {
-                ClipboardHelper.CopyToClipboard("Failed to find a valid random starting site.");
+                TolkHelper.Speak("Failed to find a valid random starting site.", SpeechPriority.High);
                 return;
             }
 
@@ -106,7 +106,7 @@ namespace RimWorldAccess
                 lastFactionWarning = factionWarning;
             }
 
-            ClipboardHelper.CopyToClipboard($"Random site selected: {tileInfo}");
+            TolkHelper.Speak($"Random site selected: {tileInfo}");
             hasReadCurrentTile = true;
         }
 
@@ -127,7 +127,7 @@ namespace RimWorldAccess
 
             if (neighbors.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No neighboring tiles found.");
+                TolkHelper.Speak("No neighboring tiles found.");
                 return;
             }
 
@@ -159,7 +159,7 @@ namespace RimWorldAccess
                     lastFactionWarning = factionWarning;
                 }
 
-                ClipboardHelper.CopyToClipboard($"Moved {actualDirection}: {tileInfo}");
+                TolkHelper.Speak($"Moved {actualDirection}: {tileInfo}");
             }
         }
 
@@ -240,12 +240,12 @@ namespace RimWorldAccess
                     lastFactionWarning = factionWarning;
                 }
 
-                ClipboardHelper.CopyToClipboard($"Jumped {actualDirection} to new biome ({iterations} tiles): {tileInfo}");
+                TolkHelper.Speak($"Jumped {actualDirection} to new biome ({iterations} tiles): {tileInfo}");
             }
             else
             {
                 // No different biome found in that direction
-                ClipboardHelper.CopyToClipboard($"No different biome found in {direction} direction (searched {iterations} tiles)");
+                TolkHelper.Speak($"No different biome found in {direction} direction (searched {iterations} tiles)");
             }
         }
 
@@ -256,7 +256,7 @@ namespace RimWorldAccess
 
             if (!tile.Valid)
             {
-                ClipboardHelper.CopyToClipboard("No tile selected. Use arrow keys to navigate to a tile first.");
+                TolkHelper.Speak("No tile selected. Use arrow keys to navigate to a tile first.");
                 return;
             }
 
@@ -271,11 +271,11 @@ namespace RimWorldAccess
                 {
                     string menuTitle = "Additional Information Menu - " + availableMenuItems.Count + " categories available";
                     string firstItem = GetMenuItemName(availableMenuItems[0]);
-                    ClipboardHelper.CopyToClipboard($"{menuTitle}. Selected: {firstItem}. Use arrow keys to navigate, Enter to read details, Escape to close.");
+                    TolkHelper.Speak($"{menuTitle}. Selected: {firstItem}. Use arrow keys to navigate, Enter to read details, Escape to close.");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No additional information available for this tile.");
+                    TolkHelper.Speak("No additional information available for this tile.");
                     isMenuOpen = false;
                 }
             }
@@ -300,7 +300,7 @@ namespace RimWorldAccess
                 selectedMenuIndex = 0;
 
             string itemName = GetMenuItemName(availableMenuItems[selectedMenuIndex]);
-            ClipboardHelper.CopyToClipboard($"{itemName} ({selectedMenuIndex + 1} of {availableMenuItems.Count})");
+            TolkHelper.Speak($"{itemName} ({selectedMenuIndex + 1} of {availableMenuItems.Count})");
         }
 
         public static void ReadSelectedMenuItem()
@@ -314,7 +314,7 @@ namespace RimWorldAccess
 
             AdditionalInfoCategory category = availableMenuItems[selectedMenuIndex];
             string info = GetDetailedInfoForCategory(tile, category);
-            ClipboardHelper.CopyToClipboard(info);
+            TolkHelper.Speak(info);
         }
 
         public static void CloseMenu()
@@ -322,7 +322,7 @@ namespace RimWorldAccess
             if (isMenuOpen)
             {
                 isMenuOpen = false;
-                ClipboardHelper.CopyToClipboard("Menu closed.");
+                TolkHelper.Speak("Menu closed.");
             }
         }
 
@@ -645,7 +645,7 @@ namespace RimWorldAccess
 
             if (!tile.Valid)
             {
-                ClipboardHelper.CopyToClipboard("No tile selected. Use arrow keys to navigate to a tile first.");
+                TolkHelper.Speak("No tile selected. Use arrow keys to navigate to a tile first.");
                 return;
             }
 
@@ -671,17 +671,17 @@ namespace RimWorldAccess
                         string change = offset.Second > 0 ? $"+{offset.Second}" : offset.Second.ToString();
                         warning.AppendLine($"  {offset.First.Faction.Name}: {change} goodwill per season");
                     }
-                    ClipboardHelper.CopyToClipboard(warning.ToString().TrimEnd());
+                    TolkHelper.Speak(warning.ToString().TrimEnd());
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Valid settlement location. No faction proximity warnings. Press Next to proceed.");
+                    TolkHelper.Speak("Valid settlement location. No faction proximity warnings. Press Next to proceed.");
                 }
             }
             else
             {
                 string errorMessage = "Cannot settle here: " + reason.ToString();
-                ClipboardHelper.CopyToClipboard(errorMessage);
+                TolkHelper.Speak(errorMessage, SpeechPriority.High);
             }
         }
 

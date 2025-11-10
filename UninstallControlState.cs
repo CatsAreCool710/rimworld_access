@@ -23,13 +23,13 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to configure");
+                TolkHelper.Speak("No building to configure");
                 return;
             }
 
             if (!targetBuilding.def.Minifiable)
             {
-                ClipboardHelper.CopyToClipboard("Building cannot be uninstalled");
+                TolkHelper.Speak("Building cannot be uninstalled", SpeechPriority.High);
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace RimWorldAccess
             {
                 // Remove uninstall designation
                 building.Map.designationManager.RemoveDesignation(designation);
-                ClipboardHelper.CopyToClipboard(string.Format("{0} - Uninstall designation removed", building.LabelCap));
+                TolkHelper.Speak(string.Format("{0} - Uninstall designation removed", building.LabelCap));
             }
             else
             {
@@ -78,14 +78,14 @@ namespace RimWorldAccess
                 {
                     // Instant uninstall like the game does in god mode
                     building.Uninstall();
-                    ClipboardHelper.CopyToClipboard(string.Format("{0} - Instantly uninstalled", building.LabelCap));
+                    TolkHelper.Speak(string.Format("{0} - Instantly uninstalled", building.LabelCap));
                 }
                 else
                 {
                     // Add uninstall designation
                     building.Map.designationManager.AddDesignation(new Designation(building, DesignationDefOf.Uninstall));
                     SoundDefOf.Click.PlayOneShotOnCamera();
-                    ClipboardHelper.CopyToClipboard(string.Format("{0} - Designated for uninstall", building.LabelCap));
+                    TolkHelper.Speak(string.Format("{0} - Designated for uninstall", building.LabelCap));
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace RimWorldAccess
 
             string announcement = string.Format("{0} - Status: {1}", itemLabel, status);
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace RimWorldAccess
                 details += "Press Space or Enter to designate for uninstall.";
             }
 
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace RimWorldAccess
             if (!DialogNavigationState.HasReadText() && !string.IsNullOrEmpty(curNode.text))
             {
                 string textToRead = curNode.text.ToString();
-                ClipboardHelper.CopyToClipboard(textToRead);
+                TolkHelper.Speak(textToRead);
                 DialogNavigationState.MarkTextAsRead();
                 MelonLoader.MelonLogger.Msg($"Dialog text read to clipboard: {textToRead.Substring(0, Mathf.Min(50, textToRead.Length))}...");
             }
@@ -55,7 +55,7 @@ namespace RimWorldAccess
                     if (selectedIndex >= 0 && selectedIndex < optionCount)
                     {
                         string optionText = GetOptionText(curNode.options[selectedIndex]);
-                        ClipboardHelper.CopyToClipboard(optionText);
+                        TolkHelper.Speak(optionText);
                         MelonLoader.MelonLogger.Msg($"Selected option {selectedIndex}: {optionText}");
                     }
 
@@ -70,7 +70,7 @@ namespace RimWorldAccess
                     if (selectedIndex >= 0 && selectedIndex < optionCount)
                     {
                         string optionText = GetOptionText(curNode.options[selectedIndex]);
-                        ClipboardHelper.CopyToClipboard(optionText);
+                        TolkHelper.Speak(optionText);
                         MelonLoader.MelonLogger.Msg($"Selected option {selectedIndex}: {optionText}");
                     }
 

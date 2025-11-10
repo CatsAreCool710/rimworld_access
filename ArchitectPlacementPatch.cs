@@ -78,7 +78,7 @@ namespace RimWorldAccess
                         Rot4 currentRot = (Rot4)rotField.GetValue(designatorPlace);
                         currentRot.Rotate(RotationDirection.Clockwise);
                         rotField.SetValue(designatorPlace, currentRot);
-                        ClipboardHelper.CopyToClipboard($"Rotated to {currentRot}");
+                        TolkHelper.Speak($"Rotated to {currentRot}");
                     }
                 }
                 handled = true;
@@ -108,7 +108,7 @@ namespace RimWorldAccess
                             activeDesignator.Finalize(true);
 
                             string label = activeDesignator.Label;
-                            ClipboardHelper.CopyToClipboard($"{label} placed at {currentPosition.x}, {currentPosition.z}");
+                            TolkHelper.Speak($"{label} placed at {currentPosition.x}, {currentPosition.z}");
 
                             // If in ArchitectState mode, clear selected cells for next placement
                             if (inArchitectMode)
@@ -123,14 +123,14 @@ namespace RimWorldAccess
                         }
                         catch (System.Exception ex)
                         {
-                            ClipboardHelper.CopyToClipboard($"Error placing: {ex.Message}");
+                            TolkHelper.Speak($"Error placing: {ex.Message}", SpeechPriority.High);
                             MelonLoader.MelonLogger.Error($"Error in single cell designation: {ex}");
                         }
                     }
                     else
                     {
                         string reason = report.Reason ?? "Cannot place here";
-                        ClipboardHelper.CopyToClipboard($"Invalid: {reason}");
+                        TolkHelper.Speak($"Invalid: {reason}");
                     }
                 }
                 else
@@ -150,7 +150,7 @@ namespace RimWorldAccess
                 // For place designators (build, reinstall), Enter exits placement mode
                 if (activeDesignator is Designator_Place)
                 {
-                    ClipboardHelper.CopyToClipboard("Placement completed");
+                    TolkHelper.Speak("Placement completed");
                     if (inArchitectMode)
                         ArchitectState.Reset();
                     else
@@ -167,7 +167,7 @@ namespace RimWorldAccess
             // Escape key - cancel placement
             else if (key == KeyCode.Escape)
             {
-                ClipboardHelper.CopyToClipboard("Placement cancelled");
+                TolkHelper.Speak("Placement cancelled");
                 if (inArchitectMode)
                     ArchitectState.Cancel();
                 else
@@ -231,7 +231,7 @@ namespace RimWorldAccess
                         if (!lastInfo.StartsWith("Selected"))
                         {
                             string modifiedInfo = "Selected, " + lastInfo;
-                            ClipboardHelper.CopyToClipboard(modifiedInfo);
+                            TolkHelper.Speak(modifiedInfo);
                             MapNavigationState.LastAnnouncedInfo = modifiedInfo;
                         }
                     }
@@ -245,7 +245,7 @@ namespace RimWorldAccess
                     {
                         // Append the reason why we can't place here
                         string modifiedInfo = lastInfo + ", " + report.Reason;
-                        ClipboardHelper.CopyToClipboard(modifiedInfo);
+                        TolkHelper.Speak(modifiedInfo);
                         MapNavigationState.LastAnnouncedInfo = modifiedInfo;
                     }
                 }

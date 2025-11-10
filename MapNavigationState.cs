@@ -133,7 +133,7 @@ namespace RimWorldAccess
             {
                 modeText = "Jump mode: Unknown";
             }
-            ClipboardHelper.CopyToClipboard(modeText);
+            TolkHelper.Speak(modeText);
         }
 
         /// <summary>

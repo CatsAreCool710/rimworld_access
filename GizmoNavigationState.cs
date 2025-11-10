@@ -68,7 +68,7 @@ namespace RimWorldAccess
 
             if (availableGizmos.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No commands available");
+                TolkHelper.Speak("No commands available");
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace RimWorldAccess
             // Validate cursor position
             if (!cursorPosition.IsValid || !cursorPosition.InBounds(map))
             {
-                ClipboardHelper.CopyToClipboard("Invalid cursor position");
+                TolkHelper.Speak("Invalid cursor position");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace RimWorldAccess
 
             if (thingsAtPosition == null || thingsAtPosition.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No objects at cursor position");
+                TolkHelper.Speak("No objects at cursor position");
                 return;
             }
 
@@ -122,7 +122,7 @@ namespace RimWorldAccess
 
             if (availableGizmos.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No commands available for objects at cursor");
+                TolkHelper.Speak("No commands available for objects at cursor");
                 return;
             }
 
@@ -135,7 +135,7 @@ namespace RimWorldAccess
             if (thingsAtPosition.Count > 3)
                 objectNames += $" and {thingsAtPosition.Count - 3} more";
 
-            ClipboardHelper.CopyToClipboard($"Gizmos for: {objectNames}");
+            TolkHelper.Speak($"Gizmos for: {objectNames}");
 
             // Announce the first gizmo
             AnnounceCurrentGizmo();
@@ -194,7 +194,7 @@ namespace RimWorldAccess
                 string reason = selectedGizmo.disabledReason;
                 if (string.IsNullOrEmpty(reason))
                     reason = "Command not available";
-                ClipboardHelper.CopyToClipboard($"Disabled: {reason}");
+                TolkHelper.Speak($"Disabled: {reason}");
                 return;
             }
 
@@ -235,12 +235,12 @@ namespace RimWorldAccess
                     selectedGizmo.ProcessInput(fakeEvent);
 
                     // Announce placement mode
-                    ClipboardHelper.CopyToClipboard($"{GetGizmoLabel(selectedGizmo)} - Use arrow keys to position, R to rotate, Enter to place, Escape to cancel");
+                    TolkHelper.Speak($"{GetGizmoLabel(selectedGizmo)} - Use arrow keys to position, R to rotate, Enter to place, Escape to cancel");
                 }
                 catch (System.Exception ex)
                 {
                     ModLogger.Error($"Exception in Designator execution: {ex.Message}");
-                    ClipboardHelper.CopyToClipboard($"Error executing {GetGizmoLabel(selectedGizmo)}: {ex.Message}");
+                    TolkHelper.Speak($"Error executing {GetGizmoLabel(selectedGizmo)}: {ex.Message}", SpeechPriority.High);
                 }
 
                 // Close the gizmo menu AFTER announcing
@@ -258,7 +258,7 @@ namespace RimWorldAccess
                 bool toggleActive = toggle.isActive?.Invoke() ?? false;
                 string state = toggleActive ? "ON" : "OFF";
                 string label = GetGizmoLabel(toggle);
-                ClipboardHelper.CopyToClipboard($"{label}: {state}");
+                TolkHelper.Speak($"{label}: {state}");
             }
             else
             {
@@ -270,12 +270,12 @@ namespace RimWorldAccess
                 {
                     string weaponName = verbTarget.ownerThing?.LabelCap ?? "weapon";
                     string verbLabel = verbTarget.verb?.ReportLabel ?? "attack";
-                    ClipboardHelper.CopyToClipboard($"{weaponName} {verbLabel} - Use map navigation to select target, then press Enter");
+                    TolkHelper.Speak($"{weaponName} {verbLabel} - Use map navigation to select target, then press Enter");
                 }
                 // 4. Command_Target - announce targeting mode
                 else if (selectedGizmo is Command_Target)
                 {
-                    ClipboardHelper.CopyToClipboard($"{GetGizmoLabel(selectedGizmo)} - Use map navigation to select target, then press Enter");
+                    TolkHelper.Speak($"{GetGizmoLabel(selectedGizmo)} - Use map navigation to select target, then press Enter");
                 }
             }
 
@@ -318,7 +318,7 @@ namespace RimWorldAccess
                 announcement += $" [DISABLED: {reason}]";
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>

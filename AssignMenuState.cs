@@ -141,7 +141,7 @@ namespace RimWorldAccess
             areaOptions.Clear();
             readingPolicies.Clear();
 
-            ClipboardHelper.CopyToClipboard("Assign menu closed");
+            TolkHelper.Speak("Assign menu closed");
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace RimWorldAccess
             int optionCount = GetCurrentColumnOptionCount();
             if (optionCount == 0)
             {
-                ClipboardHelper.CopyToClipboard("No options available");
+                TolkHelper.Speak("No options available");
                 return;
             }
 
@@ -199,7 +199,7 @@ namespace RimWorldAccess
             int optionCount = GetCurrentColumnOptionCount();
             if (optionCount == 0)
             {
-                ClipboardHelper.CopyToClipboard("No options available");
+                TolkHelper.Speak("No options available");
                 return;
             }
 
@@ -271,7 +271,7 @@ namespace RimWorldAccess
 
             if (!string.IsNullOrEmpty(result))
             {
-                ClipboardHelper.CopyToClipboard(result);
+                TolkHelper.Speak(result);
             }
         }
 
@@ -293,7 +293,7 @@ namespace RimWorldAccess
                         Close();
 
                         WindowlessOutfitPolicyState.Open(currentPolicy);
-                        ClipboardHelper.CopyToClipboard("Opened apparel policies manager");
+                        TolkHelper.Speak("Opened apparel policies manager");
                     }
                     break;
 
@@ -307,7 +307,7 @@ namespace RimWorldAccess
                         Close();
 
                         WindowlessFoodPolicyState.Open(currentPolicy);
-                        ClipboardHelper.CopyToClipboard("Opened food policies manager");
+                        TolkHelper.Speak("Opened food policies manager");
                     }
                     break;
 
@@ -321,7 +321,7 @@ namespace RimWorldAccess
                         Close();
 
                         WindowlessDrugPolicyState.Open(currentPolicy);
-                        ClipboardHelper.CopyToClipboard("Opened drug policies manager");
+                        TolkHelper.Speak("Opened drug policies manager");
                     }
                     break;
 
@@ -332,7 +332,7 @@ namespace RimWorldAccess
                         Close();
 
                         WindowlessAreaState.Open(Find.CurrentMap);
-                        ClipboardHelper.CopyToClipboard("Opened areas manager");
+                        TolkHelper.Speak("Opened areas manager");
                     }
                     break;
 
@@ -342,7 +342,7 @@ namespace RimWorldAccess
                         // Pass the current pawn's reading policy to open that policy for editing
                         ReadingPolicy currentPolicy = currentPawn?.reading?.CurrentPolicy;
                         Find.WindowStack.Add(new Dialog_ManageReadingPolicies(currentPolicy));
-                        ClipboardHelper.CopyToClipboard("Opened reading policies manager");
+                        TolkHelper.Speak("Opened reading policies manager");
                     }
                     break;
             }
@@ -361,7 +361,7 @@ namespace RimWorldAccess
             selectedOptionIndex = GetCurrentOptionIndex();
             LoadAllPolicies();
 
-            ClipboardHelper.CopyToClipboard($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
+            TolkHelper.Speak($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace RimWorldAccess
             selectedOptionIndex = GetCurrentOptionIndex();
             LoadAllPolicies();
 
-            ClipboardHelper.CopyToClipboard($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
+            TolkHelper.Speak($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace RimWorldAccess
         {
             if (currentPawn == null)
             {
-                ClipboardHelper.CopyToClipboard("No pawn selected");
+                TolkHelper.Speak("No pawn selected");
                 return;
             }
 
@@ -475,7 +475,7 @@ namespace RimWorldAccess
             int optionCount = GetCurrentColumnOptionCount();
 
             string message = $"{currentPawn.LabelShort} - {columnName}: {optionName} ({selectedOptionIndex + 1}/{optionCount})";
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
         }
 
         /// <summary>

@@ -216,7 +216,7 @@ namespace RimWorldAccess
                         {
                             expandedCategories.Add(node.catDef.defName);
                             RebuildMenu();
-                            ClipboardHelper.CopyToClipboard($"Expanded: {item.label}");
+                            TolkHelper.Speak($"Expanded: {item.label}");
                         }
                     }
                     else
@@ -232,7 +232,7 @@ namespace RimWorldAccess
 
                 case MenuItemType.HitPointsRange:
                 case MenuItemType.QualityRange:
-                    ClipboardHelper.CopyToClipboard("Press Enter to edit range");
+                    TolkHelper.Speak("Press Enter to edit range");
                     break;
 
                 case MenuItemType.ClearAll:
@@ -263,7 +263,7 @@ namespace RimWorldAccess
                         {
                             expandedCategories.Remove(node.catDef.defName);
                             RebuildMenu();
-                            ClipboardHelper.CopyToClipboard($"Collapsed: {item.label}");
+                            TolkHelper.Speak($"Collapsed: {item.label}");
                         }
                     }
                     else
@@ -279,7 +279,7 @@ namespace RimWorldAccess
 
                 case MenuItemType.HitPointsRange:
                 case MenuItemType.QualityRange:
-                    ClipboardHelper.CopyToClipboard("Press Enter to edit range");
+                    TolkHelper.Speak("Press Enter to edit range");
                     break;
             }
         }
@@ -337,14 +337,14 @@ namespace RimWorldAccess
                 currentFilter.AllowedHitPointsPercents = hitPoints;
                 item.label = $"Hit Points: {hitPoints.min:P0} - {hitPoints.max:P0}";
                 item.data = hitPoints;
-                ClipboardHelper.CopyToClipboard(item.label);
+                TolkHelper.Speak(item.label);
             }
             else if (item.type == MenuItemType.QualityRange)
             {
                 currentFilter.AllowedQualityLevels = quality;
                 item.label = $"Quality: {quality.min} - {quality.max}";
                 item.data = quality;
-                ClipboardHelper.CopyToClipboard(item.label);
+                TolkHelper.Speak(item.label);
             }
         }
 
@@ -364,7 +364,7 @@ namespace RimWorldAccess
 
             item.isAllowed = allow;
             string state = allow ? "Allowed" : "Disallowed";
-            ClipboardHelper.CopyToClipboard($"{state}: {item.label}");
+            TolkHelper.Speak($"{state}: {item.label}");
 
             // Update child items if expanded
             if (item.isExpanded)
@@ -395,21 +395,21 @@ namespace RimWorldAccess
             }
 
             string state = allow ? "Allowed" : "Disallowed";
-            ClipboardHelper.CopyToClipboard($"{state}: {item.label}");
+            TolkHelper.Speak($"{state}: {item.label}");
         }
 
         private static void ClearAllItems()
         {
             currentFilter.SetDisallowAll();
             RebuildMenu();
-            ClipboardHelper.CopyToClipboard("Cleared all items");
+            TolkHelper.Speak("Cleared all items");
         }
 
         private static void AllowAllItems()
         {
             currentFilter.SetAllowAll(null);
             RebuildMenu();
-            ClipboardHelper.CopyToClipboard("Allowed all items");
+            TolkHelper.Speak("Allowed all items");
         }
 
         private static void RebuildMenu()
@@ -456,7 +456,7 @@ namespace RimWorldAccess
                     announcement += $" [{expandState}]";
                 }
 
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
         }
     }

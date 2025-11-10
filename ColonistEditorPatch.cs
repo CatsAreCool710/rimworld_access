@@ -32,11 +32,11 @@ namespace RimWorldAccess
                         string name = firstPawn.Name is NameTriple triple
                             ? $"{triple.First} '{triple.Nick}' {triple.Last}"
                             : firstPawn.LabelShort;
-                        ClipboardHelper.CopyToClipboard($"{pageTitle} - {name} - {firstPawn.story.TitleCap} (Age {firstPawn.ageTracker.AgeBiologicalYears}). Use arrows to navigate, Tab for sections, R to randomize, H for help.");
+                        TolkHelper.Speak($"{pageTitle} - {name} - {firstPawn.story.TitleCap} (Age {firstPawn.ageTracker.AgeBiologicalYears}). Use arrows to navigate, Tab for sections, R to randomize, H for help.");
                     }
                     else
                     {
-                        ClipboardHelper.CopyToClipboard(pageTitle);
+                        TolkHelper.Speak(pageTitle);
                     }
                     hasAnnouncedTitle = true;
                 }
@@ -120,7 +120,7 @@ namespace RimWorldAccess
                     {
                         // Help - show current mode
                         string help = ColonistEditorNavigationState.GetCurrentModeDescription();
-                        ClipboardHelper.CopyToClipboard(help);
+                        TolkHelper.Speak(help);
                         Event.current.Use();
                         patchActive = true;
                     }

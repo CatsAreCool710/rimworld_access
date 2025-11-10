@@ -176,7 +176,7 @@ namespace RimWorldAccess
                         needs = NeedsTabHelper.GetNeeds(currentPawn);
                         if (needs.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No needs information available");
+                            TolkHelper.Speak("No needs information available");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -188,7 +188,7 @@ namespace RimWorldAccess
                         thoughts = NeedsTabHelper.GetThoughts(currentPawn);
                         if (thoughts.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No thoughts");
+                            TolkHelper.Speak("No thoughts");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -225,7 +225,7 @@ namespace RimWorldAccess
             {
                 case MenuLevel.SectionMenu:
                     Close();
-                    ClipboardHelper.CopyToClipboard("Closed Needs tab");
+                    TolkHelper.Speak("Closed Needs tab");
                     break;
 
                 case MenuLevel.NeedsList:
@@ -300,7 +300,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
         }
     }
 }

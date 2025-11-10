@@ -11,6 +11,16 @@
     <EmbeddedResource Include="Sounds\**\*.mp3" />
   </ItemGroup>
 
+  <!-- Include Tolk.dll and dependencies for deployment -->
+  <ItemGroup>
+    <Content Include="Tolk.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="nvdaControllerClient64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 <ItemGroup>
   <!-- MelonLoader References -->
   <Reference Include="MelonLoader">
@@ -44,11 +54,23 @@
 
   <Target Name="CopyModAfterBuild" AfterTargets="Build">
     <!-- Display a message in the build output -->
-    <Message Text="--- Copying $(ProjectName).dll to game folder ---" Importance="high" />
+    <Message Text="--- Copying $(ProjectName).dll, Tolk.dll, and nvdaControllerClient64.dll to game folder ---" Importance="high" />
 
-    <!-- Perform the copy operation -->
+    <!-- Copy the mod DLL -->
     <Copy
       SourceFiles="$(TargetPath)"
+      DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\"
+    />
+
+    <!-- Copy Tolk.dll -->
+    <Copy
+      SourceFiles="$(ProjectDir)Tolk.dll"
+      DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\"
+    />
+
+    <!-- Copy nvdaControllerClient64.dll -->
+    <Copy
+      SourceFiles="$(ProjectDir)nvdaControllerClient64.dll"
       DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\"
     />
   </Target>
@@ -65,17 +87,22 @@
     <!-- Create release folder if it doesn't exist -->
     <MakeDir Directories="$(ReleaseFolderPath)" />
 
-    <!-- Copy DLL to game folder -->
-    <Message Text="--- Copying DLL to game folder ---" Importance="high" />
+    <!-- Copy DLL to release folder -->
+    <Message Text="--- Copying DLL, Tolk.dll, and nvdaControllerClient64.dll to release folder ---" Importance="high" />
     <Copy
       SourceFiles="$(TargetPath)"
-      DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\"
+      DestinationFolder="$(ReleaseFolderPath)"
     />
 
-    <!-- Copy DLL to release folder -->
-    <Message Text="--- Copying DLL to release folder ---" Importance="high" />
+    <!-- Copy Tolk.dll to release folder -->
     <Copy
-      SourceFiles="$(TargetPath)"
+      SourceFiles="$(ProjectDir)Tolk.dll"
+      DestinationFolder="$(ReleaseFolderPath)"
+    />
+
+    <!-- Copy nvdaControllerClient64.dll to release folder -->
+    <Copy
+      SourceFiles="$(ProjectDir)nvdaControllerClient64.dll"
       DestinationFolder="$(ReleaseFolderPath)"
     />
 

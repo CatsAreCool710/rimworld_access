@@ -186,7 +186,7 @@ namespace RimWorldAccess
 
             if (!item.isEnabled)
             {
-                ClipboardHelper.CopyToClipboard("Option not available");
+                TolkHelper.Speak("Option not available", SpeechPriority.High);
                 return;
             }
 
@@ -219,7 +219,7 @@ namespace RimWorldAccess
             if (item.type == MenuItemType.ExistingBill && item.data is Bill bill)
             {
                 billGiver.BillStack.Delete(bill);
-                ClipboardHelper.CopyToClipboard($"Deleted: {bill.LabelCap}");
+                TolkHelper.Speak($"Deleted: {bill.LabelCap}");
 
                 // Rebuild menu
                 BuildMenuItems();
@@ -234,7 +234,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Cannot delete this item");
+                TolkHelper.Speak("Cannot delete this item", SpeechPriority.High);
             }
         }
 
@@ -251,7 +251,7 @@ namespace RimWorldAccess
             if (item.type == MenuItemType.ExistingBill && item.data is Bill bill)
             {
                 BillUtility.Clipboard = bill;
-                ClipboardHelper.CopyToClipboard($"Copied to clipboard: {bill.LabelCap}");
+                TolkHelper.Speak($"Copied to clipboard: {bill.LabelCap}");
 
                 // Rebuild to show paste option
                 BuildMenuItems();
@@ -259,7 +259,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Cannot copy this item");
+                TolkHelper.Speak("Cannot copy this item", SpeechPriority.High);
             }
         }
 
@@ -271,7 +271,7 @@ namespace RimWorldAccess
             Building_WorkTable workTable = billGiver as Building_WorkTable;
             if (workTable == null)
             {
-                ClipboardHelper.CopyToClipboard("Cannot add bills to this object");
+                TolkHelper.Speak("Cannot add bills to this object", SpeechPriority.High);
                 return;
             }
 
@@ -304,7 +304,7 @@ namespace RimWorldAccess
 
             if (options.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No recipes available");
+                TolkHelper.Speak("No recipes available");
                 return;
             }
 
@@ -336,13 +336,13 @@ namespace RimWorldAccess
                 if (ModsConfig.BiotechActive && recipe.mechanitorOnlyRecipe &&
                     !workTable.Map.mapPawns.FreeColonists.Any(MechanitorUtility.IsMechanitor))
                 {
-                    ClipboardHelper.CopyToClipboard($"Recipe requires mechanitor: {recipe.LabelCap}");
+                    TolkHelper.Speak($"Recipe requires mechanitor: {recipe.LabelCap}");
                     return;
                 }
 
                 if (!workTable.Map.mapPawns.FreeColonists.Any((Pawn col) => recipe.PawnSatisfiesSkillRequirements(col)))
                 {
-                    ClipboardHelper.CopyToClipboard($"No pawns have required skills for: {recipe.LabelCap}");
+                    TolkHelper.Speak($"No pawns have required skills for: {recipe.LabelCap}");
                     return;
                 }
 
@@ -350,7 +350,7 @@ namespace RimWorldAccess
                 Bill bill = recipe.MakeNewBill(precept);
                 billGiver.BillStack.AddBill(bill);
 
-                ClipboardHelper.CopyToClipboard($"Added bill: {bill.LabelCap}");
+                TolkHelper.Speak($"Added bill: {bill.LabelCap}");
 
                 // Rebuild menu
                 BuildMenuItems();
@@ -381,7 +381,7 @@ namespace RimWorldAccess
         {
             if (BillUtility.Clipboard == null)
             {
-                ClipboardHelper.CopyToClipboard("Clipboard is empty");
+                TolkHelper.Speak("Clipboard is empty");
                 return;
             }
 
@@ -389,7 +389,7 @@ namespace RimWorldAccess
             bill.InitializeAfterClone();
             billGiver.BillStack.AddBill(bill);
 
-            ClipboardHelper.CopyToClipboard($"Pasted bill: {bill.LabelCap}");
+            TolkHelper.Speak($"Pasted bill: {bill.LabelCap}");
 
             // Rebuild menu and select the new bill
             BuildMenuItems();
@@ -408,7 +408,7 @@ namespace RimWorldAccess
         {
             if (bill == null)
             {
-                ClipboardHelper.CopyToClipboard("No bill selected");
+                TolkHelper.Speak("No bill selected");
                 return;
             }
 
@@ -418,7 +418,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard($"Bill type {bill.GetType().Name} not yet supported");
+                TolkHelper.Speak($"Bill type {bill.GetType().Name} not yet supported");
             }
         }
 
@@ -434,7 +434,7 @@ namespace RimWorldAccess
                     announcement += " (unavailable)";
                 }
 
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
         }
 

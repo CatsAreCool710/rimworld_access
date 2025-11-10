@@ -36,7 +36,7 @@ namespace RimWorldAccess
 
                 if (objects.Count == 0)
                 {
-                    ClipboardHelper.CopyToClipboard("No items here to inspect.");
+                    TolkHelper.Speak("No items here to inspect.");
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     return;
                 }
@@ -68,7 +68,7 @@ namespace RimWorldAccess
             {
                 if (obj == null)
                 {
-                    ClipboardHelper.CopyToClipboard("No object to inspect.");
+                    TolkHelper.Speak("No object to inspect.");
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     return;
                 }
@@ -215,14 +215,14 @@ namespace RimWorldAccess
             if (!item.IsExpandable)
             {
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("This item cannot be expanded.");
+                TolkHelper.Speak("This item cannot be expanded.", SpeechPriority.High);
                 return;
             }
 
             if (item.IsExpanded)
             {
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("Already expanded.");
+                TolkHelper.Speak("Already expanded.");
                 return;
             }
 
@@ -235,7 +235,7 @@ namespace RimWorldAccess
             if (item.Children.Count == 0)
             {
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("No items to show.");
+                TolkHelper.Speak("No items to show.");
                 return;
             }
 
@@ -258,14 +258,14 @@ namespace RimWorldAccess
             if (!item.IsExpandable)
             {
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("This item cannot be collapsed.");
+                TolkHelper.Speak("This item cannot be collapsed.", SpeechPriority.High);
                 return;
             }
 
             if (!item.IsExpanded)
             {
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("Already collapsed.");
+                TolkHelper.Speak("Already collapsed.");
                 return;
             }
 
@@ -307,7 +307,7 @@ namespace RimWorldAccess
 
             // Otherwise, nothing to do
             SoundDefOf.ClickReject.PlayOneShotOnCamera();
-            ClipboardHelper.CopyToClipboard("No action available for this item.");
+            TolkHelper.Speak("No action available for this item.");
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace RimWorldAccess
             {
                 Close();
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard("Inspection panel closed.");
+                TolkHelper.Speak("Inspection panel closed.");
             }
         }
 
@@ -344,7 +344,7 @@ namespace RimWorldAccess
             {
                 if (visibleItems == null || visibleItems.Count == 0)
                 {
-                    ClipboardHelper.CopyToClipboard("No items to inspect.");
+                    TolkHelper.Speak("No items to inspect.");
                     return;
                 }
 
@@ -382,7 +382,7 @@ namespace RimWorldAccess
                     announcement += $"\n{helpText}";
                 }
 
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
             catch (Exception ex)
             {

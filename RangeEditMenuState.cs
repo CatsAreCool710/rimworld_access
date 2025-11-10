@@ -199,7 +199,7 @@ namespace RimWorldAccess
                 announcement = $"Quality {optionName}: {value}. Range: {qualityRange.min} to {qualityRange.max}";
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
     }
 }

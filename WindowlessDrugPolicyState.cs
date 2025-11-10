@@ -102,7 +102,7 @@ namespace RimWorldAccess
             selectedDrugIndex = 0;
             selectedSettingIndex = 0;
 
-            ClipboardHelper.CopyToClipboard("Drug policy manager closed");
+            TolkHelper.Speak("Drug policy manager closed");
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace RimWorldAccess
                 LoadPolicies();
                 selectedPolicyIndex = allPolicies.IndexOf(newPolicy);
                 selectedPolicy = newPolicy;
-                ClipboardHelper.CopyToClipboard($"Created new drug policy: {newPolicy.label}");
+                TolkHelper.Speak($"Created new drug policy: {newPolicy.label}");
             }
         }
 
@@ -247,7 +247,7 @@ namespace RimWorldAccess
             if (selectedPolicy != null)
             {
                 Find.WindowStack.Add(new Dialog_RenamePolicy(selectedPolicy));
-                ClipboardHelper.CopyToClipboard($"Rename policy: {selectedPolicy.label}. Enter new name and press Enter.");
+                TolkHelper.Speak($"Rename policy: {selectedPolicy.label}. Enter new name and press Enter.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace RimWorldAccess
                 LoadPolicies();
                 selectedPolicyIndex = allPolicies.IndexOf(newPolicy);
                 selectedPolicy = newPolicy;
-                ClipboardHelper.CopyToClipboard($"Duplicated policy: {newPolicy.label}");
+                TolkHelper.Speak($"Duplicated policy: {newPolicy.label}");
             }
         }
 
@@ -296,11 +296,11 @@ namespace RimWorldAccess
                         selectedPolicyIndex = 0;
                     }
 
-                    ClipboardHelper.CopyToClipboard($"Deleted policy: {deletedName}");
+                    TolkHelper.Speak($"Deleted policy: {deletedName}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot delete: {result.Reason}");
+                    TolkHelper.Speak($"Cannot delete: {result.Reason}", SpeechPriority.High);
                 }
             }
         }
@@ -313,7 +313,7 @@ namespace RimWorldAccess
             if (selectedPolicy != null && Current.Game?.drugPolicyDatabase != null)
             {
                 Current.Game.drugPolicyDatabase.SetDefault(selectedPolicy);
-                ClipboardHelper.CopyToClipboard($"Set {selectedPolicy.label} as default drug policy");
+                TolkHelper.Speak($"Set {selectedPolicy.label} as default drug policy");
             }
         }
 
@@ -415,17 +415,17 @@ namespace RimWorldAccess
             {
                 case "Allow for Addiction":
                     entry.allowedForAddiction = !entry.allowedForAddiction;
-                    ClipboardHelper.CopyToClipboard($"Allow for Addiction: {(entry.allowedForAddiction ? "Yes" : "No")}");
+                    TolkHelper.Speak($"Allow for Addiction: {(entry.allowedForAddiction ? "Yes" : "No")}");
                     break;
 
                 case "Allow for Joy":
                     entry.allowedForJoy = !entry.allowedForJoy;
-                    ClipboardHelper.CopyToClipboard($"Allow for Joy: {(entry.allowedForJoy ? "Yes" : "No")}");
+                    TolkHelper.Speak($"Allow for Joy: {(entry.allowedForJoy ? "Yes" : "No")}");
                     break;
 
                 case "Allow Scheduled":
                     entry.allowScheduled = !entry.allowScheduled;
-                    ClipboardHelper.CopyToClipboard($"Allow Scheduled: {(entry.allowScheduled ? "Yes" : "No")}");
+                    TolkHelper.Speak($"Allow Scheduled: {(entry.allowScheduled ? "Yes" : "No")}");
                     break;
 
                 case "Back to Drug List":
@@ -451,27 +451,27 @@ namespace RimWorldAccess
                     entry.daysFrequency += direction * 0.5f;
                     if (entry.daysFrequency < 0.5f) entry.daysFrequency = 0.5f;
                     if (entry.daysFrequency > 30f) entry.daysFrequency = 30f;
-                    ClipboardHelper.CopyToClipboard($"Days Frequency: {entry.daysFrequency:F1}");
+                    TolkHelper.Speak($"Days Frequency: {entry.daysFrequency:F1}");
                     break;
 
                 case "Only if Mood Below":
                     entry.onlyIfMoodBelow += direction * 0.05f;
                     if (entry.onlyIfMoodBelow < 0f) entry.onlyIfMoodBelow = 0f;
                     if (entry.onlyIfMoodBelow > 1f) entry.onlyIfMoodBelow = 1f;
-                    ClipboardHelper.CopyToClipboard($"Only if Mood Below: {entry.onlyIfMoodBelow:P0}");
+                    TolkHelper.Speak($"Only if Mood Below: {entry.onlyIfMoodBelow:P0}");
                     break;
 
                 case "Only if Joy Below":
                     entry.onlyIfJoyBelow += direction * 0.05f;
                     if (entry.onlyIfJoyBelow < 0f) entry.onlyIfJoyBelow = 0f;
                     if (entry.onlyIfJoyBelow > 1f) entry.onlyIfJoyBelow = 1f;
-                    ClipboardHelper.CopyToClipboard($"Only if Joy Below: {entry.onlyIfJoyBelow:P0}");
+                    TolkHelper.Speak($"Only if Joy Below: {entry.onlyIfJoyBelow:P0}");
                     break;
 
                 case "Take to Inventory":
                     entry.takeToInventory += direction;
                     if (entry.takeToInventory < 0) entry.takeToInventory = 0;
-                    ClipboardHelper.CopyToClipboard($"Take to Inventory: {entry.takeToInventory}");
+                    TolkHelper.Speak($"Take to Inventory: {entry.takeToInventory}");
                     break;
             }
         }
@@ -487,17 +487,17 @@ namespace RimWorldAccess
                 {
                     bool isDefault = Current.Game?.drugPolicyDatabase?.DefaultDrugPolicy() == selectedPolicy;
                     string defaultMarker = isDefault ? " (default)" : "";
-                    ClipboardHelper.CopyToClipboard($"Drug policy {selectedPolicyIndex + 1}/{allPolicies.Count}: {selectedPolicy.label}{defaultMarker}. Press Tab for actions.");
+                    TolkHelper.Speak($"Drug policy {selectedPolicyIndex + 1}/{allPolicies.Count}: {selectedPolicy.label}{defaultMarker}. Press Tab for actions.");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No drug policies available. Press Tab to create one.");
+                    TolkHelper.Speak("No drug policies available. Press Tab to create one.");
                 }
             }
             else if (currentMode == NavigationMode.PolicyActions)
             {
                 string action = policyActions[selectedActionIndex];
-                ClipboardHelper.CopyToClipboard($"Action {selectedActionIndex + 1}/{policyActions.Length}: {action}. Press Enter to execute, Tab/Shift+Tab or arrows to navigate, Escape to return to policy list.");
+                TolkHelper.Speak($"Action {selectedActionIndex + 1}/{policyActions.Length}: {action}. Press Enter to execute, Tab/Shift+Tab or arrows to navigate, Escape to return to policy list.");
             }
             else if (currentMode == NavigationMode.DrugList)
             {
@@ -506,11 +506,11 @@ namespace RimWorldAccess
                     DrugPolicyEntry entry = selectedPolicy[selectedDrugIndex];
                     string drugName = entry.drug.label;
                     string status = GetDrugStatusSummary(entry);
-                    ClipboardHelper.CopyToClipboard($"Drug {selectedDrugIndex + 1}/{selectedPolicy.Count}: {drugName}. {status}. Press Enter to edit, Escape to return.");
+                    TolkHelper.Speak($"Drug {selectedDrugIndex + 1}/{selectedPolicy.Count}: {drugName}. {status}. Press Enter to edit, Escape to return.");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No drugs in policy.");
+                    TolkHelper.Speak("No drugs in policy.");
                 }
             }
             else if (currentMode == NavigationMode.DrugSettings)
@@ -520,7 +520,7 @@ namespace RimWorldAccess
                     DrugPolicyEntry entry = selectedPolicy[selectedDrugIndex];
                     string settingName = drugSettings[selectedSettingIndex];
                     string settingValue = GetSettingValue(entry, settingName);
-                    ClipboardHelper.CopyToClipboard($"{entry.drug.label} - Setting {selectedSettingIndex + 1}/{drugSettings.Length}: {settingName} = {settingValue}. Use Space to toggle, Left/Right to adjust.");
+                    TolkHelper.Speak($"{entry.drug.label} - Setting {selectedSettingIndex + 1}/{drugSettings.Length}: {settingName} = {settingValue}. Use Space to toggle, Left/Right to adjust.");
                 }
             }
         }

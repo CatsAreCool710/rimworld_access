@@ -61,7 +61,7 @@ namespace RimWorldAccess
             // If already in zone creation mode, don't allow opening menu/settings
             if (ZoneCreationState.IsInCreationMode)
             {
-                ClipboardHelper.CopyToClipboard("Already creating a zone. Press Enter to confirm or Escape to cancel");
+                TolkHelper.Speak("Already creating a zone. Press Enter to confirm or Escape to cancel");
                 Event.current.Use();
                 zKeyHandledFrame = Time.frameCount;
                 return;
@@ -103,19 +103,19 @@ namespace RimWorldAccess
                 if (settings != null)
                 {
                     StorageSettingsMenuState.Open(settings);
-                    ClipboardHelper.CopyToClipboard($"Storage settings for {zone.label}");
+                    TolkHelper.Speak($"Storage settings for {zone.label}");
                     MelonLoader.MelonLogger.Msg($"Opened storage settings for: {zone.label}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot access settings for {zone.label}");
+                    TolkHelper.Speak($"Cannot access settings for {zone.label}", SpeechPriority.High);
                 }
             }
             else if (zone is Zone_Growing growingZone)
             {
                 // Open plant selection menu
                 PlantSelectionMenuState.Open(growingZone);
-                ClipboardHelper.CopyToClipboard($"Plant selection for {zone.label}");
+                TolkHelper.Speak($"Plant selection for {zone.label}");
                 MelonLoader.MelonLogger.Msg($"Opened plant selection for: {zone.label}");
             }
             else
@@ -129,7 +129,7 @@ namespace RimWorldAccess
                     Find.MainTabsRoot.SetCurrentTab(MainButtonDefOf.Inspect, playSound: false);
                 }
 
-                ClipboardHelper.CopyToClipboard($"Opening settings for {zone.label}");
+                TolkHelper.Speak($"Opening settings for {zone.label}");
                 MelonLoader.MelonLogger.Msg($"Opened settings for zone: {zone.label}");
             }
         }

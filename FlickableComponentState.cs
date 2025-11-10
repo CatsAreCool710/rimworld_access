@@ -24,14 +24,14 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to configure");
+                TolkHelper.Speak("No building to configure");
                 return;
             }
 
             CompFlickable comp = targetBuilding.TryGetComp<CompFlickable>();
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Building does not have power control");
+                TolkHelper.Speak("Building does not have power control");
                 return;
             }
 
@@ -84,7 +84,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Power is already on");
+                TolkHelper.Speak("Power is already on");
             }
         }
 
@@ -103,7 +103,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Power is already off");
+                TolkHelper.Speak("Power is already off");
             }
         }
 
@@ -140,7 +140,7 @@ namespace RimWorldAccess
                 }
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace RimWorldAccess
                 details += "\nNot connected to power grid";
             }
 
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
     }
 }

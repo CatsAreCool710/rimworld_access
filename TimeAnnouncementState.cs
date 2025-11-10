@@ -21,14 +21,14 @@ namespace RimWorldAccess
             // Check if we're in-game
             if (Current.ProgramState != ProgramState.Playing)
             {
-                ClipboardHelper.CopyToClipboard("Not in game");
+                TolkHelper.Speak("Not in game");
                 return;
             }
 
             // Check if there's a tick manager
             if (Find.TickManager == null)
             {
-                ClipboardHelper.CopyToClipboard("Time information not available");
+                TolkHelper.Speak("Time information not available", SpeechPriority.High);
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace RimWorldAccess
             sb.Append($", Days passed: {daysPassed}");
 
             // Copy to clipboard for screen reader
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
 
             // Play audio feedback
             SoundDefOf.Click.PlayOneShotOnCamera();

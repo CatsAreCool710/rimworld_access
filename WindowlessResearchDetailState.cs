@@ -40,7 +40,7 @@ namespace RimWorldAccess
             isActive = false;
             currentProject = null;
             sections.Clear();
-            ClipboardHelper.CopyToClipboard("Returned to research menu");
+            TolkHelper.Speak("Returned to research menu");
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace RimWorldAccess
             {
                 // Stop research
                 Find.ResearchManager.StopProject(currentProject);
-                ClipboardHelper.CopyToClipboard($"Stopped research on {currentProject.LabelCap}");
+                TolkHelper.Speak($"Stopped research on {currentProject.LabelCap}");
 
                 // Rebuild sections to update button text
                 sections = BuildDetailSections(currentProject);
@@ -110,7 +110,7 @@ namespace RimWorldAccess
             // Check if already completed
             if (currentProject.IsFinished)
             {
-                ClipboardHelper.CopyToClipboard($"{currentProject.LabelCap} is already completed");
+                TolkHelper.Speak($"{currentProject.LabelCap} is already completed");
                 return;
             }
 
@@ -118,7 +118,7 @@ namespace RimWorldAccess
             if (!currentProject.PrerequisitesCompleted)
             {
                 var missingPrereqs = GetMissingPrerequisites();
-                ClipboardHelper.CopyToClipboard($"Cannot start research: Missing prerequisites - {missingPrereqs}");
+                TolkHelper.Speak($"Cannot start research: Missing prerequisites - {missingPrereqs}", SpeechPriority.High);
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace RimWorldAccess
             if (currentProject.TechprintCount > 0 && !currentProject.TechprintRequirementMet)
             {
                 int applied = Find.ResearchManager.GetTechprints(currentProject);
-                ClipboardHelper.CopyToClipboard($"Cannot start research: Need {currentProject.TechprintCount} techprints, only {applied} applied");
+                TolkHelper.Speak($"Cannot start research: Need {currentProject.TechprintCount} techprints, only {applied} applied", SpeechPriority.High);
                 return;
             }
 
@@ -135,14 +135,14 @@ namespace RimWorldAccess
             {
                 if (!currentProject.AnalyzedThingsRequirementsMet)
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot start research: Must study required items first");
+                    TolkHelper.Speak($"Cannot start research: Must study required items first", SpeechPriority.High);
                     return;
                 }
             }
 
             // Start research
             Find.ResearchManager.SetCurrentProject(currentProject);
-            ClipboardHelper.CopyToClipboard($"Started research on {currentProject.LabelCap}");
+            TolkHelper.Speak($"Started research on {currentProject.LabelCap}");
 
             // Rebuild sections to update button text and progress
             sections = BuildDetailSections(currentProject);
@@ -474,7 +474,7 @@ namespace RimWorldAccess
         {
             if (sections.Count == 0 || currentProject == null)
             {
-                ClipboardHelper.CopyToClipboard("No detail sections available");
+                TolkHelper.Speak("No detail sections available");
                 return;
             }
 
@@ -486,7 +486,7 @@ namespace RimWorldAccess
             announcement.AppendLine();
             announcement.Append(section.Content);
 
-            ClipboardHelper.CopyToClipboard(announcement.ToString());
+            TolkHelper.Speak(announcement.ToString());
         }
     }
 

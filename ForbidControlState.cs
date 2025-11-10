@@ -24,14 +24,14 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No item to configure");
+                TolkHelper.Speak("No item to configure");
                 return;
             }
 
             CompForbiddable comp = targetBuilding.TryGetComp<CompForbiddable>();
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Item cannot be forbidden");
+                TolkHelper.Speak("Item cannot be forbidden", SpeechPriority.High);
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace RimWorldAccess
 
             string announcement = string.Format("{0} - Status: {1}", itemLabel, status);
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace RimWorldAccess
                 details += "Colonists can interact with this item normally.";
             }
 
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
     }
 }

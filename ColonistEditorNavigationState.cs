@@ -214,7 +214,7 @@ namespace RimWorldAccess
             if (currentPawnIndex < 0 || currentPawnIndex >= pawns.Count) return;
 
             StartingPawnUtility.RandomizePawn(currentPawnIndex);
-            ClipboardHelper.CopyToClipboard($"Randomized pawn {currentPawnIndex + 1}");
+            TolkHelper.Speak($"Randomized pawn {currentPawnIndex + 1}");
             CopyPawnToClipboard();
         }
 
@@ -300,7 +300,7 @@ namespace RimWorldAccess
 
             string text = $"[Pawn {currentPawnIndex + 1}/{pawns.Count}] {selectedPrefix}{name} - {pawn.story.TitleCap} ({status}) - Age {pawn.ageTracker.AgeBiologicalYears}";
 
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static void CopySectionToClipboard()
@@ -310,7 +310,7 @@ namespace RimWorldAccess
             int detailCount = GetDetailCountForSection(section);
 
             string text = $"[Section] {sectionName} ({detailCount} items) - Press Right Arrow to view details, Left Arrow to go back";
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static void CopyDetailToClipboard()
@@ -318,7 +318,7 @@ namespace RimWorldAccess
             Section section = availableSections[currentSectionIndex];
             string detailText = GetDetailText(section, currentDetailIndex);
 
-            ClipboardHelper.CopyToClipboard(detailText);
+            TolkHelper.Speak(detailText);
         }
 
         private static int GetDetailCountForCurrentSection()
@@ -729,7 +729,7 @@ namespace RimWorldAccess
             pawn.Name = new NameTriple(editingFirstName, editingNickName, editingLastName);
 
             currentMode = NavigationMode.PawnList;
-            ClipboardHelper.CopyToClipboard($"Name saved: {pawn.Name}");
+            TolkHelper.Speak($"Name saved: {pawn.Name}");
         }
 
         public static void CancelNameEdit()
@@ -737,7 +737,7 @@ namespace RimWorldAccess
             if (currentMode != NavigationMode.NameEditMenu) return;
 
             currentMode = NavigationMode.PawnList;
-            ClipboardHelper.CopyToClipboard("Name edit cancelled");
+            TolkHelper.Speak("Name edit cancelled");
         }
 
         private static void CopyNameMenuToClipboard()
@@ -749,13 +749,13 @@ namespace RimWorldAccess
                 "Save Changes"
             };
 
-            ClipboardHelper.CopyToClipboard($"[Name Editor] {menuItems[currentNameField]} - Press Enter to edit, Escape to cancel");
+            TolkHelper.Speak($"[Name Editor] {menuItems[currentNameField]} - Press Enter to edit, Escape to cancel");
         }
 
         private static void CopyTextEditPromptToClipboard()
         {
             string[] fieldNames = { "First Name", "Nickname", "Last Name" };
-            ClipboardHelper.CopyToClipboard($"[Editing {fieldNames[currentNameField]}] {currentTextInput}_ (Type to edit, Enter to save, Escape to cancel)");
+            TolkHelper.Speak($"[Editing {fieldNames[currentNameField]}] {currentTextInput}_ (Type to edit, Enter to save, Escape to cancel)");
         }
 
         // Info card functionality
@@ -885,12 +885,12 @@ namespace RimWorldAccess
                 previousMode = currentMode;
                 currentMode = NavigationMode.InfoCard;
 
-                ClipboardHelper.CopyToClipboard(infoText.ToString());
+                TolkHelper.Speak(infoText.ToString());
             }
             catch (System.Exception ex)
             {
                 Log.Error($"[RimWorld Access] Error getting info card: {ex}");
-                ClipboardHelper.CopyToClipboard("Error getting info card");
+                TolkHelper.Speak("Error getting info card", SpeechPriority.High);
             }
         }
 
@@ -907,7 +907,7 @@ namespace RimWorldAccess
             // Can't swap if there are no pawns on the other side
             if (startingCount <= 0 || startingCount >= pawns.Count)
             {
-                ClipboardHelper.CopyToClipboard("Cannot swap - no pawns on the other side of the boundary");
+                TolkHelper.Speak("Cannot swap - no pawns on the other side of the boundary", SpeechPriority.High);
                 return;
             }
 
@@ -1004,7 +1004,7 @@ namespace RimWorldAccess
                 ? $"{tripleTarget.First} '{tripleTarget.Nick}' {tripleTarget.Last}"
                 : targetPawn.LabelShort;
 
-            ClipboardHelper.CopyToClipboard($"Swap {sourceName} with: {targetName} - {targetPawn.story.TitleCap} (Age {targetPawn.ageTracker.AgeBiologicalYears})");
+            TolkHelper.Speak($"Swap {sourceName} with: {targetName} - {targetPawn.story.TitleCap} (Age {targetPawn.ageTracker.AgeBiologicalYears})");
         }
 
         public static void ConfirmPawnSwap()
@@ -1026,7 +1026,7 @@ namespace RimWorldAccess
             currentMode = NavigationMode.PawnList;
             currentPawnIndex = swapTargetIndex;
 
-            ClipboardHelper.CopyToClipboard($"Swapped {sourcePawn.Name} with {targetPawn.Name}");
+            TolkHelper.Speak($"Swapped {sourcePawn.Name} with {targetPawn.Name}");
             CopyPawnToClipboard();
         }
 
@@ -1035,7 +1035,7 @@ namespace RimWorldAccess
             if (currentMode != NavigationMode.SwapSelect) return;
 
             currentMode = NavigationMode.PawnList;
-            ClipboardHelper.CopyToClipboard("Swap cancelled");
+            TolkHelper.Speak("Swap cancelled");
             CopyPawnToClipboard();
         }
 
@@ -1047,13 +1047,13 @@ namespace RimWorldAccess
                 StartingPawnUtility.AddNewPawn();
                 List<Pawn> pawns = Find.GameInitData.startingAndOptionalPawns;
                 currentPawnIndex = pawns.Count - 1; // Navigate to the new pawn
-                ClipboardHelper.CopyToClipboard($"Added new pawn. Total pawns: {pawns.Count}");
+                TolkHelper.Speak($"Added new pawn. Total pawns: {pawns.Count}");
                 CopyPawnToClipboard();
             }
             catch (System.Exception ex)
             {
                 Log.Error($"[RimWorld Access] Error adding new pawn: {ex}");
-                ClipboardHelper.CopyToClipboard("Error adding new pawn");
+                TolkHelper.Speak("Error adding new pawn", SpeechPriority.High);
             }
         }
 
@@ -1064,7 +1064,7 @@ namespace RimWorldAccess
             if (currentPawnIndex < 0 || currentPawnIndex >= pawns.Count) return;
             if (pawns.Count <= 1)
             {
-                ClipboardHelper.CopyToClipboard("Cannot remove last pawn");
+                TolkHelper.Speak("Cannot remove last pawn", SpeechPriority.High);
                 return;
             }
 
@@ -1085,13 +1085,13 @@ namespace RimWorldAccess
                     currentPawnIndex = pawns.Count - 1;
                 }
 
-                ClipboardHelper.CopyToClipboard($"Removed pawn. Remaining: {pawns.Count}");
+                TolkHelper.Speak($"Removed pawn. Remaining: {pawns.Count}");
                 CopyPawnToClipboard();
             }
             catch (System.Exception ex)
             {
                 Log.Error($"[RimWorld Access] Error removing pawn: {ex}");
-                ClipboardHelper.CopyToClipboard("Error removing pawn");
+                TolkHelper.Speak("Error removing pawn", SpeechPriority.High);
             }
         }
 
@@ -1103,7 +1103,7 @@ namespace RimWorldAccess
                 // Validate we have at least one starting pawn
                 if (Find.GameInitData.startingPawnCount <= 0)
                 {
-                    ClipboardHelper.CopyToClipboard("Error: No starting pawns selected. Use Space to select pawns.");
+                    TolkHelper.Speak("Error: No starting pawns selected. Use Space to select pawns.", SpeechPriority.High);
                     return false;
                 }
 
@@ -1115,18 +1115,18 @@ namespace RimWorldAccess
                     Pawn pawn = pawns[i];
                     if (pawn.Name == null || string.IsNullOrEmpty(pawn.Name.ToString()))
                     {
-                        ClipboardHelper.CopyToClipboard($"Error: Pawn {i + 1} has no name");
+                        TolkHelper.Speak($"Error: Pawn {i + 1} has no name", SpeechPriority.High);
                         return false;
                     }
                 }
 
-                ClipboardHelper.CopyToClipboard("Beginning game...");
+                TolkHelper.Speak("Beginning game...");
                 return true;
             }
             catch (System.Exception ex)
             {
                 Log.Error($"[RimWorld Access] Error beginning game: {ex}");
-                ClipboardHelper.CopyToClipboard("Error beginning game");
+                TolkHelper.Speak("Error beginning game", SpeechPriority.High);
                 return false;
             }
         }

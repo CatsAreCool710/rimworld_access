@@ -127,7 +127,7 @@ namespace RimWorldAccess
         /// </summary>
         public static void Confirm()
         {
-            ClipboardHelper.CopyToClipboard("Storyteller and difficulty confirmed. Closing selection.");
+            TolkHelper.Speak("Storyteller and difficulty confirmed. Closing selection.");
             Close();
             // The page will close itself via the close button
             Find.WindowStack.TryRemove(typeof(Page_SelectStorytellerInGame));
@@ -172,7 +172,7 @@ namespace RimWorldAccess
                 if (selectedStorytellerIndex >= 0 && selectedStorytellerIndex < storytellers.Count)
                 {
                     var st = storytellers[selectedStorytellerIndex];
-                    ClipboardHelper.CopyToClipboard($"Storyteller: {st.label}. {st.description}. Press Tab to switch to difficulty selection.");
+                    TolkHelper.Speak($"Storyteller: {st.label}. {st.description}. Press Tab to switch to difficulty selection.");
                 }
             }
             else // DifficultyList
@@ -180,7 +180,7 @@ namespace RimWorldAccess
                 if (selectedDifficultyIndex >= 0 && selectedDifficultyIndex < difficulties.Count)
                 {
                     var diff = difficulties[selectedDifficultyIndex];
-                    ClipboardHelper.CopyToClipboard($"Difficulty: {diff.LabelCap}. {diff.description}. Press Tab to switch to storyteller selection. Press Enter to confirm.");
+                    TolkHelper.Speak($"Difficulty: {diff.LabelCap}. {diff.description}. Press Tab to switch to storyteller selection. Press Enter to confirm.");
                 }
             }
         }

@@ -15,6 +15,24 @@ namespace RimWorldAccess
 
             LoggerInstance.Msg("RimWorld Access Mod - Initializing accessibility features...");
 
+            // Initialize Tolk screen reader integration
+            try
+            {
+                TolkHelper.SetLogger(LoggerInstance);
+                TolkHelper.Initialize();
+
+                if (TolkHelper.IsActive())
+                {
+                    TolkHelper.Speak("RimWorld Access mod loaded", SpeechPriority.Normal);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                LoggerInstance.Error($"Failed to initialize Tolk screen reader integration: {ex.Message}");
+                LoggerInstance.Error("The mod will not function without Tolk.dll");
+                return;
+            }
+
             // Apply Harmony patches
             var harmony = new HarmonyLib.Harmony("com.rimworldaccess.mainmenukeyboard");
 
@@ -32,7 +50,13 @@ namespace RimWorldAccess
             LoggerInstance.Msg($"Total patches applied: {patchCount}");
 
             LoggerInstance.Msg("RimWorld Access Mod - Main menu keyboard navigation enabled!");
-            LoggerInstance.Msg("Use Arrow keys to navigate, Enter to select. Selected items copy to clipboard.");
+            LoggerInstance.Msg("Use Arrow keys to navigate, Enter to select.");
+        }
+
+        public override void OnDeinitializeMelon()
+        {
+            LoggerInstance.Msg("RimWorld Access Mod - Shutting down...");
+            TolkHelper.Shutdown();
         }
     }
 }

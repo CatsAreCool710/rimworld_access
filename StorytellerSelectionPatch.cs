@@ -29,11 +29,11 @@ namespace RimWorldAccess
                     StorytellerDef storyteller = StorytellerNavigationState.SelectedStoryteller;
                     if (storyteller != null)
                     {
-                        ClipboardHelper.CopyToClipboard($"{pageTitle} - {storyteller.label} - {storyteller.description}. Use Tab to switch between Storyteller, Difficulty, and Permadeath modes.");
+                        TolkHelper.Speak($"{pageTitle} - {storyteller.label} - {storyteller.description}. Use Tab to switch between Storyteller, Difficulty, and Permadeath modes.");
                     }
                     else
                     {
-                        ClipboardHelper.CopyToClipboard(pageTitle);
+                        TolkHelper.Speak(pageTitle);
                     }
                     hasAnnouncedTitle = true;
                 }
@@ -85,15 +85,15 @@ namespace RimWorldAccess
             {
                 case NavigationMode.Storyteller:
                     currentMode = NavigationMode.Difficulty;
-                    ClipboardHelper.CopyToClipboard("Navigation: Difficulty selection (Use Up/Down arrows)");
+                    TolkHelper.Speak("Navigation: Difficulty selection (Use Up/Down arrows)");
                     break;
                 case NavigationMode.Difficulty:
                     currentMode = NavigationMode.Permadeath;
-                    ClipboardHelper.CopyToClipboard("Navigation: Permadeath/Reload mode (Press Enter to toggle)");
+                    TolkHelper.Speak("Navigation: Permadeath/Reload mode (Press Enter to toggle)");
                     break;
                 case NavigationMode.Permadeath:
                     currentMode = NavigationMode.Storyteller;
-                    ClipboardHelper.CopyToClipboard("Navigation: Storyteller selection (Use Up/Down arrows)");
+                    TolkHelper.Speak("Navigation: Storyteller selection (Use Up/Down arrows)");
                     break;
             }
         }

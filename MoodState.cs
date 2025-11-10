@@ -20,21 +20,21 @@ namespace RimWorldAccess
             // Check if we're in-game
             if (Current.ProgramState != ProgramState.Playing)
             {
-                ClipboardHelper.CopyToClipboard("Not in game");
+                TolkHelper.Speak("Not in game");
                 return;
             }
 
             // Check if there's a current map
             if (Find.CurrentMap == null)
             {
-                ClipboardHelper.CopyToClipboard("No map loaded");
+                TolkHelper.Speak("No map loaded");
                 return;
             }
 
             // Check if there's a selection
             if (Find.Selector == null || Find.Selector.NumSelected == 0)
             {
-                ClipboardHelper.CopyToClipboard("No pawn selected");
+                TolkHelper.Speak("No pawn selected");
                 return;
             }
 
@@ -43,21 +43,21 @@ namespace RimWorldAccess
 
             if (selectedPawn == null)
             {
-                ClipboardHelper.CopyToClipboard("Selected object is not a pawn");
+                TolkHelper.Speak("Selected object is not a pawn");
                 return;
             }
 
             // Check if pawn has needs
             if (selectedPawn.needs == null)
             {
-                ClipboardHelper.CopyToClipboard($"{selectedPawn.LabelShort} has no needs");
+                TolkHelper.Speak($"{selectedPawn.LabelShort} has no needs");
                 return;
             }
 
             // Check if pawn has mood need
             if (selectedPawn.needs.mood == null)
             {
-                ClipboardHelper.CopyToClipboard($"{selectedPawn.LabelShort} has no mood");
+                TolkHelper.Speak($"{selectedPawn.LabelShort} has no mood");
                 return;
             }
 
@@ -129,7 +129,7 @@ namespace RimWorldAccess
             }
 
             // Copy to clipboard for screen reader
-            ClipboardHelper.CopyToClipboard(sb.ToString().TrimEnd());
+            TolkHelper.Speak(sb.ToString().TrimEnd());
         }
     }
 }

@@ -24,14 +24,14 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to configure");
+                TolkHelper.Speak("No building to configure");
                 return;
             }
 
             CompTempControl comp = targetBuilding.TryGetComp<CompTempControl>();
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Building does not have temperature control");
+                TolkHelper.Speak("Building does not have temperature control");
                 return;
             }
 
@@ -142,7 +142,7 @@ namespace RimWorldAccess
             }
 
             string announcement = $"{building.LabelCap} - Target: {targetTemp}{powerMode}";
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>

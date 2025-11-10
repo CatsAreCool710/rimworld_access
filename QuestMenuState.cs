@@ -47,7 +47,7 @@ namespace RimWorldAccess
         {
             isActive = false;
             currentQuests.Clear();
-            ClipboardHelper.CopyToClipboard("Quest menu closed");
+            TolkHelper.Speak("Quest menu closed");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace RimWorldAccess
         {
             if (currentQuests.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No quests in this tab");
+                TolkHelper.Speak("No quests in this tab");
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace RimWorldAccess
         {
             if (currentQuests.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No quests in this tab");
+                TolkHelper.Speak("No quests in this tab");
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace RimWorldAccess
         {
             if (currentQuests.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No quest selected");
+                TolkHelper.Speak("No quest selected");
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace RimWorldAccess
 
             // Build detailed information about the quest
             string details = BuildQuestDetails(selectedQuest);
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace RimWorldAccess
         {
             if (currentQuests.Count == 0 || currentTab != QuestsTab.Available)
             {
-                ClipboardHelper.CopyToClipboard("Cannot accept quest");
+                TolkHelper.Speak("Cannot accept quest", SpeechPriority.High);
                 return;
             }
 
@@ -138,21 +138,21 @@ namespace RimWorldAccess
 
             if (selectedQuest.State != QuestState.NotYetAccepted)
             {
-                ClipboardHelper.CopyToClipboard("Quest is not available to accept");
+                TolkHelper.Speak("Quest is not available to accept", SpeechPriority.High);
                 return;
             }
 
             AcceptanceReport canAccept = QuestUtility.CanAcceptQuest(selectedQuest);
             if (!canAccept.Accepted)
             {
-                ClipboardHelper.CopyToClipboard($"Cannot accept: {canAccept.Reason}");
+                TolkHelper.Speak($"Cannot accept: {canAccept.Reason}", SpeechPriority.High);
                 return;
             }
 
             // Accept the quest
             SoundDefOf.Quest_Accepted.PlayOneShotOnCamera();
             selectedQuest.Accept(null);
-            ClipboardHelper.CopyToClipboard($"Accepted quest: {selectedQuest.name.StripTags()}");
+            TolkHelper.Speak($"Accepted quest: {selectedQuest.name.StripTags()}");
 
             // Refresh the list
             RefreshQuestList();
@@ -166,7 +166,7 @@ namespace RimWorldAccess
         {
             if (currentQuests.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No quest selected");
+                TolkHelper.Speak("No quest selected");
                 return;
             }
 
@@ -175,14 +175,14 @@ namespace RimWorldAccess
             if (selectedQuest.Historical)
             {
                 selectedQuest.hiddenInUI = true;
-                ClipboardHelper.CopyToClipboard($"Deleted quest: {selectedQuest.name.StripTags()}");
+                TolkHelper.Speak($"Deleted quest: {selectedQuest.name.StripTags()}");
                 SoundDefOf.Tick_High.PlayOneShotOnCamera();
             }
             else
             {
                 selectedQuest.dismissed = !selectedQuest.dismissed;
                 string action = selectedQuest.dismissed ? "Dismissed" : "Resumed";
-                ClipboardHelper.CopyToClipboard($"{action} quest: {selectedQuest.name.StripTags()}");
+                TolkHelper.Speak($"{action} quest: {selectedQuest.name.StripTags()}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
             }
 
@@ -257,7 +257,7 @@ namespace RimWorldAccess
         {
             string tabName = GetTabName();
             string countInfo = currentQuests.Count == 1 ? "1 quest" : $"{currentQuests.Count} quests";
-            ClipboardHelper.CopyToClipboard($"{tabName} tab - {countInfo}");
+            TolkHelper.Speak($"{tabName} tab - {countInfo}");
 
             if (currentQuests.Count > 0)
             {
@@ -272,13 +272,13 @@ namespace RimWorldAccess
         {
             if (currentQuests.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard($"{GetTabName()} tab - No quests");
+                TolkHelper.Speak($"{GetTabName()} tab - No quests");
                 return;
             }
 
             Quest quest = currentQuests[currentIndex];
             string announcement = BuildQuestAnnouncement(quest);
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>

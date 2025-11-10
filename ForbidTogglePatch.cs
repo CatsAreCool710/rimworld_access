@@ -65,7 +65,7 @@ namespace RimWorldAccess
 
                 if (forbiddableItems.Count == 0)
                 {
-                    ClipboardHelper.CopyToClipboard("Nothing to forbid/unforbid at this location");
+                    TolkHelper.Speak("Nothing to forbid/unforbid at this location");
                     return;
                 }
 
@@ -101,7 +101,7 @@ namespace RimWorldAccess
                         : $"{toggledCount} items no longer forbidden";
                 }
 
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
                 MelonLoader.MelonLogger.Msg($"Forbid toggle: {announcement}");
             }
         }

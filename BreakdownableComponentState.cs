@@ -23,14 +23,14 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to inspect");
+                TolkHelper.Speak("No building to inspect");
                 return;
             }
 
             CompBreakdownable comp = targetBuilding.TryGetComp<CompBreakdownable>();
             if (comp == null)
             {
-                ClipboardHelper.CopyToClipboard("Building cannot break down");
+                TolkHelper.Speak("Building cannot break down", SpeechPriority.High);
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace RimWorldAccess
                 }
             }
 
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
 
         /// <summary>

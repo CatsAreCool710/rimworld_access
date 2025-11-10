@@ -85,7 +85,7 @@ namespace RimWorldAccess
 
             // Announce
             string announcement = $"Jumped to {selectedPawn.LabelShort}";
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard(info);
+            TolkHelper.Speak(info);
         }
 
         /// <summary>
@@ -150,14 +150,14 @@ namespace RimWorldAccess
         {
             if (Find.Selector == null || Find.Selector.NumSelected == 0)
             {
-                ClipboardHelper.CopyToClipboard("No pawn selected");
+                TolkHelper.Speak("No pawn selected");
                 return null;
             }
 
             Pawn selectedPawn = Find.Selector.FirstSelectedObject as Pawn;
             if (selectedPawn == null)
             {
-                ClipboardHelper.CopyToClipboard("Selected object is not a pawn");
+                TolkHelper.Speak("Selected object is not a pawn");
                 return null;
             }
 

@@ -100,7 +100,7 @@ namespace RimWorldAccess
             selectedIndex = 0;
             workEntries.Clear();
 
-            ClipboardHelper.CopyToClipboard("Work menu cancelled");
+            TolkHelper.Speak("Work menu cancelled");
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace RimWorldAccess
                 ? $"Applied {changesApplied} work assignment changes for {currentPawn.LabelShort}"
                 : $"No changes made for {currentPawn.LabelShort}";
 
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
 
             isActive = false;
             currentPawn = null;
@@ -154,7 +154,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("At top of list");
+                TolkHelper.Speak("At top of list");
             }
         }
 
@@ -173,7 +173,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("At bottom of list");
+                TolkHelper.Speak("At bottom of list");
             }
         }
 
@@ -192,7 +192,7 @@ namespace RimWorldAccess
 
             if (entry.IsDisabled)
             {
-                ClipboardHelper.CopyToClipboard($"{entry.WorkType.labelShort}: Disabled - cannot toggle");
+                TolkHelper.Speak($"{entry.WorkType.labelShort}: Disabled - cannot toggle", SpeechPriority.High);
                 return;
             }
 
@@ -214,7 +214,7 @@ namespace RimWorldAccess
 
             if (entry.IsDisabled)
             {
-                ClipboardHelper.CopyToClipboard($"{entry.WorkType.labelShort}: Disabled - cannot change priority");
+                TolkHelper.Speak($"{entry.WorkType.labelShort}: Disabled - cannot change priority", SpeechPriority.High);
                 return;
             }
 
@@ -238,7 +238,7 @@ namespace RimWorldAccess
             currentPawn = allPawns[currentPawnIndex];
             selectedIndex = 0;
             LoadWorkTypesForCurrentPawn();
-            ClipboardHelper.CopyToClipboard($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
+            TolkHelper.Speak($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace RimWorldAccess
             currentPawn = allPawns[currentPawnIndex];
             selectedIndex = 0;
             LoadWorkTypesForCurrentPawn();
-            ClipboardHelper.CopyToClipboard($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
+            TolkHelper.Speak($"Now editing: {currentPawn.LabelShort} ({currentPawnIndex + 1}/{allPawns.Count})");
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace RimWorldAccess
         {
             if (!Find.PlaySettings.useWorkPriorities)
             {
-                ClipboardHelper.CopyToClipboard("Column reordering only available in manual priorities mode");
+                TolkHelper.Speak("Column reordering only available in manual priorities mode");
                 return;
             }
 
@@ -286,7 +286,7 @@ namespace RimWorldAccess
             int currentIndex = allWorkTypes.IndexOf(entry.WorkType);
             if (currentIndex <= 0)
             {
-                ClipboardHelper.CopyToClipboard($"{entry.WorkType.labelShort}: Already at highest priority");
+                TolkHelper.Speak($"{entry.WorkType.labelShort}: Already at highest priority");
                 return;
             }
 
@@ -338,7 +338,7 @@ namespace RimWorldAccess
             if (selectedIndex < 0)
                 selectedIndex = 0;
 
-            ClipboardHelper.CopyToClipboard($"{entry.WorkType.labelShort}: Moved up in priority order (will execute earlier when priorities are equal)");
+            TolkHelper.Speak($"{entry.WorkType.labelShort}: Moved up in priority order (will execute earlier when priorities are equal)");
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace RimWorldAccess
         {
             if (!Find.PlaySettings.useWorkPriorities)
             {
-                ClipboardHelper.CopyToClipboard("Column reordering only available in manual priorities mode");
+                TolkHelper.Speak("Column reordering only available in manual priorities mode");
                 return;
             }
 
@@ -368,7 +368,7 @@ namespace RimWorldAccess
             int currentIndex = allWorkTypes.IndexOf(entry.WorkType);
             if (currentIndex >= allWorkTypes.Count - 1)
             {
-                ClipboardHelper.CopyToClipboard($"{entry.WorkType.labelShort}: Already at lowest priority");
+                TolkHelper.Speak($"{entry.WorkType.labelShort}: Already at lowest priority");
                 return;
             }
 
@@ -420,7 +420,7 @@ namespace RimWorldAccess
             if (selectedIndex < 0)
                 selectedIndex = 0;
 
-            ClipboardHelper.CopyToClipboard($"{entry.WorkType.labelShort}: Moved down in priority order (will execute later when priorities are equal)");
+            TolkHelper.Speak($"{entry.WorkType.labelShort}: Moved down in priority order (will execute later when priorities are equal)");
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace RimWorldAccess
             }
 
             string mode = Find.PlaySettings.useWorkPriorities ? "manual priorities" : "simple";
-            ClipboardHelper.CopyToClipboard($"Switched to {mode} mode");
+            TolkHelper.Speak($"Switched to {mode} mode");
             UpdateClipboard();
         }
 
@@ -458,7 +458,7 @@ namespace RimWorldAccess
         {
             if (workEntries.Count == 0 || selectedIndex < 0 || selectedIndex >= workEntries.Count)
             {
-                ClipboardHelper.CopyToClipboard("No work types available");
+                TolkHelper.Speak("No work types available");
                 return;
             }
 
@@ -486,7 +486,7 @@ namespace RimWorldAccess
                 message = $"{entry.WorkType.labelShort}: {status}{changed}";
             }
 
-            ClipboardHelper.CopyToClipboard(message);
+            TolkHelper.Speak(message);
         }
 
         /// <summary>

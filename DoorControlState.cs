@@ -23,14 +23,14 @@ namespace RimWorldAccess
         {
             if (targetBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to configure");
+                TolkHelper.Speak("No building to configure");
                 return;
             }
 
             Building_Door doorBuilding = targetBuilding as Building_Door;
             if (doorBuilding == null)
             {
-                ClipboardHelper.CopyToClipboard("Building is not a door");
+                TolkHelper.Speak("Building is not a door");
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Error: Could not access door hold-open setting");
+                TolkHelper.Speak("Error: Could not access door hold-open setting", SpeechPriority.High);
             }
         }
 
@@ -91,7 +91,7 @@ namespace RimWorldAccess
 
             string announcement = string.Format("{0} - {1} {2}", doorLabel, status, openStatus);
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace RimWorldAccess
                 details += "Status: Manual door (no power required)";
             }
 
-            ClipboardHelper.CopyToClipboard(details);
+            TolkHelper.Speak(details);
         }
     }
 }

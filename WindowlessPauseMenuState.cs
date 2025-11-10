@@ -90,7 +90,7 @@ namespace RimWorldAccess
         {
             if (selectedIndex >= 0 && selectedIndex < currentOptions.Count)
             {
-                ClipboardHelper.CopyToClipboard(currentOptions[selectedIndex].Label);
+                TolkHelper.Speak(currentOptions[selectedIndex].Label);
             }
         }
 
@@ -131,7 +131,7 @@ namespace RimWorldAccess
                     "ReviewScenario".Translate(),
                     () => {
                         string scenarioText = Find.Scenario.name + ": " + Find.Scenario.GetFullInformationText();
-                        ClipboardHelper.CopyToClipboard(scenarioText);
+                        TolkHelper.Speak(scenarioText);
                     }
                 ));
 
@@ -173,7 +173,7 @@ namespace RimWorldAccess
                             if (GameDataSaveLoader.CurrentGameStateIsValuable)
                             {
                                 // Show confirmation
-                                ClipboardHelper.CopyToClipboard("Confirm quit to main menu? Press Enter to confirm, Escape to cancel");
+                                TolkHelper.Speak("Confirm quit to main menu? Press Enter to confirm, Escape to cancel");
                                 WindowlessConfirmationState.Open(
                                     "ConfirmQuit".Translate(),
                                     GenScene.GoToMainMenu
@@ -192,7 +192,7 @@ namespace RimWorldAccess
                             if (GameDataSaveLoader.CurrentGameStateIsValuable)
                             {
                                 // Show confirmation
-                                ClipboardHelper.CopyToClipboard("Confirm quit to desktop? Press Enter to confirm, Escape to cancel");
+                                TolkHelper.Speak("Confirm quit to desktop? Press Enter to confirm, Escape to cancel");
                                 WindowlessConfirmationState.Open(
                                     "ConfirmQuit".Translate(),
                                     Root.Shutdown
@@ -211,7 +211,7 @@ namespace RimWorldAccess
                     "ResumeGame".Translate(),
                     () => {
                         // Just close the menu
-                        ClipboardHelper.CopyToClipboard("Resumed game");
+                        TolkHelper.Speak("Resumed game");
                     }
                 ));
             }

@@ -64,7 +64,7 @@ namespace RimWorldAccess
                 string info = GetInfoForKey(pressedKey.Value, currentPosition, Find.CurrentMap);
 
                 // Copy to clipboard for screen reader
-                ClipboardHelper.CopyToClipboard(info);
+                TolkHelper.Speak(info);
 
                 // Log to console for debugging
                 MelonLoader.MelonLogger.Msg($"Tile info ({pressedKey.Value}) requested for {currentPosition}");

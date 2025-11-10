@@ -115,14 +115,14 @@ namespace RimWorldAccess
 
                 animal.playerSettings.Master = master;
                 string masterName = master?.LabelShort.StripTags() ?? "None";
-                ClipboardHelper.CopyToClipboard($"Master set to: {masterName}");
+                TolkHelper.Speak($"Master set to: {masterName}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error setting master: {ex}");
-                ClipboardHelper.CopyToClipboard("Error setting master");
+                TolkHelper.Speak("Error setting master", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -140,14 +140,14 @@ namespace RimWorldAccess
 
                 pawn.playerSettings.followDrafted = !pawn.playerSettings.followDrafted;
                 string status = pawn.playerSettings.followDrafted ? "enabled" : "disabled";
-                ClipboardHelper.CopyToClipboard($"Follow drafted {status}");
+                TolkHelper.Speak($"Follow drafted {status}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error toggling follow drafted: {ex}");
-                ClipboardHelper.CopyToClipboard("Error toggling follow drafted");
+                TolkHelper.Speak("Error toggling follow drafted", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -165,14 +165,14 @@ namespace RimWorldAccess
 
                 pawn.playerSettings.followFieldwork = !pawn.playerSettings.followFieldwork;
                 string status = pawn.playerSettings.followFieldwork ? "enabled" : "disabled";
-                ClipboardHelper.CopyToClipboard($"Follow fieldwork {status}");
+                TolkHelper.Speak($"Follow fieldwork {status}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error toggling follow fieldwork: {ex}");
-                ClipboardHelper.CopyToClipboard("Error toggling follow fieldwork");
+                TolkHelper.Speak("Error toggling follow fieldwork", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -297,7 +297,7 @@ namespace RimWorldAccess
                 var acceptanceReport = pawn.training.CanAssignToTrain(trainable);
                 if (!acceptanceReport.Accepted)
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot train: {acceptanceReport.Reason}");
+                    TolkHelper.Speak($"Cannot train: {acceptanceReport.Reason}", SpeechPriority.High);
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     return false;
                 }
@@ -306,14 +306,14 @@ namespace RimWorldAccess
                 pawn.training.SetWantedRecursive(trainable, newState);
 
                 string status = newState ? "enabled" : "disabled";
-                ClipboardHelper.CopyToClipboard($"Training {trainable.LabelCap} {status}");
+                TolkHelper.Speak($"Training {trainable.LabelCap} {status}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error toggling training: {ex}");
-                ClipboardHelper.CopyToClipboard("Error toggling training");
+                TolkHelper.Speak("Error toggling training", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }

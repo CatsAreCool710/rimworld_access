@@ -52,7 +52,7 @@ namespace RimWorldAccess
                 }
 
                 announcement += ". Use Tab to navigate between fields. Press Enter to confirm.";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
                 GiveNameDialogState.MarkAsAnnounced();
                 MelonLoader.MelonLogger.Msg($"Dialog announced: {announcement.Substring(0, Mathf.Min(100, announcement.Length))}...");
             }
@@ -128,7 +128,7 @@ namespace RimWorldAccess
                             {
                                 string newName = generator();
                                 curNameField.SetValue(dialog, newName);
-                                ClipboardHelper.CopyToClipboard($"Randomized: {newName}");
+                                TolkHelper.Speak($"Randomized: {newName}");
                                 MelonLoader.MelonLogger.Msg($"Randomized name to: {newName}");
                             }
                         }
@@ -161,7 +161,7 @@ namespace RimWorldAccess
                         {
                             string newName = generator1();
                             curNameField.SetValue(dialog, newName);
-                            ClipboardHelper.CopyToClipboard($"Randomized first name: {newName}");
+                            TolkHelper.Speak($"Randomized first name: {newName}");
                             MelonLoader.MelonLogger.Msg($"Randomized first name to: {newName}");
                         }
                         break;
@@ -172,7 +172,7 @@ namespace RimWorldAccess
                         {
                             string newName = generator2();
                             curSecondNameField.SetValue(dialog, newName);
-                            ClipboardHelper.CopyToClipboard($"Randomized second name: {newName}");
+                            TolkHelper.Speak($"Randomized second name: {newName}");
                             MelonLoader.MelonLogger.Msg($"Randomized second name to: {newName}");
                         }
                         break;
@@ -213,14 +213,14 @@ namespace RimWorldAccess
                     namedSecondMethod.Invoke(dialog, new object[] { text2 });
                     string gainedNameMessageKey = (string)gainedNameMessageKeyField.GetValue(dialog);
                     Messages.Message(gainedNameMessageKey.Translate(text, text2), MessageTypeDefOf.TaskCompletion, historical: false);
-                    ClipboardHelper.CopyToClipboard($"Names accepted: {text}, {text2}");
+                    TolkHelper.Speak($"Names accepted: {text}, {text2}");
                 }
                 else
                 {
                     namedMethod.Invoke(dialog, new object[] { text });
                     string gainedNameMessageKey = (string)gainedNameMessageKeyField.GetValue(dialog);
                     Messages.Message(gainedNameMessageKey.Translate(text), MessageTypeDefOf.TaskCompletion, historical: false);
-                    ClipboardHelper.CopyToClipboard($"Name accepted: {text}");
+                    TolkHelper.Speak($"Name accepted: {text}");
                 }
 
                 Find.WindowStack.TryRemove(dialog);
@@ -230,7 +230,7 @@ namespace RimWorldAccess
             {
                 string invalidNameMessageKey = (string)invalidNameMessageKeyField.GetValue(dialog);
                 Messages.Message(invalidNameMessageKey.Translate(), MessageTypeDefOf.RejectInput, historical: false);
-                ClipboardHelper.CopyToClipboard("Invalid name");
+                TolkHelper.Speak("Invalid name");
                 MelonLoader.MelonLogger.Msg("Dialog submission rejected: invalid name");
             }
         }
@@ -293,7 +293,7 @@ namespace RimWorldAccess
                 }
             }
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             MelonLoader.MelonLogger.Msg($"Focus changed to: {announcement}");
         }
 

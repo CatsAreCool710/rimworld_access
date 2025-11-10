@@ -138,7 +138,7 @@ namespace RimWorldAccess
                     if (!lastInfo.StartsWith("Selected"))
                     {
                         string modifiedInfo = "Selected, " + lastInfo;
-                        ClipboardHelper.CopyToClipboard(modifiedInfo);
+                        TolkHelper.Speak(modifiedInfo);
                         MapNavigationState.LastAnnouncedInfo = modifiedInfo;
                     }
                 }

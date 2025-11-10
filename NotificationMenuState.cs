@@ -33,7 +33,7 @@ namespace RimWorldAccess
         {
             if (Find.CurrentMap == null)
             {
-                ClipboardHelper.CopyToClipboard("No map available");
+                TolkHelper.Speak("No map available");
                 return;
             }
 
@@ -42,7 +42,7 @@ namespace RimWorldAccess
 
             if (notifications.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No notifications available");
+                TolkHelper.Speak("No notifications available");
                 return;
             }
 
@@ -148,7 +148,7 @@ namespace RimWorldAccess
             else
             {
                 Close();
-                ClipboardHelper.CopyToClipboard("Notification menu closed");
+                TolkHelper.Speak("Notification menu closed");
             }
         }
 
@@ -255,7 +255,7 @@ namespace RimWorldAccess
             {
                 // In detail view, show full explanation
                 string announcement = BuildDetailAnnouncement(item);
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
             else
             {
@@ -264,7 +264,7 @@ namespace RimWorldAccess
                                   item.Type == NotificationType.Letter ? "Letter" :
                                   "Alert";
                 string announcement = $"{typeLabel}: {item.Label}";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
             }
         }
 
@@ -331,7 +331,7 @@ namespace RimWorldAccess
         {
             if (!item.HasValidTarget)
             {
-                ClipboardHelper.CopyToClipboard("No target location available");
+                TolkHelper.Speak("No target location available");
                 return;
             }
 
@@ -361,17 +361,17 @@ namespace RimWorldAccess
                     string locationDesc = target.HasThing ? target.Thing.LabelShort :
                                          target.Cell.IsValid ? $"position {target.Cell.x}, {target.Cell.z}" :
                                          "target location";
-                    ClipboardHelper.CopyToClipboard($"Jumped to {locationDesc}");
+                    TolkHelper.Speak($"Jumped to {locationDesc}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Target location is not valid");
+                    TolkHelper.Speak("Target location is not valid");
                 }
             }
             catch (Exception ex)
             {
                 Log.Warning($"RimWorld Access: Failed to jump to target: {ex.Message}");
-                ClipboardHelper.CopyToClipboard("Failed to jump to target");
+                TolkHelper.Speak("Failed to jump to target", SpeechPriority.High);
             }
         }
 

@@ -33,7 +33,7 @@ namespace RimWorldAccess
 
             // Announce the trade summary with instructions
             string announcement = tradeSummary + "\n\nPress Enter to confirm trade, Escape to cancel and return to trading";
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             SoundDefOf.Click.PlayOneShotOnCamera();
         }
 
@@ -61,7 +61,7 @@ namespace RimWorldAccess
                 return;
 
             Close();
-            ClipboardHelper.CopyToClipboard("Trade cancelled - returned to trading menu");
+            TolkHelper.Speak("Trade cancelled - returned to trading menu");
             SoundDefOf.Click.PlayOneShotOnCamera();
 
             // Announce current selection in trade menu

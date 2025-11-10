@@ -223,7 +223,7 @@ namespace RimWorldAccess
                         backstories = CharacterTabHelper.GetBackstories(currentPawn);
                         if (backstories.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No backstories");
+                            TolkHelper.Speak("No backstories");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -235,7 +235,7 @@ namespace RimWorldAccess
                         traits = CharacterTabHelper.GetTraits(currentPawn);
                         if (traits.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No traits");
+                            TolkHelper.Speak("No traits");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -247,7 +247,7 @@ namespace RimWorldAccess
                         incapacities = CharacterTabHelper.GetIncapacities(currentPawn);
                         if (incapacities.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No incapacities");
+                            TolkHelper.Speak("No incapacities");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -259,7 +259,7 @@ namespace RimWorldAccess
                         abilities = CharacterTabHelper.GetAbilities(currentPawn);
                         if (abilities.Count == 0)
                         {
-                            ClipboardHelper.CopyToClipboard("No abilities");
+                            TolkHelper.Speak("No abilities");
                             SoundDefOf.ClickReject.PlayOneShotOnCamera();
                             return;
                         }
@@ -314,7 +314,7 @@ namespace RimWorldAccess
             {
                 case MenuLevel.SectionMenu:
                     Close();
-                    ClipboardHelper.CopyToClipboard("Closed Character tab");
+                    TolkHelper.Speak("Closed Character tab");
                     break;
 
                 case MenuLevel.BasicInfo:
@@ -461,7 +461,7 @@ namespace RimWorldAccess
                     break;
             }
 
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
         }
     }
 }

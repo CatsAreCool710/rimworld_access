@@ -26,7 +26,7 @@ namespace RimWorldAccess
         {
             if (building == null)
             {
-                ClipboardHelper.CopyToClipboard("No building to inspect");
+                TolkHelper.Speak("No building to inspect");
                 return;
             }
 
@@ -39,7 +39,7 @@ namespace RimWorldAccess
 
             if (availableTabs.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard($"{building.LabelCap} - No available tabs");
+                TolkHelper.Speak($"{building.LabelCap} - No available tabs");
                 Close();
                 return;
             }
@@ -50,7 +50,7 @@ namespace RimWorldAccess
             {
                 announcement += $" - Tab: {availableTabs[selectedTabIndex].labelKey.Translate()}";
             }
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace RimWorldAccess
             }
 
             // For other tabs, just announce that they're not yet supported
-            ClipboardHelper.CopyToClipboard($"Tab {currentTab.labelKey.Translate()} not yet supported for keyboard access");
+            TolkHelper.Speak($"Tab {currentTab.labelKey.Translate()} not yet supported for keyboard access");
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace RimWorldAccess
             }
 
             // If no recognized settings, announce
-            ClipboardHelper.CopyToClipboard($"{selectedBuilding.LabelCap} has no keyboard-accessible settings");
+            TolkHelper.Speak($"{selectedBuilding.LabelCap} has no keyboard-accessible settings");
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace RimWorldAccess
                 return;
 
             string tabName = availableTabs[selectedTabIndex].labelKey.Translate();
-            ClipboardHelper.CopyToClipboard($"Tab: {tabName}");
+            TolkHelper.Speak($"Tab: {tabName}");
         }
     }
 }

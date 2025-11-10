@@ -29,7 +29,7 @@ namespace RimWorldAccess
             {
                 // Announce the message to screen reader via clipboard
                 string announcement = $"Message: {msg.text}";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
                 MelonLogger.Msg($"[Notification] {announcement}");
             }
         }
@@ -47,7 +47,7 @@ namespace RimWorldAccess
             {
                 // Announce the letter to screen reader via clipboard
                 string announcement = $"Letter: {let.Label}";
-                ClipboardHelper.CopyToClipboard(announcement);
+                TolkHelper.Speak(announcement);
                 MelonLogger.Msg($"[Notification] {announcement}");
             }
         }
@@ -82,7 +82,7 @@ namespace RimWorldAccess
                         if (!announcedAlerts.Contains(label))
                         {
                             string announcement = $"Alert: {label}";
-                            ClipboardHelper.CopyToClipboard(announcement);
+                            TolkHelper.Speak(announcement);
                             MelonLogger.Msg($"[Notification] {announcement}");
                         }
                     }

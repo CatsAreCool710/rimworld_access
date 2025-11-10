@@ -81,7 +81,7 @@ namespace RimWorldAccess
             currentMap = null;
             currentMode = NavigationMode.AreaList;
 
-            ClipboardHelper.CopyToClipboard("Area manager closed");
+            TolkHelper.Speak("Area manager closed");
         }
 
         /// <summary>
@@ -238,12 +238,12 @@ namespace RimWorldAccess
                     LoadAreas();
                     selectedAreaIndex = allAreas.IndexOf(newArea);
                     selectedArea = newArea;
-                    ClipboardHelper.CopyToClipboard($"Created new area: {newArea.Label}");
+                    TolkHelper.Speak($"Created new area: {newArea.Label}");
                     ReturnToAreaList();
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Cannot create area. Maximum of 10 areas reached.");
+                    TolkHelper.Speak("Cannot create area. Maximum of 10 areas reached.", SpeechPriority.High);
                 }
             }
         }
@@ -256,7 +256,7 @@ namespace RimWorldAccess
             if (selectedArea != null)
             {
                 Find.WindowStack.Add(new Dialog_RenameArea(selectedArea));
-                ClipboardHelper.CopyToClipboard($"Rename area: {selectedArea.Label}. Enter new name and press Enter.");
+                TolkHelper.Speak($"Rename area: {selectedArea.Label}. Enter new name and press Enter.");
             }
         }
 
@@ -306,7 +306,7 @@ namespace RimWorldAccess
             if (selectedArea != null)
             {
                 selectedArea.Invert();
-                ClipboardHelper.CopyToClipboard($"Inverted area: {selectedArea.Label}. All cells toggled.");
+                TolkHelper.Speak($"Inverted area: {selectedArea.Label}. All cells toggled.");
             }
         }
 
@@ -326,11 +326,11 @@ namespace RimWorldAccess
                     LoadAreas();
                     selectedAreaIndex = allAreas.IndexOf(newArea);
                     selectedArea = newArea;
-                    ClipboardHelper.CopyToClipboard($"Copied area to: {newArea.Label}");
+                    TolkHelper.Speak($"Copied area to: {newArea.Label}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("Cannot copy area. Maximum of 10 areas reached.");
+                    TolkHelper.Speak("Cannot copy area. Maximum of 10 areas reached.", SpeechPriority.High);
                 }
             }
         }
@@ -359,7 +359,7 @@ namespace RimWorldAccess
                 selectedAreaIndex = 0;
             }
 
-            ClipboardHelper.CopyToClipboard($"Deleted area: {deletedName}");
+            TolkHelper.Speak($"Deleted area: {deletedName}");
         }
 
         /// <summary>
@@ -372,17 +372,17 @@ namespace RimWorldAccess
                 if (selectedArea != null)
                 {
                     int cellCount = selectedArea.TrueCount;
-                    ClipboardHelper.CopyToClipboard($"Area {selectedAreaIndex + 1}/{allAreas.Count}: {selectedArea.Label} ({cellCount} cells). Press Tab for actions.");
+                    TolkHelper.Speak($"Area {selectedAreaIndex + 1}/{allAreas.Count}: {selectedArea.Label} ({cellCount} cells). Press Tab for actions.");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No areas available. Press Tab to create one.");
+                    TolkHelper.Speak("No areas available. Press Tab to create one.");
                 }
             }
             else if (currentMode == NavigationMode.AreaActions)
             {
                 string action = areaActions[selectedActionIndex];
-                ClipboardHelper.CopyToClipboard($"Action {selectedActionIndex + 1}/{areaActions.Length}: {action}. Press Enter to execute, Tab/Shift+Tab or arrows to navigate, Escape to return to area list.");
+                TolkHelper.Speak($"Action {selectedActionIndex + 1}/{areaActions.Length}: {action}. Press Enter to execute, Tab/Shift+Tab or arrows to navigate, Escape to return to area list.");
             }
         }
     }

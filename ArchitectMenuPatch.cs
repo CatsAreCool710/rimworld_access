@@ -68,7 +68,7 @@ namespace RimWorldAccess
             if (ArchitectState.IsActive)
             {
                 ArchitectState.Reset();
-                ClipboardHelper.CopyToClipboard("Architect menu closed");
+                TolkHelper.Speak("Architect menu closed");
                 Event.current.Use();
                 return;
             }
@@ -90,7 +90,7 @@ namespace RimWorldAccess
 
             if (categories.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No architect categories available");
+                TolkHelper.Speak("No architect categories available");
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace RimWorldAccess
 
             if (designators.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard($"No tools available in {category.LabelCap}");
+                TolkHelper.Speak($"No tools available in {category.LabelCap}");
                 ArchitectState.Reset();
                 return;
             }
@@ -174,7 +174,7 @@ namespace RimWorldAccess
 
             if (options.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard($"No materials available for {buildable.label}");
+                TolkHelper.Speak($"No materials available for {buildable.label}");
                 ArchitectState.Reset();
                 return;
             }

@@ -80,7 +80,7 @@ namespace RimWorldAccess
             allPolicies.Clear();
             currentMode = NavigationMode.PolicyList;
 
-            ClipboardHelper.CopyToClipboard("Food policy manager closed");
+            TolkHelper.Speak("Food policy manager closed");
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace RimWorldAccess
                 LoadPolicies();
                 selectedPolicyIndex = allPolicies.IndexOf(newPolicy);
                 selectedPolicy = newPolicy;
-                ClipboardHelper.CopyToClipboard($"Created new food policy: {newPolicy.label}");
+                TolkHelper.Speak($"Created new food policy: {newPolicy.label}");
             }
         }
 
@@ -225,7 +225,7 @@ namespace RimWorldAccess
             if (selectedPolicy != null)
             {
                 Find.WindowStack.Add(new Dialog_RenamePolicy(selectedPolicy));
-                ClipboardHelper.CopyToClipboard($"Rename policy: {selectedPolicy.label}. Enter new name and press Enter.");
+                TolkHelper.Speak($"Rename policy: {selectedPolicy.label}. Enter new name and press Enter.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace RimWorldAccess
                 LoadPolicies();
                 selectedPolicyIndex = allPolicies.IndexOf(newPolicy);
                 selectedPolicy = newPolicy;
-                ClipboardHelper.CopyToClipboard($"Duplicated policy: {newPolicy.label}");
+                TolkHelper.Speak($"Duplicated policy: {newPolicy.label}");
             }
         }
 
@@ -274,11 +274,11 @@ namespace RimWorldAccess
                         selectedPolicyIndex = 0;
                     }
 
-                    ClipboardHelper.CopyToClipboard($"Deleted policy: {deletedName}");
+                    TolkHelper.Speak($"Deleted policy: {deletedName}");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot delete: {result.Reason}");
+                    TolkHelper.Speak($"Cannot delete: {result.Reason}", SpeechPriority.High);
                 }
             }
         }
@@ -291,7 +291,7 @@ namespace RimWorldAccess
             if (selectedPolicy != null && Current.Game?.foodRestrictionDatabase != null)
             {
                 Current.Game.foodRestrictionDatabase.SetDefault(selectedPolicy);
-                ClipboardHelper.CopyToClipboard($"Set {selectedPolicy.label} as default food policy");
+                TolkHelper.Speak($"Set {selectedPolicy.label} as default food policy");
             }
         }
 
@@ -310,7 +310,7 @@ namespace RimWorldAccess
                 // Activate filter navigation - no quality or hitpoints for food
                 ThingFilterNavigationState.Activate(selectedPolicy.filter, rootNode, showQuality: false, showHitPoints: false);
 
-                ClipboardHelper.CopyToClipboard($"Editing filter for {selectedPolicy.label}. Use arrows to navigate, Space to toggle, Enter to expand/collapse categories.");
+                TolkHelper.Speak($"Editing filter for {selectedPolicy.label}. Use arrows to navigate, Space to toggle, Enter to expand/collapse categories.");
             }
         }
 
@@ -325,17 +325,17 @@ namespace RimWorldAccess
                 {
                     bool isDefault = Current.Game?.foodRestrictionDatabase?.DefaultFoodRestriction() == selectedPolicy;
                     string defaultMarker = isDefault ? " (default)" : "";
-                    ClipboardHelper.CopyToClipboard($"Food policy {selectedPolicyIndex + 1}/{allPolicies.Count}: {selectedPolicy.label}{defaultMarker}. Press Tab for actions.");
+                    TolkHelper.Speak($"Food policy {selectedPolicyIndex + 1}/{allPolicies.Count}: {selectedPolicy.label}{defaultMarker}. Press Tab for actions.");
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No food policies available. Press Tab to create one.");
+                    TolkHelper.Speak("No food policies available. Press Tab to create one.");
                 }
             }
             else if (currentMode == NavigationMode.PolicyActions)
             {
                 string action = policyActions[selectedActionIndex];
-                ClipboardHelper.CopyToClipboard($"Action {selectedActionIndex + 1}/{policyActions.Length}: {action}. Press Enter to execute, Tab/Shift+Tab or arrows to navigate, Escape to return to policy list.");
+                TolkHelper.Speak($"Action {selectedActionIndex + 1}/{policyActions.Length}: {action}. Press Enter to execute, Tab/Shift+Tab or arrows to navigate, Escape to return to policy list.");
             }
         }
     }

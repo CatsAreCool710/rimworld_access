@@ -91,7 +91,7 @@ namespace RimWorldAccess
 
             if (allItems.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("Inventory menu opened. No items in colony storage.");
+                TolkHelper.Speak("Inventory menu opened. No items in colony storage.");
                 rootNodes = new List<TreeNode>();
                 flattenedVisibleNodes = new List<TreeNode>();
                 SoundDefOf.TabOpen.PlayOneShotOnCamera();
@@ -112,7 +112,7 @@ namespace RimWorldAccess
 
             // Announce opening
             string announcement = $"Colony inventory opened. {aggregatedItems.Count} item types in storage. {rootNodes.Count} categories.";
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             SoundDefOf.TabOpen.PlayOneShotOnCamera();
 
             // Announce first selection
@@ -251,7 +251,7 @@ namespace RimWorldAccess
             flattenedVisibleNodes.Clear();
             selectedIndex = 0;
 
-            ClipboardHelper.CopyToClipboard("Inventory menu closed.");
+            TolkHelper.Speak("Inventory menu closed.");
             SoundDefOf.TabClose.PlayOneShotOnCamera();
         }
 
@@ -364,11 +364,11 @@ namespace RimWorldAccess
                 current.IsExpanded = true;
                 RebuildFlattenedList();
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard($"Expanded: {current.Label}");
+                TolkHelper.Speak($"Expanded: {current.Label}");
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Cannot expand this item.");
+                TolkHelper.Speak("Cannot expand this item.", SpeechPriority.High);
             }
         }
 
@@ -386,7 +386,7 @@ namespace RimWorldAccess
                 current.IsExpanded = false;
                 RebuildFlattenedList();
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard($"Collapsed: {current.Label}");
+                TolkHelper.Speak($"Collapsed: {current.Label}");
             }
             else if (current.Parent != null)
             {
@@ -399,11 +399,11 @@ namespace RimWorldAccess
                 if (selectedIndex < 0) selectedIndex = 0;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                ClipboardHelper.CopyToClipboard($"Collapsed parent: {current.Parent.Label}");
+                TolkHelper.Speak($"Collapsed parent: {current.Parent.Label}");
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("Cannot collapse this item.");
+                TolkHelper.Speak("Cannot collapse this item.", SpeechPriority.High);
             }
         }
 
@@ -438,7 +438,7 @@ namespace RimWorldAccess
             }
             else
             {
-                ClipboardHelper.CopyToClipboard("This item has no actions.");
+                TolkHelper.Speak("This item has no actions.");
             }
         }
 
@@ -449,7 +449,7 @@ namespace RimWorldAccess
         {
             if (flattenedVisibleNodes.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("Inventory is empty.");
+                TolkHelper.Speak("Inventory is empty.");
                 return;
             }
 
@@ -470,7 +470,7 @@ namespace RimWorldAccess
             }
 
             string announcement = $"{current.Label} {typeInfo}".Trim();
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace RimWorldAccess
         {
             if (item.StorageLocations.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No storage location found for this item.");
+                TolkHelper.Speak("No storage location found for this item.");
                 return;
             }
 
@@ -498,7 +498,7 @@ namespace RimWorldAccess
                 MapNavigationState.CurrentCursorPosition = location;
             }
 
-            ClipboardHelper.CopyToClipboard($"Jumped to {item.Def.LabelCap} storage location at {location}.");
+            TolkHelper.Speak($"Jumped to {item.Def.LabelCap} storage location at {location}.");
             SoundDefOf.Click.PlayOneShotOnCamera();
 
             // Close the inventory menu after jumping
@@ -536,7 +536,7 @@ namespace RimWorldAccess
             details.Add($"Storage locations: {item.StorageLocations.Count}");
 
             string announcement = string.Join(". ", details);
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
             SoundDefOf.Click.PlayOneShotOnCamera();
         }
 

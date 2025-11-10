@@ -401,14 +401,14 @@ namespace RimWorldAccess
             try
             {
                 // Placeholder - actual implementation would set the game's pregnancy approach
-                ClipboardHelper.CopyToClipboard($"Pregnancy approach set to: {approach}");
+                TolkHelper.Speak($"Pregnancy approach set to: {approach}");
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error setting pregnancy approach: {ex}");
-                ClipboardHelper.CopyToClipboard("Error setting pregnancy approach");
+                TolkHelper.Speak("Error setting pregnancy approach", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }

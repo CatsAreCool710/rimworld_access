@@ -294,7 +294,7 @@ namespace RimWorldAccess
                 else if (key == KeyCode.Escape)
                 {
                     WindowlessPauseMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Menu closed");
+                    TolkHelper.Speak("Menu closed");
                     handled = true;
                 }
 
@@ -638,7 +638,7 @@ namespace RimWorldAccess
                 else if (key == KeyCode.Escape)
                 {
                     JumpMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Jump menu closed");
+                    TolkHelper.Speak("Jump menu closed");
                     handled = true;
                 }
 
@@ -705,7 +705,7 @@ namespace RimWorldAccess
                 else if (key == KeyCode.Escape)
                 {
                     GizmoNavigationState.Close();
-                    ClipboardHelper.CopyToClipboard("Gizmo menu closed");
+                    TolkHelper.Speak("Gizmo menu closed");
                     handled = true;
                 }
 
@@ -814,7 +814,7 @@ namespace RimWorldAccess
                 else if (key == KeyCode.Escape)
                 {
                     WindowlessFloatMenuState.Close();
-                    ClipboardHelper.CopyToClipboard("Menu closed");
+                    TolkHelper.Speak("Menu closed");
                     handled = true;
                 }
 
@@ -892,11 +892,8 @@ namespace RimWorldAccess
                         }
                         soundDef?.PlayOneShotOnCamera();
 
-                        // Announce the change
-                        string speedName = newSpeed == TimeSpeed.Normal ? "Normal" :
-                                         newSpeed == TimeSpeed.Fast ? "Fast" :
-                                         "Superfast";
-                        ClipboardHelper.CopyToClipboard($"Time speed: {speedName}");
+                        // Note: Announcement is handled by TimeControlAccessibilityPatch
+                        // which monitors the CurTimeSpeed setter
 
                         Event.current.Use();
                         return;
@@ -941,7 +938,7 @@ namespace RimWorldAccess
 
                         // Announce the change
                         string status = selectedPawn.drafter.Drafted ? "Drafted" : "Undrafted";
-                        ClipboardHelper.CopyToClipboard($"{selectedPawn.LabelShort} {status}");
+                        TolkHelper.Speak($"{selectedPawn.LabelShort} {status}");
 
                         // Prevent the default R key behavior
                         Event.current.Use();
@@ -1093,7 +1090,7 @@ namespace RimWorldAccess
                     }
                     else
                     {
-                        ClipboardHelper.CopyToClipboard("No colonists available");
+                        TolkHelper.Speak("No colonists available");
                     }
 
                     return;
@@ -1346,7 +1343,7 @@ namespace RimWorldAccess
                 // Validate cursor position
                 if (!cursorPosition.IsValid || !cursorPosition.InBounds(Find.CurrentMap))
                 {
-                    ClipboardHelper.CopyToClipboard("Invalid position");
+                    TolkHelper.Speak("Invalid position");
                     Event.current.Use();
                     return;
                 }
@@ -1382,7 +1379,7 @@ namespace RimWorldAccess
                 // Validate cursor position
                 if (!cursorPosition.IsValid || !cursorPosition.InBounds(map))
                 {
-                    ClipboardHelper.CopyToClipboard("Invalid position");
+                    TolkHelper.Speak("Invalid position");
                     Event.current.Use();
                     return;
                 }
@@ -1390,7 +1387,7 @@ namespace RimWorldAccess
                 // Check for pawns to give orders to
                 if (Find.Selector == null || !Find.Selector.SelectedPawns.Any())
                 {
-                    ClipboardHelper.CopyToClipboard("No pawn selected");
+                    TolkHelper.Speak("No pawn selected");
                     Event.current.Use();
                     return;
                 }
@@ -1413,7 +1410,7 @@ namespace RimWorldAccess
                 }
                 else
                 {
-                    ClipboardHelper.CopyToClipboard("No available actions");
+                    TolkHelper.Speak("No available actions");
                 }
 
                 // Consume the event

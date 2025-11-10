@@ -166,12 +166,12 @@ namespace RimWorldAccess
             if (currentLevel == OptionsMenuLevel.CategoryList)
             {
                 string categoryName = categories[selectedCategoryIndex].Name;
-                ClipboardHelper.CopyToClipboard($"Category: {categoryName}");
+                TolkHelper.Speak($"Category: {categoryName}");
             }
             else // SettingsList
             {
                 var setting = categories[selectedCategoryIndex].Settings[selectedSettingIndex];
-                ClipboardHelper.CopyToClipboard(setting.GetAnnouncement());
+                TolkHelper.Speak(setting.GetAnnouncement());
             }
         }
 
@@ -215,7 +215,7 @@ namespace RimWorldAccess
                             options.Add(new FloatMenuOption(localLang.DisplayName, () => LanguageDatabase.SelectLanguage(localLang)));
                         }
                         Find.WindowStack.Add(new FloatMenu(options));
-                        ClipboardHelper.CopyToClipboard("Opening language selection menu");
+                        TolkHelper.Speak("Opening language selection menu");
                     }));
             }
 
@@ -269,7 +269,7 @@ namespace RimWorldAccess
                         "ResetAndRestartConfirmationDialog".Translate(),
                         RestoreToDefaultSettings,
                         destructive: true));
-                    ClipboardHelper.CopyToClipboard("Opening reset confirmation dialog");
+                    TolkHelper.Speak("Opening reset confirmation dialog");
                 }));
 
             categories.Add(general);
@@ -306,11 +306,11 @@ namespace RimWorldAccess
                             // Close options menu before opening storyteller page
                             Close();
                             Find.WindowStack.Add(new Page_SelectStorytellerInGame());
-                            ClipboardHelper.CopyToClipboard("Opening Storyteller Selection");
+                            TolkHelper.Speak("Opening Storyteller Selection");
                         }
                         else
                         {
-                            ClipboardHelper.CopyToClipboard("Cannot change storyteller right now");
+                            TolkHelper.Speak("Cannot change storyteller right now", SpeechPriority.High);
                         }
                     }));
             }
@@ -563,7 +563,7 @@ namespace RimWorldAccess
             {
                 // Buttons don't respond to left/right arrows - only Enter
                 // Just re-announce the current state
-                ClipboardHelper.CopyToClipboard(GetAnnouncement());
+                TolkHelper.Speak(GetAnnouncement());
             }
         }
 

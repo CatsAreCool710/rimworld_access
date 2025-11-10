@@ -46,7 +46,7 @@ namespace RimWorldAccess
                 // Validate cursor position
                 if (!cursorPosition.IsValid || !cursorPosition.InBounds(Find.CurrentMap))
                 {
-                    ClipboardHelper.CopyToClipboard("Invalid target position");
+                    TolkHelper.Speak("Invalid target position");
                     Event.current.Use();
                     return false;
                 }
@@ -66,7 +66,7 @@ namespace RimWorldAccess
                     // Validate the target is valid
                     if (!target.IsValid)
                     {
-                        ClipboardHelper.CopyToClipboard("No valid target at cursor position");
+                        TolkHelper.Speak("No valid target at cursor position");
                         Event.current.Use();
                         return false;
                     }
@@ -87,7 +87,7 @@ namespace RimWorldAccess
 
                     // Announce success
                     string targetLabel = target.HasThing ? target.Thing.LabelShort : target.Cell.ToString();
-                    ClipboardHelper.CopyToClipboard($"Targeting: {targetLabel}");
+                    TolkHelper.Speak($"Targeting: {targetLabel}");
 
                     // Consume the event
                     Event.current.Use();
@@ -105,7 +105,7 @@ namespace RimWorldAccess
 
                     if (action == null)
                     {
-                        ClipboardHelper.CopyToClipboard("No targeting action available");
+                        TolkHelper.Speak("No targeting action available");
                         Event.current.Use();
                         return false;
                     }
@@ -127,7 +127,7 @@ namespace RimWorldAccess
 
                     if (validator != null && !validator(target))
                     {
-                        ClipboardHelper.CopyToClipboard("Invalid target");
+                        TolkHelper.Speak("Invalid target");
                         Event.current.Use();
                         return false;
                     }
@@ -140,7 +140,7 @@ namespace RimWorldAccess
 
                     // Announce success
                     string targetLabel = target.HasThing ? target.Thing.LabelShort : target.Cell.ToString();
-                    ClipboardHelper.CopyToClipboard($"Target selected: {targetLabel}");
+                    TolkHelper.Speak($"Target selected: {targetLabel}");
 
                     // Consume the event
                     Event.current.Use();

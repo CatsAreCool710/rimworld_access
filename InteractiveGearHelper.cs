@@ -218,7 +218,7 @@ namespace RimWorldAccess
             {
                 if (!CanDropItem(item, pawn))
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot drop {item.Label}");
+                    TolkHelper.Speak($"Cannot drop {item.Label}", SpeechPriority.High);
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     return false;
                 }
@@ -230,7 +230,7 @@ namespace RimWorldAccess
                 {
                     Job job = JobMaker.MakeJob(JobDefOf.RemoveApparel, apparel);
                     pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                    ClipboardHelper.CopyToClipboard($"Removing {item.Label}");
+                    TolkHelper.Speak($"Removing {item.Label}");
                     SoundDefOf.Tick_High.PlayOneShotOnCamera();
                     return true;
                 }
@@ -241,7 +241,7 @@ namespace RimWorldAccess
                 {
                     Job job = JobMaker.MakeJob(JobDefOf.DropEquipment, equipment);
                     pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                    ClipboardHelper.CopyToClipboard($"Dropping {item.Label}");
+                    TolkHelper.Speak($"Dropping {item.Label}");
                     SoundDefOf.Tick_High.PlayOneShotOnCamera();
                     return true;
                 }
@@ -252,26 +252,26 @@ namespace RimWorldAccess
                     Thing droppedThing;
                     if (pawn.inventory.innerContainer.TryDrop(thing, pawn.Position, pawn.Map, ThingPlaceMode.Near, out droppedThing))
                     {
-                        ClipboardHelper.CopyToClipboard($"Dropped {item.Label}");
+                        TolkHelper.Speak($"Dropped {item.Label}");
                         SoundDefOf.Tick_High.PlayOneShotOnCamera();
                         return true;
                     }
                     else
                     {
-                        ClipboardHelper.CopyToClipboard($"Failed to drop {item.Label}");
+                        TolkHelper.Speak($"Failed to drop {item.Label}", SpeechPriority.High);
                         SoundDefOf.ClickReject.PlayOneShotOnCamera();
                         return false;
                     }
                 }
 
-                ClipboardHelper.CopyToClipboard($"Cannot drop {item.Label}");
+                TolkHelper.Speak($"Cannot drop {item.Label}", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error dropping item: {ex}");
-                ClipboardHelper.CopyToClipboard($"Error dropping {item.Label}");
+                TolkHelper.Speak($"Error dropping {item.Label}", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -286,7 +286,7 @@ namespace RimWorldAccess
             {
                 if (!CanConsumeItem(item, pawn))
                 {
-                    ClipboardHelper.CopyToClipboard($"Cannot consume {item.Label}");
+                    TolkHelper.Speak($"Cannot consume {item.Label}", SpeechPriority.High);
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     return false;
                 }
@@ -295,14 +295,14 @@ namespace RimWorldAccess
 
                 // Use RimWorld's built-in consume logic
                 FoodUtility.IngestFromInventoryNow(pawn, thing);
-                ClipboardHelper.CopyToClipboard($"Consuming {item.Label}");
+                TolkHelper.Speak($"Consuming {item.Label}");
                 SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 return true;
             }
             catch (Exception ex)
             {
                 Log.Error($"[RimWorldAccess] Error consuming item: {ex}");
-                ClipboardHelper.CopyToClipboard($"Error consuming {item.Label}");
+                TolkHelper.Speak($"Error consuming {item.Label}", SpeechPriority.High);
                 SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 return false;
             }
@@ -315,7 +315,7 @@ namespace RimWorldAccess
         {
             if (item == null || item.Thing == null)
             {
-                ClipboardHelper.CopyToClipboard("No item information available");
+                TolkHelper.Speak("No item information available");
                 return;
             }
 
@@ -368,7 +368,7 @@ namespace RimWorldAccess
                 sb.AppendLine(thing.def.description);
             }
 
-            ClipboardHelper.CopyToClipboard(sb.ToString());
+            TolkHelper.Speak(sb.ToString());
             SoundDefOf.Click.PlayOneShotOnCamera();
         }
 

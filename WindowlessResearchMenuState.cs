@@ -42,7 +42,7 @@ namespace RimWorldAccess
             rootNodes.Clear();
             flatNavigationList.Clear();
             expandedNodes.Clear();
-            ClipboardHelper.CopyToClipboard("Research menu closed");
+            TolkHelper.Speak("Research menu closed");
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace RimWorldAccess
         {
             if (flatNavigationList.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("Research menu - No research projects available");
+                TolkHelper.Speak("Research menu - No research projects available");
                 return;
             }
 
@@ -356,7 +356,7 @@ namespace RimWorldAccess
             int position = currentIndex + 1;
             announcement += $" - Item {position} of {flatNavigationList.Count}";
 
-            ClipboardHelper.CopyToClipboard(announcement);
+            TolkHelper.Speak(announcement);
         }
     }
 

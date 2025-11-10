@@ -26,7 +26,7 @@ namespace RimWorldAccess
                 if (!hasAnnouncedTitle)
                 {
                     string pageTitle = "Create World";
-                    ClipboardHelper.CopyToClipboard($"{pageTitle} - Use Up/Down to navigate fields, Left/Right to change values, R to randomize seed");
+                    TolkHelper.Speak($"{pageTitle} - Use Up/Down to navigate fields, Left/Right to change values, R to randomize seed");
                     hasAnnouncedTitle = true;
                 }
 
@@ -46,11 +46,11 @@ namespace RimWorldAccess
                             if (!string.IsNullOrEmpty(newSeed))
                             {
                                 AccessTools.Field(typeof(Page_CreateWorldParams), "seedString").SetValue(__instance, newSeed);
-                                ClipboardHelper.CopyToClipboard($"World Seed: {newSeed} (Confirmed)");
+                                TolkHelper.Speak($"World Seed: {newSeed} (Confirmed)");
                             }
                             else
                             {
-                                ClipboardHelper.CopyToClipboard("Seed input canceled (empty)");
+                                TolkHelper.Speak("Seed input canceled (empty)");
                             }
                             Event.current.Use();
                             patchActive = true;
@@ -126,7 +126,7 @@ namespace RimWorldAccess
                             {
                                 string newSeed = GenText.RandomSeedString();
                                 AccessTools.Field(typeof(Page_CreateWorldParams), "seedString").SetValue(__instance, newSeed);
-                                ClipboardHelper.CopyToClipboard($"World Seed: {newSeed} (Randomized)");
+                                TolkHelper.Speak($"World Seed: {newSeed} (Randomized)");
                                 Event.current.Use();
                                 patchActive = true;
                             }
@@ -148,7 +148,7 @@ namespace RimWorldAccess
             {
                 case "Seed":
                     // Can't modify seed with arrows, use R to randomize or Enter to type
-                    ClipboardHelper.CopyToClipboard("Press Enter to type custom seed, or R to randomize");
+                    TolkHelper.Speak("Press Enter to type custom seed, or R to randomize");
                     break;
 
                 case "PlanetCoverage":

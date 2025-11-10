@@ -56,7 +56,7 @@ namespace RimWorldAccess
                 MelonLoader.MelonLogger.Msg("RimWorld Access: Initialized map navigation");
             }
 
-            ClipboardHelper.CopyToClipboard($"Expanding area: {area.Label}. Press Space to select cells, Enter to confirm, Escape to cancel.");
+            TolkHelper.Speak($"Expanding area: {area.Label}. Press Space to select cells, Enter to confirm, Escape to cancel.");
             MelonLoader.MelonLogger.Msg("RimWorld Access: Area painting mode entered");
         }
 
@@ -76,7 +76,7 @@ namespace RimWorldAccess
                 MapNavigationState.Initialize(area.Map);
             }
 
-            ClipboardHelper.CopyToClipboard($"Shrinking area: {area.Label}. Press Space to select cells, Enter to confirm, Escape to cancel.");
+            TolkHelper.Speak($"Shrinking area: {area.Label}. Press Space to select cells, Enter to confirm, Escape to cancel.");
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace RimWorldAccess
 
             if (!currentPos.InBounds(targetArea.Map))
             {
-                ClipboardHelper.CopyToClipboard("Position out of bounds");
+                TolkHelper.Speak("Position out of bounds");
                 MelonLoader.MelonLogger.Msg("RimWorld Access: Position out of bounds");
                 return;
             }
@@ -106,13 +106,13 @@ namespace RimWorldAccess
             if (stagedCells.Contains(currentPos))
             {
                 stagedCells.Remove(currentPos);
-                ClipboardHelper.CopyToClipboard($"Deselected, {currentPos.x}, {currentPos.z}");
+                TolkHelper.Speak($"Deselected, {currentPos.x}, {currentPos.z}");
                 MelonLoader.MelonLogger.Msg($"RimWorld Access: Deselected cell at {currentPos}");
             }
             else
             {
                 stagedCells.Add(currentPos);
-                ClipboardHelper.CopyToClipboard($"Selected, {currentPos.x}, {currentPos.z}");
+                TolkHelper.Speak($"Selected, {currentPos.x}, {currentPos.z}");
                 MelonLoader.MelonLogger.Msg($"RimWorld Access: Selected cell at {currentPos}");
             }
         }
@@ -132,7 +132,7 @@ namespace RimWorldAccess
 
             if (stagedCells.Count == 0)
             {
-                ClipboardHelper.CopyToClipboard("No cells selected. Area unchanged.");
+                TolkHelper.Speak("No cells selected. Area unchanged.");
                 MelonLoader.MelonLogger.Msg("RimWorld Access: No selected cells");
                 Exit();
                 return;
@@ -155,7 +155,7 @@ namespace RimWorldAccess
             }
 
             string action = isExpanding ? "added to" : "removed from";
-            ClipboardHelper.CopyToClipboard($"{stagedCells.Count} cells {action} {targetArea.Label}. Total cells: {targetArea.TrueCount}");
+            TolkHelper.Speak($"{stagedCells.Count} cells {action} {targetArea.Label}. Total cells: {targetArea.TrueCount}");
             MelonLoader.MelonLogger.Msg($"RimWorld Access: Applied {stagedCells.Count} changes");
 
             isActive = false;
@@ -172,7 +172,7 @@ namespace RimWorldAccess
 
             if (targetArea != null)
             {
-                ClipboardHelper.CopyToClipboard("Area editing cancelled");
+                TolkHelper.Speak("Area editing cancelled");
             }
 
             isActive = false;

@@ -142,7 +142,7 @@ namespace RimWorldAccess
             }
 
             string text = $"{fieldName}: {fieldValue}";
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static void CopyCurrentFieldToClipboard()
@@ -193,7 +193,7 @@ namespace RimWorldAccess
             }
 
             string text = $"[Field] {fieldName} - {description}";
-            ClipboardHelper.CopyToClipboard(text);
+            TolkHelper.Speak(text);
         }
 
         private static string GetRainfallLabel(OverallRainfall rainfall)
@@ -240,14 +240,14 @@ namespace RimWorldAccess
         {
             isEditingSeed = true;
             seedInputBuffer = currentSeed ?? "";
-            ClipboardHelper.CopyToClipboard($"[Editing Seed] Type seed, Enter to confirm, Escape to cancel. Current: {seedInputBuffer}");
+            TolkHelper.Speak($"[Editing Seed] Type seed, Enter to confirm, Escape to cancel. Current: {seedInputBuffer}");
         }
 
         public static void CancelSeedEdit()
         {
             isEditingSeed = false;
             seedInputBuffer = "";
-            ClipboardHelper.CopyToClipboard("Seed editing canceled");
+            TolkHelper.Speak("Seed editing canceled");
         }
 
         public static string ConfirmSeedEdit()
@@ -261,7 +261,7 @@ namespace RimWorldAccess
         public static void AddCharToSeedBuffer(char c)
         {
             seedInputBuffer += c;
-            ClipboardHelper.CopyToClipboard($"[Editing Seed] {seedInputBuffer}");
+            TolkHelper.Speak($"[Editing Seed] {seedInputBuffer}");
         }
 
         public static void RemoveCharFromSeedBuffer()
@@ -269,7 +269,7 @@ namespace RimWorldAccess
             if (seedInputBuffer.Length > 0)
             {
                 seedInputBuffer = seedInputBuffer.Substring(0, seedInputBuffer.Length - 1);
-                ClipboardHelper.CopyToClipboard($"[Editing Seed] {seedInputBuffer}");
+                TolkHelper.Speak($"[Editing Seed] {seedInputBuffer}");
             }
         }
 
