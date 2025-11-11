@@ -79,7 +79,6 @@ namespace RimWorldAccess
             return WorkMenuState.IsActive ||
                    ArchitectState.IsActive ||
                    ZoneCreationState.IsInCreationMode ||
-                   JumpMenuState.IsActive ||
                    WindowlessFloatMenuState.IsActive ||
                    WindowlessPauseMenuState.IsActive ||
                    WindowlessSaveMenuState.IsActive ||

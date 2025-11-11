@@ -23,10 +23,10 @@ namespace RimWorldAccess
         private static void UpdateSuppressionFlag()
         {
             // Suppress map navigation if ANY menu that uses arrow keys is active
+            // Note: Scanner is NOT included here because it doesn't suppress map navigation
             MapNavigationState.SuppressMapNavigation =
                 WindowlessFloatMenuState.IsActive ||
                 WindowlessPauseMenuState.IsActive ||
-                JumpMenuState.IsActive ||
                 NotificationMenuState.IsActive ||
                 QuestMenuState.IsActive ||
                 WindowlessSaveMenuState.IsActive ||

@@ -10,7 +10,7 @@ namespace RimWorldAccess
 {
     /// <summary>
     /// Unified Harmony patch for UIRoot.UIRootOnGUI to handle all keyboard accessibility features.
-    /// Handles: Escape key for pause menu, Enter key for building inspection/beds, ] key for colonist orders, I key for inspection menu, J key for jump menu, L key for notification menu, F7 key for quest menu, Alt+M for mood info, Alt+H for health info, Alt+N for needs info, Alt+F for unforbid all items, F2 for schedule, F3 for assign, F6 for research, and all windowless menu navigation.
+    /// Handles: Escape key for pause menu, Enter key for building inspection/beds, ] key for colonist orders, I key for inspection menu, J key for scanner, L key for notification menu, F7 key for quest menu, Alt+M for mood info, Alt+H for health info, Alt+N for needs info, Alt+F for unforbid all items, F2 for schedule, F3 for assign, F6 for research, and all windowless menu navigation.
     /// Note: Dialog navigation (including research completion dialogs) is handled by DialogAccessibilityPatch.
     /// </summary>
     [HarmonyPatch(typeof(UIRoot))]
@@ -605,40 +605,58 @@ namespace RimWorldAccess
                 return;
             }
 
-            // ===== PRIORITY 4.75: Handle jump menu if active =====
-            if (JumpMenuState.IsActive)
+            // ===== PRIORITY 4.75: Handle scanner keys (always available during map navigation) =====
+            // Only process scanner keys if in gameplay with map navigation initialized
+            if (Current.ProgramState == ProgramState.Playing &&
+                Find.CurrentMap != null &&
+                MapNavigationState.IsInitialized &&
+                (Find.WindowStack == null || !Find.WindowStack.WindowsPreventCameraMotion) &&
+                !ZoneCreationState.IsInCreationMode)
             {
                 bool handled = false;
+                bool ctrl = Event.current.control;
+                bool shift = Event.current.shift;
 
-                if (key == KeyCode.DownArrow)
+                if (key == KeyCode.PageDown)
                 {
-                    JumpMenuState.SelectNext();
+                    if (ctrl)
+                    {
+                        ScannerState.NextCategory();
+                    }
+                    else if (shift)
+                    {
+                        ScannerState.NextSubcategory();
+                    }
+                    else
+                    {
+                        ScannerState.NextItem();
+                    }
                     handled = true;
                 }
-                else if (key == KeyCode.UpArrow)
+                else if (key == KeyCode.PageUp)
                 {
-                    JumpMenuState.SelectPrevious();
+                    if (ctrl)
+                    {
+                        ScannerState.PreviousCategory();
+                    }
+                    else if (shift)
+                    {
+                        ScannerState.PreviousSubcategory();
+                    }
+                    else
+                    {
+                        ScannerState.PreviousItem();
+                    }
                     handled = true;
                 }
-                else if (key == KeyCode.RightArrow)
+                else if (key == KeyCode.Home)
                 {
-                    JumpMenuState.ExpandCategory();
+                    ScannerState.JumpToCurrent();
                     handled = true;
                 }
-                else if (key == KeyCode.LeftArrow)
+                else if (key == KeyCode.End)
                 {
-                    JumpMenuState.CollapseCategory();
-                    handled = true;
-                }
-                else if (key == KeyCode.Return || key == KeyCode.KeypadEnter)
-                {
-                    JumpMenuState.JumpToSelected();
-                    handled = true;
-                }
-                else if (key == KeyCode.Escape)
-                {
-                    JumpMenuState.Close();
-                    TolkHelper.Speak("Jump menu closed");
+                    ScannerState.ReadDistanceAndDirection();
                     handled = true;
                 }
 
@@ -837,7 +855,6 @@ namespace RimWorldAccess
                 bool anyMenuActive = WorkMenuState.IsActive ||
                                     ArchitectState.IsActive ||
                                     ZoneCreationState.IsInCreationMode ||
-                                    JumpMenuState.IsActive ||
                                     NotificationMenuState.IsActive ||
                                     QuestMenuState.IsActive ||
                                     WindowlessFloatMenuState.IsActive ||
@@ -1118,26 +1135,7 @@ namespace RimWorldAccess
                 }
             }
 
-            // ===== PRIORITY 7: Open jump menu with J key (if no menu is active and we're in-game) =====
-            if (key == KeyCode.J)
-            {
-                // Only open jump menu if:
-                // 1. We're in gameplay (not at main menu)
-                // 2. No windows are preventing camera motion (means a dialog is open)
-                // 3. Not in zone creation mode
-                if (Current.ProgramState == ProgramState.Playing &&
-                    Find.CurrentMap != null &&
-                    (Find.WindowStack == null || !Find.WindowStack.WindowsPreventCameraMotion) &&
-                    !ZoneCreationState.IsInCreationMode)
-                {
-                    // Prevent the default J key behavior
-                    Event.current.Use();
-
-                    // Open the jump menu
-                    JumpMenuState.Open();
-                    return;
-                }
-            }
+            // J key is no longer used - scanner is always available via Page Up/Down keys
 
             // ===== PRIORITY 7.05: Open gizmo navigation with G key (if pawn or building is selected) =====
             if (key == KeyCode.G)
