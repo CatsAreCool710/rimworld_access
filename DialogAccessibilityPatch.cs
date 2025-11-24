@@ -11,8 +11,9 @@ namespace RimWorldAccess
     {
         private static readonly Color HighlightColor = new Color(1f, 1f, 0f, 0.5f);
 
-        // Postfix to handle keyboard navigation and clipboard reading
-        static void Postfix(Dialog_NodeTree __instance, Rect inRect)
+        // Prefix to handle keyboard navigation BEFORE RimWorld processes input
+        [HarmonyPrefix]
+        static void Prefix(Dialog_NodeTree __instance)
         {
             // Initialize navigation state for this dialog
             DialogNavigationState.Initialize(__instance);
@@ -31,16 +32,7 @@ namespace RimWorldAccess
                 return;
             }
 
-            // Read the dialog text to clipboard on first display
-            if (!DialogNavigationState.HasReadText() && !string.IsNullOrEmpty(curNode.text))
-            {
-                string textToRead = curNode.text.ToString();
-                TolkHelper.Speak(textToRead);
-                DialogNavigationState.MarkTextAsRead();
-                MelonLoader.MelonLogger.Msg($"Dialog text read to clipboard: {textToRead.Substring(0, Mathf.Min(50, textToRead.Length))}...");
-            }
-
-            // Handle keyboard navigation
+            // Handle keyboard navigation BEFORE RimWorld's window system processes events
             if (Event.current.type == EventType.KeyDown)
             {
                 int optionCount = curNode.options.Count;
@@ -51,7 +43,7 @@ namespace RimWorldAccess
                     DialogNavigationState.MoveUp(optionCount);
                     selectedIndex = DialogNavigationState.GetSelectedIndex();
 
-                    // Read the newly selected option to clipboard
+                    // Read the newly selected option
                     if (selectedIndex >= 0 && selectedIndex < optionCount)
                     {
                         string optionText = GetOptionText(curNode.options[selectedIndex]);
@@ -66,7 +58,7 @@ namespace RimWorldAccess
                     DialogNavigationState.MoveDown(optionCount);
                     selectedIndex = DialogNavigationState.GetSelectedIndex();
 
-                    // Read the newly selected option to clipboard
+                    // Read the newly selected option
                     if (selectedIndex >= 0 && selectedIndex < optionCount)
                     {
                         string optionText = GetOptionText(curNode.options[selectedIndex]);
@@ -99,6 +91,33 @@ namespace RimWorldAccess
 
                     Event.current.Use();
                 }
+            }
+        }
+
+        // Postfix to announce dialog text and draw visual highlight
+        [HarmonyPostfix]
+        static void Postfix(Dialog_NodeTree __instance, Rect inRect)
+        {
+            // Get the current node using reflection
+            FieldInfo curNodeField = typeof(Dialog_NodeTree).GetField("curNode", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (curNodeField == null)
+            {
+                return;
+            }
+
+            DiaNode curNode = (DiaNode)curNodeField.GetValue(__instance);
+            if (curNode == null)
+            {
+                return;
+            }
+
+            // Read the dialog text on first display
+            if (!DialogNavigationState.HasReadText() && !string.IsNullOrEmpty(curNode.text))
+            {
+                string textToRead = curNode.text.ToString();
+                TolkHelper.Speak(textToRead);
+                DialogNavigationState.MarkTextAsRead();
+                MelonLoader.MelonLogger.Msg($"Dialog text read: {textToRead.Substring(0, Mathf.Min(50, textToRead.Length))}...");
             }
 
             // Draw highlight on selected option
