@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 using RimWorld;
 
 namespace RimWorldAccess
 {
     /// <summary>
     /// Harmony patch to handle input during architect placement mode.
-    /// Handles Space (select cell), Enter (confirm), and Escape (cancel).
+    /// Handles Space (select/place cell), Shift+Space (cancel blueprint),
+    /// Enter (confirm), and Escape (cancel).
     /// Also modifies arrow key announcements to include selected cell status.
     /// </summary>
     [HarmonyPatch(typeof(UIRoot))]
@@ -67,8 +69,15 @@ namespace RimWorldAccess
             // Check if this is a zone designator
             bool isZoneDesignator = IsZoneDesignator(activeDesignator);
 
+            // Shift+Space - Cancel blueprint at cursor position (check before regular Space)
+            if (shiftHeld && key == KeyCode.Space)
+            {
+                IntVec3 currentPosition = MapNavigationState.CurrentCursorPosition;
+                CancelBlueprintAtPosition(currentPosition);
+                handled = true;
+            }
             // R key - rotate building
-            if (key == KeyCode.R)
+            else if (key == KeyCode.R)
             {
                 if (inArchitectMode)
                 {
@@ -239,6 +248,42 @@ namespace RimWorldAccess
             if (handled)
             {
                 Event.current.Use();
+            }
+        }
+
+        /// <summary>
+        /// Cancels any blueprint or frame at the specified position.
+        /// </summary>
+        private static void CancelBlueprintAtPosition(IntVec3 position)
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+                return;
+
+            // Get all things at this position
+            List<Thing> thingList = position.GetThingList(map);
+
+            // Look for blueprints or frames
+            bool foundAndCanceled = false;
+            for (int i = thingList.Count - 1; i >= 0; i--)
+            {
+                Thing thing = thingList[i];
+
+                // Check if it's a player-owned blueprint or frame
+                if (thing.Faction == Faction.OfPlayer && (thing is Frame || thing is Blueprint))
+                {
+                    string thingLabel = thing.Label;
+                    thing.Destroy(DestroyMode.Cancel);
+                    TolkHelper.Speak($"Cancelled {thingLabel}");
+                    SoundDefOf.Designate_Cancel.PlayOneShotOnCamera();
+                    foundAndCanceled = true;
+                    break; // Only cancel one blueprint per keypress
+                }
+            }
+
+            if (!foundAndCanceled)
+            {
+                TolkHelper.Speak("No blueprint to cancel here");
             }
         }
 
